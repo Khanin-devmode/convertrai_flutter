@@ -34,9 +34,20 @@ class _MyHomePageState extends State<MyHomePage> {
   double sqm = 4000;
   double rai = 1;
   double ngan = 0;
-  double waa = 0;
+  double sqWaa = 0;
+  double totalSqWaa = 0;
 
-  void convertSqm() {}
+  void convertSqm(double inputSqm) {
+    double sqWaaRemainder;
+
+    setState(() {
+      totalSqWaa = inputSqm / 4;
+      rai = (totalSqWaa / 400).floorToDouble();
+      sqWaaRemainder = totalSqWaa.remainder(400);
+      ngan = (sqWaaRemainder / 100).floorToDouble();
+      sqWaa = sqWaaRemainder.remainder(100);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +60,31 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Text('เปลี่ยนหน่วยที่ดินตามรางเมตร'),
-            InputRow(unit: sqm, inputLabel: 'ตรม.', unitLabel: 'ตรม.'),
+            InputRow(
+                key: Key('1'),
+                unit: sqm,
+                inputLabel: 'ตรม.',
+                unitLabel: 'ตรม.',
+                onChange: convertSqm),
             Text('เปลี่ยนหน่วยที่ดินไร่'),
-            InputRow(unit: rai, inputLabel: 'ไร่', unitLabel: 'ไร่'),
-            InputRow(unit: ngan, inputLabel: 'งาน', unitLabel: 'งาน'),
-            InputRow(unit: waa, inputLabel: 'วา', unitLabel: 'วา'),
+            InputRow(
+                key: Key('2'),
+                unit: rai,
+                inputLabel: 'ไร่',
+                unitLabel: 'ไร่',
+                onChange: () {}),
+            InputRow(
+                key: Key('3'),
+                unit: ngan,
+                inputLabel: 'งาน',
+                unitLabel: 'งาน',
+                onChange: () {}),
+            InputRow(
+                key: Key('4'),
+                unit: sqWaa,
+                inputLabel: 'วา',
+                unitLabel: 'วา',
+                onChange: () {}),
           ],
         ),
       ),
@@ -63,16 +94,18 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class InputRow extends StatelessWidget {
-  const InputRow({
-    Key? key,
-    required this.unit,
-    required this.inputLabel,
-    required this.unitLabel,
-  }) : super(key: key);
+  const InputRow(
+      {Key? key,
+      required this.unit,
+      required this.inputLabel,
+      required this.unitLabel,
+      required this.onChange})
+      : super(key: key);
 
   final double unit;
   final String inputLabel;
   final String unitLabel;
+  final Function onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +116,9 @@ class InputRow extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: TextField(
+              onChanged: (value) {
+                onChange();
+              },
               controller: TextEditingController(text: unit.toStringAsFixed(2)),
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
