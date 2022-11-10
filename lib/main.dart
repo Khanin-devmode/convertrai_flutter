@@ -31,13 +31,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  double sqm = 4000;
+  double rai = 1;
+  double ngan = 0;
+  double waa = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  void convertSqm() {}
 
   @override
   Widget build(BuildContext context) {
@@ -50,56 +49,58 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Text('เปลี่ยนหน่วยที่ดินตามรางเมตร'),
-            Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'ที่ดินตารางเมตร'),
-                  ),
-                ),
-                Text('ตารางเมตร')
-              ],
-            ),
+            InputRow(unit: sqm, inputLabel: 'ตรม.', unitLabel: 'ตรม.'),
             Text('เปลี่ยนหน่วยที่ดินไร่'),
-            Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'ไร่'),
-                  ),
-                ),
-                Text('ไร่')
-              ],
-            ),
-            Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'งาน'),
-                  ),
-                ),
-                Text('งาน')
-              ],
-            ),
-            Row(
-              children: [
-                Flexible(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'วา'),
-                  ),
-                ),
-                Text('วา')
-              ],
-            ),
+            InputRow(unit: rai, inputLabel: 'ไร่', unitLabel: 'ไร่'),
+            InputRow(unit: ngan, inputLabel: 'งาน', unitLabel: 'งาน'),
+            InputRow(unit: waa, inputLabel: 'วา', unitLabel: 'วา'),
           ],
         ),
       ),
 // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class InputRow extends StatelessWidget {
+  const InputRow({
+    Key? key,
+    required this.unit,
+    required this.inputLabel,
+    required this.unitLabel,
+  }) : super(key: key);
+
+  final double unit;
+  final String inputLabel;
+  final String unitLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+          flex: 5,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: TextField(
+              controller: TextEditingController(text: unit.toStringAsFixed(2)),
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(
+                  RegExp(r'[0-9]'),
+                ),
+              ],
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), labelText: inputLabel),
+            ),
+          ),
+        ),
+        Flexible(
+          child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Text(unitLabel)),
+        )
+      ],
     );
   }
 }
