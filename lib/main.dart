@@ -31,21 +31,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double sqm = 4000;
-  double rai = 1;
-  double ngan = 0;
-  double sqWaa = 0;
-  double totalSqWaa = 0;
+  double _sqm = 1600;
+  double _rai = 1;
+  double _ngan = 0;
+  double _sqWaa = 0;
+  double _totalSqWaa = 0;
+
+  final _sqmTextController = TextEditingController(text: '1600');
+  final _raiTextController = TextEditingController(text: '1');
+  final _nganTextController = TextEditingController(text: '0');
+  final _sqWaaTextController = TextEditingController(text: '0');
 
   void convertSqm(double inputSqm) {
     double sqWaaRemainder;
 
     setState(() {
-      totalSqWaa = inputSqm / 4;
-      rai = (totalSqWaa / 400).floorToDouble();
-      sqWaaRemainder = totalSqWaa.remainder(400);
-      ngan = (sqWaaRemainder / 100).floorToDouble();
-      sqWaa = sqWaaRemainder.remainder(100);
+      _totalSqWaa = inputSqm / 4;
+      _rai = (_totalSqWaa / 400).floorToDouble();
+      sqWaaRemainder = _totalSqWaa.remainder(400);
+      _ngan = (sqWaaRemainder / 100).floorToDouble();
+      _sqWaa = sqWaaRemainder.remainder(100);
+
+      _raiTextController.text = _rai.toStringAsFixed(0);
+      _nganTextController.text = _ngan.toStringAsFixed(0);
+      _sqWaaTextController.text = _sqWaa.toStringAsFixed(0);
     });
   }
 
@@ -61,29 +70,30 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Text('เปลี่ยนหน่วยที่ดินตามรางเมตร'),
             InputRow(
-                key: Key('1'),
-                unit: sqm,
-                inputLabel: 'ตรม.',
-                unitLabel: 'ตรม.',
-                onChange: convertSqm),
+              unit: _sqm,
+              inputLabel: 'ตรม.',
+              unitLabel: 'ตรม.',
+              textEditingController: _sqmTextController,
+              onChange: convertSqm,
+            ),
             Text('เปลี่ยนหน่วยที่ดินไร่'),
             InputRow(
-                key: Key('2'),
-                unit: rai,
+                unit: _rai,
                 inputLabel: 'ไร่',
                 unitLabel: 'ไร่',
+                textEditingController: _raiTextController,
                 onChange: () {}),
             InputRow(
-                key: Key('3'),
-                unit: ngan,
+                unit: _ngan,
                 inputLabel: 'งาน',
                 unitLabel: 'งาน',
+                textEditingController: _nganTextController,
                 onChange: () {}),
             InputRow(
-                key: Key('4'),
-                unit: sqWaa,
-                inputLabel: 'วา',
-                unitLabel: 'วา',
+                unit: _sqWaa,
+                inputLabel: 'ตรว.',
+                unitLabel: 'ตรว.',
+                textEditingController: _sqWaaTextController,
                 onChange: () {}),
           ],
         ),
@@ -94,18 +104,20 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class InputRow extends StatelessWidget {
-  const InputRow(
+  InputRow(
       {Key? key,
       required this.unit,
       required this.inputLabel,
       required this.unitLabel,
-      required this.onChange})
+      required this.onChange,
+      required this.textEditingController})
       : super(key: key);
 
-  final double unit;
+  double unit;
   final String inputLabel;
   final String unitLabel;
   final Function onChange;
+  final TextEditingController textEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -117,9 +129,11 @@ class InputRow extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: TextField(
               onChanged: (value) {
-                onChange();
+                print('value: ' + value);
+                var n = double.tryParse(value);
+                n != null ? onChange(n) : print('value is null');
               },
-              controller: TextEditingController(text: unit.toStringAsFixed(2)),
+              controller: textEditingController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(
