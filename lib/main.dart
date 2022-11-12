@@ -58,6 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void convertRai() {
+    setState(() {
+      _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWaa * 4);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
