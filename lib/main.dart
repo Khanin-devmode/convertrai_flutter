@@ -42,23 +42,26 @@ class _MyHomePageState extends State<MyHomePage> {
   final _nganTextController = TextEditingController(text: '0');
   final _sqWaaTextController = TextEditingController(text: '0');
 
-  void convertSqm(double inputSqm) {
-    double sqWaaRemainder;
+  void convertSqm(String txtInputSqm) {
+    var n = double.tryParse(txtInputSqm);
 
-    setState(() {
-      _totalSqWaa = inputSqm / 4;
-      _rai = (_totalSqWaa / 400).floorToDouble();
-      sqWaaRemainder = _totalSqWaa.remainder(400);
-      _ngan = (sqWaaRemainder / 100).floorToDouble();
-      _sqWaa = sqWaaRemainder.remainder(100);
+    if (n != null) {
+      double sqWaaRemainder;
+      setState(() {
+        _totalSqWaa = n / 4;
+        _rai = (_totalSqWaa / 400).floorToDouble();
+        sqWaaRemainder = _totalSqWaa.remainder(400);
+        _ngan = (sqWaaRemainder / 100).floorToDouble();
+        _sqWaa = sqWaaRemainder.remainder(100);
 
-      _raiTextController.text = _rai.toStringAsFixed(0);
-      _nganTextController.text = _ngan.toStringAsFixed(0);
-      _sqWaaTextController.text = _sqWaa.toStringAsFixed(0);
-    });
+        _raiTextController.text = _rai.toStringAsFixed(0);
+        _nganTextController.text = _ngan.toStringAsFixed(0);
+        _sqWaaTextController.text = _sqWaa.toStringAsFixed(0);
+      });
+    }
   }
 
-  void convertRai() {
+  void convertRai(String newValue) {
     setState(() {
       _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWaa * 4);
     });
@@ -80,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               inputLabel: 'ตรม.',
               unitLabel: 'ตรม.',
               textEditingController: _sqmTextController,
-              onChange: convertSqm,
+              onChanged: convertSqm,
             ),
             Text('เปลี่ยนหน่วยที่ดินไร่'),
             InputRow(
@@ -88,19 +91,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 inputLabel: 'ไร่',
                 unitLabel: 'ไร่',
                 textEditingController: _raiTextController,
-                onChange: () {}),
+                onChanged: convertRai),
             InputRow(
                 unit: _ngan,
                 inputLabel: 'งาน',
                 unitLabel: 'งาน',
                 textEditingController: _nganTextController,
-                onChange: () {}),
+                onChanged: convertRai),
             InputRow(
                 unit: _sqWaa,
                 inputLabel: 'ตรว.',
                 unitLabel: 'ตรว.',
                 textEditingController: _sqWaaTextController,
-                onChange: () {}),
+                onChanged: convertRai),
           ],
         ),
       ),
@@ -115,14 +118,14 @@ class InputRow extends StatelessWidget {
       required this.unit,
       required this.inputLabel,
       required this.unitLabel,
-      required this.onChange,
+      required this.onChanged,
       required this.textEditingController})
       : super(key: key);
 
   double unit;
   final String inputLabel;
   final String unitLabel;
-  final Function onChange;
+  final Function(String) onChanged;
   final TextEditingController textEditingController;
 
   @override
@@ -134,11 +137,7 @@ class InputRow extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: TextField(
-              onChanged: (value) {
-                print('value: ' + value);
-                var n = double.tryParse(value);
-                n != null ? onChange(n) : print('value is null');
-              },
+              onChanged: onChanged,
               controller: textEditingController,
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
