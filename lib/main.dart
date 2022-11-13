@@ -45,26 +45,44 @@ class _MyHomePageState extends State<MyHomePage> {
   void convertSqm(String txtInputSqm) {
     var n = double.tryParse(txtInputSqm);
 
-    if (n != null) {
-      double sqWaaRemainder;
-      setState(() {
-        _totalSqWaa = n / 4;
-        _rai = (_totalSqWaa / 400).floorToDouble();
-        sqWaaRemainder = _totalSqWaa.remainder(400);
-        _ngan = (sqWaaRemainder / 100).floorToDouble();
-        _sqWaa = sqWaaRemainder.remainder(100);
+    _sqm = (n != null) ? n : 0;
+    double sqWaaRemainder;
+    setState(() {
+      _totalSqWaa = _sqm / 4;
+      _rai = (_totalSqWaa / 400).floorToDouble();
+      sqWaaRemainder = _totalSqWaa.remainder(400);
+      _ngan = (sqWaaRemainder / 100).floorToDouble();
+      _sqWaa = sqWaaRemainder.remainder(100);
 
-        _raiTextController.text = _rai.toStringAsFixed(0);
-        _nganTextController.text = _ngan.toStringAsFixed(0);
-        _sqWaaTextController.text = _sqWaa.toStringAsFixed(0);
-      });
-    }
+      _raiTextController.text = _rai.toString();
+      _nganTextController.text = _ngan.toString();
+      _sqWaaTextController.text = _sqWaa.toString();
+    });
   }
 
-  void convertRai(String newValue) {
+  void updateSqmState() {
     setState(() {
       _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWaa * 4);
+      _sqmTextController.text = _sqm.toString();
     });
+  }
+
+  void convertRai(String txtRaiInput) {
+    var n = double.tryParse(txtRaiInput);
+    _rai = (n != null) ? n : 0;
+    updateSqmState();
+  }
+
+  void convertNgan(String txtRaiInput) {
+    var n = double.tryParse(txtRaiInput);
+    _ngan = (n != null) ? n : 0;
+    updateSqmState();
+  }
+
+  void convertSqWaa(String txtRaiInput) {
+    var n = double.tryParse(txtRaiInput);
+    _sqWaa = (n != null) ? n : 0;
+    updateSqmState();
   }
 
   @override
@@ -97,13 +115,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 inputLabel: 'งาน',
                 unitLabel: 'งาน',
                 textEditingController: _nganTextController,
-                onChanged: convertRai),
+                onChanged: convertNgan),
             InputRow(
                 unit: _sqWaa,
                 inputLabel: 'ตรว.',
                 unitLabel: 'ตรว.',
                 textEditingController: _sqWaaTextController,
-                onChanged: convertRai),
+                onChanged: convertSqWaa),
           ],
         ),
       ),
