@@ -5,6 +5,8 @@ void main() {
   runApp(const ConverRaiApp());
 }
 
+enum ConvertingUnit { sqm, rai, ngan, wha, combined }
+
 class ConverRaiApp extends StatelessWidget {
   const ConverRaiApp({super.key});
 
@@ -31,6 +33,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Map<String, String> convertingUnit = {'sqm': 'ไร่'};
+
   double _sqm = 1600;
   double _rai = 1;
   double _ngan = 0;
@@ -103,25 +107,25 @@ class _MyHomePageState extends State<MyHomePage> {
               textEditingController: _sqmTextController,
               onChanged: convertSqm,
             ),
-            Text('เปลี่ยนหน่วยที่ดินไร่'),
-            InputRow(
-                unit: _rai,
-                inputLabel: 'ไร่',
-                unitLabel: 'ไร่',
-                textEditingController: _raiTextController,
-                onChanged: convertRai),
-            InputRow(
-                unit: _ngan,
-                inputLabel: 'งาน',
-                unitLabel: 'งาน',
-                textEditingController: _nganTextController,
-                onChanged: convertNgan),
-            InputRow(
-                unit: _sqWaa,
-                inputLabel: 'ตรว.',
-                unitLabel: 'ตรว.',
-                textEditingController: _sqWaaTextController,
-                onChanged: convertSqWaa),
+            // Text('เปลี่ยนหน่วยที่ดินไร่'),
+            // InputRow(
+            //     unit: _rai,
+            //     inputLabel: 'ไร่',
+            //     unitLabel: 'ไร่',
+            //     textEditingController: _raiTextController,
+            //     onChanged: convertRai),
+            // InputRow(
+            //     unit: _ngan,
+            //     inputLabel: 'งาน',
+            //     unitLabel: 'งาน',
+            //     textEditingController: _nganTextController,
+            //     onChanged: convertNgan),
+            // InputRow(
+            //     unit: _sqWaa,
+            //     inputLabel: 'ตรว.',
+            //     unitLabel: 'ตรว.',
+            //     textEditingController: _sqWaaTextController,
+            //     onChanged: convertSqWaa),
           ],
         ),
       ),
@@ -151,13 +155,12 @@ class InputRow extends StatelessWidget {
     return Row(
       children: [
         Flexible(
-          flex: 5,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: TextField(
               onChanged: onChanged,
               controller: textEditingController,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(
                   RegExp(r'[0-9]'),
@@ -169,9 +172,18 @@ class InputRow extends StatelessWidget {
           ),
         ),
         Flexible(
+          flex: 2,
           child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: Text(unitLabel)),
+              // child: Text(unitLabel)),
+              child: DropdownButton<ConvertingUnit>(
+                value: ConvertingUnit.sqm,
+                items: ConvertingUnit.values.map((ConvertingUnit unit) {
+                  return DropdownMenuItem<ConvertingUnit>(
+                      value: unit, child: Text(unit.toString()));
+                }).toList(),
+                onChanged: (value) {},
+              )),
         )
       ],
     );
