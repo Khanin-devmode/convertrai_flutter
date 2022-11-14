@@ -46,6 +46,21 @@ class _MyHomePageState extends State<MyHomePage> {
   final _nganTextController = TextEditingController(text: '0');
   final _sqWaaTextController = TextEditingController(text: '0');
 
+  String getUnitText(ConvertingUnit unit) {
+    switch (unit) {
+      case ConvertingUnit.rai:
+        return 'ไร่';
+      case ConvertingUnit.ngan:
+        return 'งาน';
+      case ConvertingUnit.wha:
+        return 'ตรว.';
+      case ConvertingUnit.sqm:
+        return 'ตรม.';
+      case ConvertingUnit.combined:
+        return 'ไร่/งาน/วา';
+    }
+  }
+
   void convertSqm(String txtInputSqm) {
     var n = double.tryParse(txtInputSqm);
 
@@ -106,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
               unitLabel: 'ตรม.',
               textEditingController: _sqmTextController,
               onChanged: convertSqm,
+              getUnitText: getUnitText,
             ),
             // Text('เปลี่ยนหน่วยที่ดินไร่'),
             // InputRow(
@@ -141,6 +157,7 @@ class InputRow extends StatelessWidget {
       required this.inputLabel,
       required this.unitLabel,
       required this.onChanged,
+      required this.getUnitText,
       required this.textEditingController})
       : super(key: key);
 
@@ -148,6 +165,7 @@ class InputRow extends StatelessWidget {
   final String inputLabel;
   final String unitLabel;
   final Function(String) onChanged;
+  final Function(ConvertingUnit) getUnitText;
   final TextEditingController textEditingController;
 
   @override
@@ -180,7 +198,7 @@ class InputRow extends StatelessWidget {
                 value: ConvertingUnit.sqm,
                 items: ConvertingUnit.values.map((ConvertingUnit unit) {
                   return DropdownMenuItem<ConvertingUnit>(
-                      value: unit, child: Text(unit.toString()));
+                      value: unit, child: Text(getUnitText(unit)));
                 }).toList(),
                 onChanged: (value) {},
               )),
