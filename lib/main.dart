@@ -1,5 +1,5 @@
+import 'package:convertrai_flutter/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   runApp(const ConverRaiApp());
@@ -18,15 +18,13 @@ class ConverRaiApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'ConvertRai'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -162,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('ConvertRai'),
       ),
       body: Container(
         alignment: Alignment.topCenter,
@@ -174,71 +172,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 Flexible(
                   flex: 4,
                   child: selectedUnit != ConvertingUnit.combined
-                      ? Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          child: TextField(
-                            onChanged: convertUnit,
-                            controller: _inputTextController,
-                            keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9]'),
-                              ),
-                            ],
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              label: Text(
-                                'ขนาดพื้นที่ ' + getUnitText(selectedUnit),
-                              ),
-                            ),
-                          ),
-                        )
+                      ? UnitInputField(
+                          convertUnit: convertUnit,
+                          label: 'เปลี่ยนหน่วย ${getUnitText(selectedUnit)}',
+                          textEditingController: _inputTextController)
                       : Row(
                           children: [
                             Flexible(
-                                child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextField(
-                                controller: _raiTextController,
-                                onChanged: convertRai,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  label: Text(
-                                    'ไร่ ',
-                                  ),
-                                ),
-                              ),
-                            )),
+                              child: UnitInputField(
+                                  convertUnit: convertRai,
+                                  label: 'ไร่',
+                                  textEditingController: _raiTextController),
+                            ),
                             Flexible(
-                                child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextField(
-                                controller: _nganTextController,
-                                onChanged: convertNgan,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  label: Text(
-                                    'งาน',
-                                  ),
-                                ),
-                              ),
-                            )),
+                              child: UnitInputField(
+                                  convertUnit: convertNgan,
+                                  label: 'งาน',
+                                  textEditingController: _nganTextController),
+                            ),
                             Flexible(
-                                child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextField(
-                                controller: _sqWhaTextController,
-                                onChanged: convertSqWha,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  label: Text(
-                                    'ตรว.',
-                                  ),
-                                ),
-                              ),
-                            ))
+                              child: UnitInputField(
+                                  convertUnit: convertRai,
+                                  label: 'ตรว.',
+                                  textEditingController: _sqWhaTextController),
+                            ),
                           ],
                         ),
                 ),
@@ -288,6 +245,35 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class UnitInputField extends StatelessWidget {
+  const UnitInputField(
+      {super.key,
+      required this.convertUnit,
+      required this.label,
+      required this.textEditingController});
+
+  final Function(String) convertUnit;
+  final TextEditingController textEditingController;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: TextField(
+        onChanged: convertUnit,
+        controller: textEditingController,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: kNumberInputFormatter,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          label: Text(label),
+        ),
+      ),
     );
   }
 }
