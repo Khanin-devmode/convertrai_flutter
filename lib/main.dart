@@ -14,7 +14,7 @@ class ConverRaiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Convert Rai',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -45,6 +45,17 @@ class _MyHomePageState extends State<MyHomePage> {
   ConvertingUnit selectedUnit = ConvertingUnit.sqm;
 
   final _inputTextController = TextEditingController();
+  final _raiTextController = TextEditingController();
+  final _nganTextController = TextEditingController();
+  final _sqWhaTextController = TextEditingController();
+
+  void selectUnit(newUnit) {
+    setState(() {
+      selectedUnit = newUnit;
+    });
+
+    convertUnit(_inputTextController.text);
+  }
 
   String getUnitText(ConvertingUnit unit) {
     switch (unit) {
@@ -101,15 +112,50 @@ class _MyHomePageState extends State<MyHomePage> {
       _fullRai = _sqm / 1600;
       _fullNgan = _sqm / 400;
       _fullSqWha = _sqm / 4;
+
+      _raiTextController.text = _rai.toString();
+      _nganTextController.text = _ngan.toString();
+      _sqWhaTextController.text = _sqWha.toString();
     });
   }
 
-  void selectUnit(newUnit) {
-    setState(() {
-      selectedUnit = newUnit;
-    });
+  void convertRai(String raiTextInput) {
+    var n = double.tryParse(raiTextInput);
 
-    convertUnit(_inputTextController.text);
+    _rai = (n != null) ? n : 0;
+
+    setState(() {
+      _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
+      _fullRai = _sqm / 1600;
+      _fullNgan = _sqm / 400;
+      _fullSqWha = _sqm / 4;
+    });
+  }
+
+  void convertNgan(String raiTextInput) {
+    var n = double.tryParse(raiTextInput);
+
+    _ngan = (n != null) ? n : 0;
+
+    setState(() {
+      _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
+      _fullRai = _sqm / 1600;
+      _fullNgan = _sqm / 400;
+      _fullSqWha = _sqm / 4;
+    });
+  }
+
+  void convertSqWha(String raiTextInput) {
+    var n = double.tryParse(raiTextInput);
+
+    _sqWha = (n != null) ? n : 0;
+
+    setState(() {
+      _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
+      _fullRai = _sqm / 1600;
+      _fullNgan = _sqm / 400;
+      _fullSqWha = _sqm / 4;
+    });
   }
 
   @override
@@ -122,34 +168,85 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.topCenter,
         child: Column(
           children: [
-            Text('เปลี่ยนหน่วยที่ดินตามรางเมตร'),
+            Text('เปลี่ยนหน่วยที่ดิน'),
             Row(
               children: [
                 Flexible(
                   flex: 4,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: TextField(
-                      onChanged: convertUnit,
-                      controller: _inputTextController,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'[0-9]'),
+                  child: selectedUnit != ConvertingUnit.combined
+                      ? Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                          child: TextField(
+                            onChanged: convertUnit,
+                            controller: _inputTextController,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9]'),
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              label: Text(
+                                'ขนาดพื้นที่ ' + getUnitText(selectedUnit),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            Flexible(
+                                child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: TextField(
+                                controller: _raiTextController,
+                                onChanged: convertRai,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  label: Text(
+                                    'ไร่ ',
+                                  ),
+                                ),
+                              ),
+                            )),
+                            Flexible(
+                                child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: TextField(
+                                controller: _nganTextController,
+                                onChanged: convertNgan,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  label: Text(
+                                    'งาน',
+                                  ),
+                                ),
+                              ),
+                            )),
+                            Flexible(
+                                child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: TextField(
+                                controller: _sqWhaTextController,
+                                onChanged: convertSqWha,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  label: Text(
+                                    'ตรว.',
+                                  ),
+                                ),
+                              ),
+                            ))
+                          ],
                         ),
-                      ],
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          label:
-                              Text('ขนาดพื้นที่ ' + getUnitText(selectedUnit))),
-                    ),
-                  ),
                 ),
                 Flexible(
                   flex: 2,
                   child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
                       // child: Text(unitLabel)),
                       child: DropdownButton<ConvertingUnit>(
                         value: selectedUnit,
@@ -162,14 +259,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
               ],
             ),
-            selectedUnit != ConvertingUnit.sqm
-                ? Row(
-                    children: [Text('= $_sqm ตรม.')],
-                  )
-                : Row(),
             selectedUnit != ConvertingUnit.combined
                 ? Row(
                     children: [Text('= $_rai ไร่ $_ngan งาน $_sqWha ตรว.')],
+                  )
+                : Row(),
+            selectedUnit != ConvertingUnit.sqm
+                ? Row(
+                    children: [Text('= $_sqm ตรม.')],
                   )
                 : Row(),
             selectedUnit != ConvertingUnit.rai
