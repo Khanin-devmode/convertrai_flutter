@@ -48,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final _nganTextController = TextEditingController();
   final _sqWhaTextController = TextEditingController();
 
+  List<String> saveResults = [];
+
   void selectUnit(newUnit) {
     setState(() {
       selectedUnit = newUnit;
@@ -191,6 +193,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void saveResult(String result) {
+    setState(() {
+      saveResults.add(result);
+    });
+  }
+
+  void deleteResult(int index) {
+    setState(() {
+      saveResults.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -253,27 +267,63 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             selectedUnit != ConvertingUnit.combined
                 ? ResultRow(
-                    resultText:
-                        getResultText(selectedUnit, ConvertingUnit.combined))
+                    resultText: getResultText(
+                      selectedUnit,
+                      ConvertingUnit.combined,
+                    ),
+                    saveFunction: saveResult,
+                  )
                 : Row(),
             selectedUnit != ConvertingUnit.sqm
                 ? ResultRow(
-                    resultText: getResultText(selectedUnit, ConvertingUnit.sqm))
+                    resultText: getResultText(selectedUnit, ConvertingUnit.sqm),
+                    saveFunction: saveResult,
+                  )
                 : Row(),
             selectedUnit != ConvertingUnit.rai
                 ? ResultRow(
-                    resultText: getResultText(selectedUnit, ConvertingUnit.rai))
+                    resultText: getResultText(selectedUnit, ConvertingUnit.rai),
+                    saveFunction: saveResult,
+                  )
                 : Row(),
             selectedUnit != ConvertingUnit.ngan
                 ? ResultRow(
                     resultText:
-                        getResultText(selectedUnit, ConvertingUnit.ngan))
+                        getResultText(selectedUnit, ConvertingUnit.ngan),
+                    saveFunction: saveResult,
+                  )
                 : Row(),
             selectedUnit != ConvertingUnit.sqWha
                 ? ResultRow(
                     resultText:
-                        getResultText(selectedUnit, ConvertingUnit.sqWha))
+                        getResultText(selectedUnit, ConvertingUnit.sqWha),
+                    saveFunction: saveResult,
+                  )
                 : Row(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Colors.blue,
+                width: double.infinity,
+                height: 100,
+                alignment: Alignment.center,
+                child: Text('Ad Banner'),
+              ),
+            ),
+            Text('Saved Results'),
+            Container(
+              height: 300,
+              child: ListView.builder(
+                  itemCount: saveResults.length,
+                  itemBuilder: (context, index) {
+                    final result = saveResults[index];
+                    return SavedRow(
+                      resultText: result,
+                      deleteFunction: deleteResult,
+                      index: index,
+                    );
+                  }),
+            )
           ],
         ),
       ),
@@ -283,12 +333,12 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class ResultRow extends StatelessWidget {
-  const ResultRow({
-    Key? key,
-    required this.resultText,
-  }) : super(key: key);
+  const ResultRow(
+      {Key? key, required this.resultText, required this.saveFunction})
+      : super(key: key);
 
   final String resultText;
+  final Function(String) saveFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -296,16 +346,71 @@ class ResultRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           child: Text(resultText),
         ),
         Container(
-          padding: EdgeInsets.all(8),
-          child: IconButton(
-            icon: Icon(Icons.copy),
-            onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: resultText));
-            },
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.save),
+                onPressed: () async {
+                  saveFunction(resultText);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.copy),
+                onPressed: () async {
+                  await Clipboard.setData(ClipboardData(text: resultText));
+                },
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class SavedRow extends StatelessWidget {
+  const SavedRow(
+      {Key? key,
+      required this.resultText,
+      required this.deleteFunction,
+      required this.index})
+      : super(key: key);
+
+  final String resultText;
+  final Function(int) deleteFunction;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Text(resultText),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () async {
+                  deleteFunction(index);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.copy),
+                onPressed: () async {
+                  await Clipboard.setData(ClipboardData(text: resultText));
+                },
+              ),
+            ],
           ),
         )
       ],
