@@ -1,5 +1,6 @@
 import 'package:convertrai_flutter/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const ConverRaiApp());
@@ -117,6 +118,40 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String getResultText(ConvertingUnit inputUnit, ConvertingUnit outputUnit) {
+    String inputText;
+
+    if (inputUnit != ConvertingUnit.combined) {
+      inputText = '${_inputTextController.text} ${getUnitText(selectedUnit)}';
+    } else {
+      inputText =
+          '${_raiTextController.text} ไร่ ${_nganTextController.text} งาน ${_sqWhaTextController.text} ตรว.';
+    }
+
+    switch (outputUnit) {
+      case ConvertingUnit.rai:
+        {
+          return '$inputText = $_fullRai ไร่';
+        }
+      case ConvertingUnit.ngan:
+        {
+          return '$inputText = $_fullNgan งาน';
+        }
+      case ConvertingUnit.sqWha:
+        {
+          return '$inputText = $_fullSqWha ตรว.';
+        }
+      case ConvertingUnit.sqm:
+        {
+          return '$inputText = $_sqm ตรม.';
+        }
+      case ConvertingUnit.combined:
+        {
+          return '$inputText = $_rai ไร่ $_ngan งาน $_sqWha ตรว.';
+        }
+    }
+  }
+
   void convertRai(String raiTextInput) {
     var n = double.tryParse(raiTextInput);
 
@@ -217,34 +252,63 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             selectedUnit != ConvertingUnit.combined
-                ? Row(
-                    children: [Text('= $_rai ไร่ $_ngan งาน $_sqWha ตรว.')],
-                  )
+                ? ResultRow(
+                    resultText:
+                        getResultText(selectedUnit, ConvertingUnit.combined))
                 : Row(),
             selectedUnit != ConvertingUnit.sqm
-                ? Row(
-                    children: [Text('= $_sqm ตรม.')],
-                  )
+                ? ResultRow(
+                    resultText: getResultText(selectedUnit, ConvertingUnit.sqm))
                 : Row(),
             selectedUnit != ConvertingUnit.rai
-                ? Row(
-                    children: [Text('= $_fullRai ไร่')],
-                  )
+                ? ResultRow(
+                    resultText: getResultText(selectedUnit, ConvertingUnit.rai))
                 : Row(),
             selectedUnit != ConvertingUnit.ngan
-                ? Row(
-                    children: [Text('= $_fullNgan งาน')],
-                  )
+                ? ResultRow(
+                    resultText:
+                        getResultText(selectedUnit, ConvertingUnit.ngan))
                 : Row(),
             selectedUnit != ConvertingUnit.sqWha
-                ? Row(
-                    children: [Text('= $_fullSqWha ตรว.')],
-                  )
+                ? ResultRow(
+                    resultText:
+                        getResultText(selectedUnit, ConvertingUnit.sqWha))
                 : Row(),
           ],
         ),
       ),
 // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class ResultRow extends StatelessWidget {
+  const ResultRow({
+    Key? key,
+    required this.resultText,
+  }) : super(key: key);
+
+  final String resultText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          padding: EdgeInsets.all(8),
+          child: Text(resultText),
+        ),
+        Container(
+          padding: EdgeInsets.all(8),
+          child: IconButton(
+            icon: Icon(Icons.copy),
+            onPressed: () async {
+              await Clipboard.setData(ClipboardData(text: resultText));
+            },
+          ),
+        )
+      ],
     );
   }
 }
