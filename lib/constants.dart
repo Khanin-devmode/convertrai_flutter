@@ -5,3 +5,5 @@ final kNumberInputFormatter = <TextInputFormatter>[
 ];
 
 const kNumberKeyboardType = TextInputType.numberWithOptions(decimal: true);
+
+const kBgColor = Color.fromARGB(255, 235, 235, 235);

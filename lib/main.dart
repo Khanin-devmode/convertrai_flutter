@@ -209,13 +209,28 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ConvertRai'),
+        backgroundColor: kBgColor,
+        elevation: 0,
+        centerTitle: false,
+        title: Text(
+          'ConvertRai',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        color: kBgColor,
         alignment: Alignment.topCenter,
         child: Column(
           children: [
-            Text('เปลี่ยนหน่วยที่ดิน'),
+            // Row(
+            //   children: [
+            //     Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 16),
+            //       child: Text('เปลี่ยนหน่วยที่ดิน'),
+            //     ),
+            //   ],
+            // ),
             Row(
               children: [
                 Flexible(
@@ -363,6 +378,7 @@ class ResultRow extends StatelessWidget {
                 icon: Icon(Icons.copy),
                 onPressed: () async {
                   await Clipboard.setData(ClipboardData(text: resultText));
+                  showSnackBar(context);
                 },
               ),
             ],
@@ -408,6 +424,7 @@ class SavedRow extends StatelessWidget {
                 icon: Icon(Icons.copy),
                 onPressed: () async {
                   await Clipboard.setData(ClipboardData(text: resultText));
+                  showSnackBar(context);
                 },
               ),
             ],
@@ -416,6 +433,21 @@ class SavedRow extends StatelessWidget {
       ],
     );
   }
+}
+
+void showSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      duration: const Duration(milliseconds: 1000),
+      content: Container(
+        height: 20,
+        alignment: Alignment.center,
+        child: const Text(
+          'Text Copied.',
+        ),
+      ),
+    ),
+  );
 }
 
 class UnitInputField extends StatelessWidget {
