@@ -193,8 +193,11 @@ class _ConverterPageState extends State<ConverterPage> {
         elevation: 0,
         centerTitle: false,
         title: Text(
-          'ConvertRai',
-          style: TextStyle(color: Colors.black),
+          'Convert Rai',
+          style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'MontserratAlternates',
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(
