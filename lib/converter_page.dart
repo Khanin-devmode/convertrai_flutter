@@ -192,12 +192,25 @@ class _ConverterPageState extends State<ConverterPage> {
         backgroundColor: kBgColor,
         elevation: 0,
         centerTitle: false,
-        title: Text(
-          'Convert Rai',
-          style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'MontserratAlternates',
-              fontWeight: FontWeight.bold),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              flex: 5,
+              child: Text(
+                'Convert Rai',
+                style: kTitleTextStyle,
+              ),
+            ),
+            Flexible(
+                flex: 7,
+                child: Container(
+                  height: 8,
+                  decoration: BoxDecoration(
+                      color: kTitleColor,
+                      borderRadius: BorderRadius.all(Radius.circular(2))),
+                ))
+          ],
         ),
       ),
       body: Container(
@@ -249,10 +262,14 @@ class _ConverterPageState extends State<ConverterPage> {
                 Flexible(
                   flex: 2,
                   child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
                       // child: Text(unitLabel)),
                       child: DropdownButton<ConvertingUnit>(
+                        alignment: Alignment.center,
                         value: selectedUnit,
                         items: ConvertingUnit.values.map((ConvertingUnit unit) {
                           return DropdownMenuItem<ConvertingUnit>(
@@ -455,8 +472,17 @@ class UnitInputField extends StatelessWidget {
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         inputFormatters: kNumberInputFormatter,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          label: Text(label),
+          // label: Text(label),
+          hintText: label,
+          fillColor: Colors.white,
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              width: 0,
+              style: BorderStyle.none,
+            ),
+          ),
         ),
       ),
     );
