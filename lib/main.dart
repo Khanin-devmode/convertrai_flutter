@@ -15,7 +15,9 @@ class ConverRaiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Convert Rai',
-      theme: ThemeData(fontFamily: 'MontserratAlternates'),
+      theme: ThemeData(
+        fontFamily: 'MontserratAlternates',
+      ),
       home: const ConverterPage(),
     );
   }

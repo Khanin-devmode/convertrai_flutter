@@ -49,7 +49,7 @@ class _ConverterPageState extends State<ConverterPage> {
       case ConvertingUnit.sqm:
         return 'ตรม.';
       case ConvertingUnit.combined:
-        return 'ไร่/งาน/วา';
+        return 'ไร่/งาน/ตรว.';
     }
   }
 
@@ -78,7 +78,12 @@ class _ConverterPageState extends State<ConverterPage> {
         }
         break;
       case ConvertingUnit.combined:
-        {}
+        {
+          _sqm = 0;
+          _raiTextController.text = "";
+          _nganTextController.text = "";
+          _sqWhaTextController.text = "";
+        }
         break;
     }
 
@@ -94,9 +99,9 @@ class _ConverterPageState extends State<ConverterPage> {
       _fullNgan = _sqm / 400;
       _fullSqWha = _sqm / 4;
 
-      _raiTextController.text = _rai.toString();
-      _nganTextController.text = _ngan.toString();
-      _sqWhaTextController.text = _sqWha.toString();
+      // _raiTextController.text = _rai.toString();
+      // _nganTextController.text = _ngan.toString();
+      // _sqWhaTextController.text = _sqWha.toString();
     });
   }
 
@@ -203,31 +208,27 @@ class _ConverterPageState extends State<ConverterPage> {
               ),
             ),
             Flexible(
-                flex: 7,
-                child: Container(
-                  height: 8,
-                  decoration: BoxDecoration(
-                      color: kTitleColor,
-                      borderRadius: BorderRadius.all(Radius.circular(2))),
-                ))
+              flex: 7,
+              child: Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: kTitleColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8),
         color: kBgColor,
         alignment: Alignment.topCenter,
         child: Column(
           children: [
-            // Row(
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 16),
-            //       child: Text('เปลี่ยนหน่วยที่ดิน'),
-            //     ),
-            //   ],
-            // ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   flex: 4,
@@ -267,8 +268,10 @@ class _ConverterPageState extends State<ConverterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(12))),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
+                      margin: EdgeInsets.only(right: 12),
                       // child: Text(unitLabel)),
                       child: DropdownButton<ConvertingUnit>(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
                         alignment: Alignment.center,
                         value: selectedUnit,
                         items: ConvertingUnit.values.map((ConvertingUnit unit) {
@@ -280,65 +283,89 @@ class _ConverterPageState extends State<ConverterPage> {
                 )
               ],
             ),
-            selectedUnit != ConvertingUnit.combined
-                ? ResultRow(
-                    resultText: getResultText(
-                      selectedUnit,
-                      ConvertingUnit.combined,
-                    ),
-                    saveFunction: saveResult,
-                  )
-                : Row(),
-            selectedUnit != ConvertingUnit.sqm
-                ? ResultRow(
-                    resultText: getResultText(selectedUnit, ConvertingUnit.sqm),
-                    saveFunction: saveResult,
-                  )
-                : Row(),
-            selectedUnit != ConvertingUnit.rai
-                ? ResultRow(
-                    resultText: getResultText(selectedUnit, ConvertingUnit.rai),
-                    saveFunction: saveResult,
-                  )
-                : Row(),
-            selectedUnit != ConvertingUnit.ngan
-                ? ResultRow(
-                    resultText:
-                        getResultText(selectedUnit, ConvertingUnit.ngan),
-                    saveFunction: saveResult,
-                  )
-                : Row(),
-            selectedUnit != ConvertingUnit.sqWha
-                ? ResultRow(
-                    resultText:
-                        getResultText(selectedUnit, ConvertingUnit.sqWha),
-                    saveFunction: saveResult,
-                  )
-                : Row(),
-
-            Text('Saved Results'),
             Container(
-              height: 300,
-              child: ListView.builder(
-                  itemCount: saveResults.length,
-                  itemBuilder: (context, index) {
-                    final result = saveResults[index];
-                    return SavedRow(
-                      resultText: result,
-                      deleteFunction: deleteResult,
-                      index: index,
-                    );
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Colors.blue,
-                width: double.infinity,
-                height: 100,
-                alignment: Alignment.center,
-                child: Text('Ad Banner'),
+              margin: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
+              child: Column(
+                children: [
+                  selectedUnit != ConvertingUnit.combined
+                      ? ResultRow(
+                          resultText: getResultText(
+                            selectedUnit,
+                            ConvertingUnit.combined,
+                          ),
+                          saveFunction: saveResult,
+                        )
+                      : Row(),
+                  selectedUnit != ConvertingUnit.sqm
+                      ? ResultRow(
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.sqm),
+                          saveFunction: saveResult,
+                        )
+                      : Row(),
+                  selectedUnit != ConvertingUnit.rai
+                      ? ResultRow(
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.rai),
+                          saveFunction: saveResult,
+                        )
+                      : Row(),
+                  selectedUnit != ConvertingUnit.ngan
+                      ? ResultRow(
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.ngan),
+                          saveFunction: saveResult,
+                        )
+                      : Row(),
+                  selectedUnit != ConvertingUnit.sqWha
+                      ? ResultRow(
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.sqWha),
+                          saveFunction: saveResult,
+                        )
+                      : Row(),
+                ],
               ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(20))),
+              child: Column(children: [
+                Container(
+                    padding: EdgeInsets.only(left: 16, top: 16),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Saved Results',
+                      style: kSecondTitleTextStyle,
+                    )),
+              ]),
+            ),
+            Expanded(
+              child: Container(
+                color: Colors.white,
+                child: ListView.builder(
+                    itemCount: saveResults.length,
+                    itemBuilder: (context, index) {
+                      final result = saveResults[index];
+                      return SavedRow(
+                        resultText: result,
+                        deleteFunction: deleteResult,
+                        index: index,
+                      );
+                    }),
+              ),
+            ),
+            Container(
+              color: Colors.blue,
+              width: double.infinity,
+              height: 80,
+              alignment: Alignment.center,
+              child: Text('Ad Banner'),
             ),
           ],
         ),
@@ -363,20 +390,29 @@ class ResultRow extends StatelessWidget {
       children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Text(resultText),
+          child: Text(
+            resultText,
+            style: kBodyText,
+          ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+          // padding: EdgeInsets.symmetric(horizontal: 8),
           child: Row(
             children: [
               IconButton(
-                icon: Icon(Icons.save),
+                icon: Icon(
+                  Icons.save_outlined,
+                  color: kIconColor,
+                ),
                 onPressed: () async {
                   saveFunction(resultText);
                 },
               ),
               IconButton(
-                icon: Icon(Icons.copy),
+                icon: Icon(
+                  Icons.copy,
+                  color: kIconColor,
+                ),
                 onPressed: () async {
                   await Clipboard.setData(ClipboardData(text: resultText));
                   showSnackBar(context);
@@ -408,21 +444,30 @@ class SavedRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Text(resultText),
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            resultText,
+            style: kBodyText,
+          ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+          padding: EdgeInsets.symmetric(horizontal: 12),
           child: Row(
-            children: [
+            children: <Widget>[
               IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(
+                  Icons.delete_outlined,
+                  color: kIconColor,
+                ),
                 onPressed: () async {
                   deleteFunction(index);
                 },
               ),
               IconButton(
-                icon: Icon(Icons.copy),
+                icon: const Icon(
+                  Icons.copy,
+                  color: kIconColor,
+                ),
                 onPressed: () async {
                   await Clipboard.setData(ClipboardData(text: resultText));
                   showSnackBar(context);
