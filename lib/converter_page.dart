@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
 
@@ -12,6 +13,22 @@ class ConverterPage extends StatefulWidget {
 }
 
 class _ConverterPageState extends State<ConverterPage> {
+  BannerAd? myBanner;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load ads.
+    final BannerAd myBanner = BannerAd(
+      adUnitId: 'ca-app-pub-1974036075700572/8104205430',
+      size: AdSize.largeBanner,
+      request: const AdRequest(),
+      listener: const BannerAdListener(),
+    );
+
+    myBanner.load();
+  }
+
   double _sqm = 0;
   double _rai = 0;
   double _ngan = 0;
@@ -200,7 +217,7 @@ class _ConverterPageState extends State<ConverterPage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
+            const Flexible(
               flex: 5,
               child: Text(
                 'Convert Rai',
@@ -211,7 +228,7 @@ class _ConverterPageState extends State<ConverterPage> {
               flex: 7,
               child: Container(
                 height: 8,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kTitleColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(2),
@@ -263,15 +280,16 @@ class _ConverterPageState extends State<ConverterPage> {
                 Flexible(
                   flex: 2,
                   child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(12))),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
-                      margin: EdgeInsets.only(right: 12),
+                      margin: const EdgeInsets.only(right: 12),
                       // child: Text(unitLabel)),
                       child: DropdownButton<ConvertingUnit>(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
                         alignment: Alignment.center,
                         value: selectedUnit,
                         items: ConvertingUnit.values.map((ConvertingUnit unit) {
@@ -284,8 +302,8 @@ class _ConverterPageState extends State<ConverterPage> {
               ],
             ),
             Container(
-              margin: EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               child: Column(
@@ -331,16 +349,16 @@ class _ConverterPageState extends State<ConverterPage> {
               ),
             ),
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(20))),
               child: Column(children: [
                 Container(
-                    padding: EdgeInsets.only(left: 16, top: 16),
+                    padding: const EdgeInsets.only(left: 16, top: 16),
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Saved Results',
+                    child: const Text(
+                      'บันทึกผล',
                       style: kSecondTitleTextStyle,
                     )),
               ]),
@@ -348,7 +366,7 @@ class _ConverterPageState extends State<ConverterPage> {
             Expanded(
               child: Container(
                 color: Colors.white,
-                child: saveResults.length > 0
+                child: saveResults.isNotEmpty
                     ? ListView.builder(
                         itemCount: saveResults.length,
                         itemBuilder: (context, index) {
@@ -362,29 +380,31 @@ class _ConverterPageState extends State<ConverterPage> {
                     : Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Press"),
+                          children: const [
+                            Text("กด"),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4),
+                              padding: EdgeInsets.symmetric(horizontal: 4),
                               child: Icon(
                                 Icons.save_outlined,
                                 color: kIconColor,
                               ),
                             ),
-                            Text("to record results here.")
+                            Text("เพื่อบันทึกผลแปลงหน่วยที่นี่")
                           ],
                         ),
                       ),
               ),
             ),
-            Container(
-              color: Colors.blue,
-              width: double.infinity,
-              height: 80,
-              alignment: Alignment.center,
-              child: Text('Ad Banner'),
-            ),
+            myBanner != null
+                ? Container(
+                    color: Colors.blue,
+                    width: 320,
+                    height: 100,
+                    alignment: Alignment.center,
+                    // child: Text('Ad Banner'),
+                    child: AdWidget(ad: myBanner!),
+                  )
+                : Row(),
           ],
         ),
       ),
@@ -407,38 +427,35 @@ class ResultRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             resultText,
             style: kBodyText,
           ),
         ),
-        Container(
-          // padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.save_outlined,
-                  color: kIconColor,
-                ),
-                onPressed: () async {
-                  saveFunction(resultText);
-                },
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.save_outlined,
+                color: kIconColor,
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.copy,
-                  color: kIconColor,
-                ),
-                onPressed: () async {
-                  await Clipboard.setData(ClipboardData(text: resultText));
-                  showSnackBar(context);
-                },
+              onPressed: () async {
+                saveFunction(resultText);
+              },
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.copy,
+                color: kIconColor,
               ),
-            ],
-          ),
-        )
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: resultText));
+                showSnackBar(context);
+              },
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -462,14 +479,14 @@ class SavedRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             resultText,
             style: kBodyText,
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             children: <Widget>[
               IconButton(
@@ -486,8 +503,8 @@ class SavedRow extends StatelessWidget {
                   Icons.copy,
                   color: kIconColor,
                 ),
-                onPressed: () async {
-                  await Clipboard.setData(ClipboardData(text: resultText));
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: resultText));
                   showSnackBar(context);
                 },
               ),
@@ -534,11 +551,11 @@ class UnitInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: TextField(
         onChanged: convertUnit,
         controller: textEditingController,
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: kNumberInputFormatter,
         decoration: InputDecoration(
           // label: Text(label),
@@ -547,7 +564,7 @@ class UnitInputField extends StatelessWidget {
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 0,
               style: BorderStyle.none,
             ),

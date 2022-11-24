@@ -1,9 +1,11 @@
-import 'package:convertrai_flutter/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'converter_page.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
   runApp(const ConverRaiApp());
 }
 
