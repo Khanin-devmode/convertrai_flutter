@@ -348,16 +348,34 @@ class _ConverterPageState extends State<ConverterPage> {
             Expanded(
               child: Container(
                 color: Colors.white,
-                child: ListView.builder(
-                    itemCount: saveResults.length,
-                    itemBuilder: (context, index) {
-                      final result = saveResults[index];
-                      return SavedRow(
-                        resultText: result,
-                        deleteFunction: deleteResult,
-                        index: index,
-                      );
-                    }),
+                child: saveResults.length > 0
+                    ? ListView.builder(
+                        itemCount: saveResults.length,
+                        itemBuilder: (context, index) {
+                          final result = saveResults[index];
+                          return SavedRow(
+                            resultText: result,
+                            deleteFunction: deleteResult,
+                            index: index,
+                          );
+                        })
+                    : Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Press"),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4),
+                              child: Icon(
+                                Icons.save_outlined,
+                                color: kIconColor,
+                              ),
+                            ),
+                            Text("to record results here.")
+                          ],
+                        ),
+                      ),
               ),
             ),
             Container(
@@ -492,6 +510,12 @@ void showSnackBar(BuildContext context) {
           'Text Copied.',
         ),
       ),
+      width: 280.0, // Width of the SnackBar.
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      backgroundColor: kSnackBarBg,
     ),
   );
 }
