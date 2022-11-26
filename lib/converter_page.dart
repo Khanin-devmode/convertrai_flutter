@@ -126,7 +126,7 @@ class _ConverterPageState extends State<ConverterPage> {
     String inputText;
 
     if (inputUnit != ConvertingUnit.combined) {
-      inputText = '${_inputTextController.text} ${getUnitText(selectedUnit)}}';
+      inputText = '${_inputTextController.text} ${getUnitText(selectedUnit)}';
     } else {
       inputText =
           '${_raiTextController.text} ไร่ ${_nganTextController.text} งาน ${_sqWhaTextController.text} ตรว.';
@@ -139,19 +139,19 @@ class _ConverterPageState extends State<ConverterPage> {
         }
       case ConvertingUnit.ngan:
         {
-          return '$inputText = $_fullNgan งาน';
+          return '$inputText = ${kNumFormat.format(_fullNgan)} งาน';
         }
       case ConvertingUnit.sqWha:
         {
-          return '$inputText = $_fullSqWha ตรว.';
+          return '$inputText = ${kNumFormat.format(_fullSqWha)} ตรว.';
         }
       case ConvertingUnit.sqm:
         {
-          return '$inputText = $_sqm ตรม.';
+          return '$inputText = ${kNumFormat.format(_sqm)} ตรม.';
         }
       case ConvertingUnit.combined:
         {
-          return '$inputText = $_rai ไร่ $_ngan งาน $_sqWha ตรว.';
+          return '$inputText = ${kNumFormat.format(_rai)} ไร่ ${kNumFormat.format(_ngan)} งาน ${kNumFormat.format(_sqWha)} ตรว.';
         }
     }
   }

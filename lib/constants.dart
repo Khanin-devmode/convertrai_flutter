@@ -18,4 +18,4 @@ const kSecondTitleTextStyle =
     TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kTitleColor);
 const kBodyText = TextStyle(fontSize: 16);
 
-var kNumFormat = NumberFormat('###.0#', 'en_US');
+var kNumFormat = NumberFormat(',###.######', 'en_US');
