@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 final kNumberInputFormatter = <TextInputFormatter>[
   FilteringTextInputFormatter.allow(RegExp(r'[0-9\.]'))
@@ -16,3 +17,5 @@ const kTitleTextStyle =
 const kSecondTitleTextStyle =
     TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kTitleColor);
 const kBodyText = TextStyle(fontSize: 16);
+
+var kNumFormat = NumberFormat('###.0#', 'en_US');

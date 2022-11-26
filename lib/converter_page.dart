@@ -26,7 +26,7 @@ class _ConverterPageState extends State<ConverterPage> {
       listener: const BannerAdListener(),
     );
 
-    myBanner.load();
+    // myBanner.load();
   }
 
   double _sqm = 0;
@@ -126,7 +126,7 @@ class _ConverterPageState extends State<ConverterPage> {
     String inputText;
 
     if (inputUnit != ConvertingUnit.combined) {
-      inputText = '${_inputTextController.text} ${getUnitText(selectedUnit)}';
+      inputText = '${_inputTextController.text} ${getUnitText(selectedUnit)}}';
     } else {
       inputText =
           '${_raiTextController.text} ไร่ ${_nganTextController.text} งาน ${_sqWhaTextController.text} ตรว.';
@@ -135,7 +135,7 @@ class _ConverterPageState extends State<ConverterPage> {
     switch (outputUnit) {
       case ConvertingUnit.rai:
         {
-          return '$inputText = $_fullRai ไร่';
+          return '$inputText = $_fullRai ไร่ ${kNumFormat.format(_fullRai)}';
         }
       case ConvertingUnit.ngan:
         {
@@ -429,6 +429,7 @@ class ResultRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
+            // kNumFormat.format(resultText),
             resultText,
             style: kBodyText,
           ),
