@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
 
@@ -71,7 +72,8 @@ class _ConverterPageState extends State<ConverterPage> {
   }
 
   void convertUnit(String txtInputUnit) {
-    var n = double.tryParse(txtInputUnit);
+    var pureNum = txtInputUnit.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
     switch (selectedUnit) {
       case ConvertingUnit.rai:
@@ -135,7 +137,7 @@ class _ConverterPageState extends State<ConverterPage> {
     switch (outputUnit) {
       case ConvertingUnit.rai:
         {
-          return '$inputText = $_fullRai ไร่ ${kNumFormat.format(_fullRai)}';
+          return '$inputText = ${kNumFormat.format(_fullRai)} ไร่';
         }
       case ConvertingUnit.ngan:
         {
@@ -557,7 +559,7 @@ class UnitInputField extends StatelessWidget {
         onChanged: convertUnit,
         controller: textEditingController,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: kNumberInputFormatter,
+        inputFormatters: [ThousandsFormatter()],
         decoration: InputDecoration(
           // label: Text(label),
           hintText: label,

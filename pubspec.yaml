@@ -15,6 +15,7 @@ dependencies:
   google_mobile_ads: ^2.3.0
   flutter_launcher_icons: ^0.11.0
   intl: ^0.17.0
+  pattern_formatter: ^2.0.0
 
 dev_dependencies:
   flutter_test:
