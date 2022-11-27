@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'package:flutter/services.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
 enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
@@ -14,22 +13,6 @@ class ConverterPage extends StatefulWidget {
 }
 
 class _ConverterPageState extends State<ConverterPage> {
-  BannerAd? myBanner;
-
-  @override
-  void initState() {
-    super.initState();
-    // Load ads.
-    final BannerAd myBanner = BannerAd(
-      adUnitId: 'ca-app-pub-1974036075700572/8104205430',
-      size: AdSize.largeBanner,
-      request: const AdRequest(),
-      listener: const BannerAdListener(),
-    );
-
-    // myBanner.load();
-  }
-
   double _sqm = 0;
   double _rai = 0;
   double _ngan = 0;
@@ -397,16 +380,16 @@ class _ConverterPageState extends State<ConverterPage> {
                       ),
               ),
             ),
-            myBanner != null
-                ? Container(
-                    color: Colors.blue,
-                    width: 320,
-                    height: 100,
-                    alignment: Alignment.center,
-                    // child: Text('Ad Banner'),
-                    child: AdWidget(ad: myBanner!),
-                  )
-                : Row(),
+            // myBanner != null
+            //     ? Container(
+            //         color: Colors.blue,
+            //         width: 320,
+            //         height: 100,
+            //         alignment: Alignment.center,
+            //         // child: Text('Ad Banner'),
+            //         child: AdWidget(ad: myBanner!),
+            //       )
+            //     : Row(),
           ],
         ),
       ),
