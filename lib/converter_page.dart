@@ -203,14 +203,14 @@ class _ConverterPageState extends State<ConverterPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Flexible(
-              flex: 5,
+              flex: 6,
               child: Text(
                 'Convert Rai',
                 style: kTitleTextStyle,
               ),
             ),
             Flexible(
-              flex: 7,
+              flex: 6,
               child: Container(
                 height: 8,
                 decoration: const BoxDecoration(

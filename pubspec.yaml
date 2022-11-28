@@ -29,4 +29,8 @@ flutter:
         - asset: fonts/MontserratAlternates-Regular.ttf
   uses-material-design: true
 
-
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/launcher/icon.png"
+  min_sdk_android: 21
