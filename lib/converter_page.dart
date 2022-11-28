@@ -13,18 +13,18 @@ class ConverterPage extends StatefulWidget {
 }
 
 class _ConverterPageState extends State<ConverterPage> {
-  double _sqm = 0;
-  double _rai = 0;
+  double _sqm = 1600;
+  double _rai = 1;
   double _ngan = 0;
   double _sqWha = 0;
-  double _fullRai = 0;
-  double _fullNgan = 0;
-  double _fullSqWha = 0;
+  double _fullRai = 1;
+  double _fullNgan = 4;
+  double _fullSqWha = 400;
   double _totalSqWha = 0;
 
   ConvertingUnit selectedUnit = ConvertingUnit.sqm;
 
-  final _inputTextController = TextEditingController();
+  final _inputTextController = TextEditingController(text: '1600');
   final _raiTextController = TextEditingController();
   final _nganTextController = TextEditingController();
   final _sqWhaTextController = TextEditingController();
@@ -142,7 +142,8 @@ class _ConverterPageState extends State<ConverterPage> {
   }
 
   void convertRai(String raiTextInput) {
-    var n = double.tryParse(raiTextInput);
+    var pureNum = raiTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
     _rai = (n != null) ? n : 0;
 
@@ -154,8 +155,9 @@ class _ConverterPageState extends State<ConverterPage> {
     });
   }
 
-  void convertNgan(String raiTextInput) {
-    var n = double.tryParse(raiTextInput);
+  void convertNgan(String nganTextInput) {
+    var pureNum = nganTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
     _ngan = (n != null) ? n : 0;
 
@@ -167,8 +169,9 @@ class _ConverterPageState extends State<ConverterPage> {
     });
   }
 
-  void convertSqWha(String raiTextInput) {
-    var n = double.tryParse(raiTextInput);
+  void convertSqWha(String sqWhaTextInput) {
+    var pureNum = sqWhaTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
     _sqWha = (n != null) ? n : 0;
 
@@ -255,7 +258,7 @@ class _ConverterPageState extends State<ConverterPage> {
                             ),
                             Flexible(
                               child: UnitInputField(
-                                  convertUnit: convertRai,
+                                  convertUnit: convertSqWha,
                                   label: 'ตรว.',
                                   textEditingController: _sqWhaTextController),
                             ),

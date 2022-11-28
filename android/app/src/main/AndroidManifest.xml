@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.convertrai_flutter">
    <application
-        android:label="convertrai_flutter"
+        android:label="Convert Rai"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
