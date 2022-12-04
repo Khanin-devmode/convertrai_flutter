@@ -3,13 +3,15 @@ import 'converter_page.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
-  MobileAds.instance.initialize();
-
   runApp(const ConverRaiApp());
 }
 
 class ConverRaiApp extends StatelessWidget {
   const ConverRaiApp({super.key});
+
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    return MobileAds.instance.initialize();
+  }
 
   // This widget is the root of your application.
   @override
