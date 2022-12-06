@@ -23,6 +23,7 @@ class ConverRaiApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const ConverterPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

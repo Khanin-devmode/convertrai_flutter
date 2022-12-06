@@ -304,7 +304,7 @@ class _ConverterPageState extends State<ConverterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(12))),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
-                      margin: const EdgeInsets.only(right: 12),
+                      margin: const EdgeInsets.only(right: 9),
                       // child: Text(unitLabel)),
                       child: DropdownButton<ConvertingUnit>(
                         borderRadius:
