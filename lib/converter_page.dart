@@ -415,13 +415,16 @@ class _ConverterPageState extends State<ConverterPage> {
               ),
             ),
             _bannerAd != null
-                ? Container(
-                    color: Colors.blue,
-                    width: _bannerAd!.size.width.toDouble(),
-                    height: _bannerAd!.size.height.toDouble(),
-                    alignment: Alignment.center,
-                    // child: Text('Ad Banner'),
-                    child: AdWidget(ad: _bannerAd!),
+                ? SafeArea(
+                    bottom: true,
+                    child: Container(
+                      color: Colors.blue,
+                      width: _bannerAd!.size.width.toDouble(),
+                      height: _bannerAd!.size.height.toDouble(),
+                      alignment: Alignment.center,
+                      // child: Text('Ad Banner'),
+                      child: AdWidget(ad: _bannerAd!),
+                    ),
                   )
                 : Row(),
           ],
