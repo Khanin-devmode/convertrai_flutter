@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../constants.dart';
 import 'package:flutter/services.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
-import 'ad_helper.dart';
+import '../ad_helper.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
 
-class ConverterPage extends StatefulWidget {
-  const ConverterPage({super.key});
+class ConverterPage extends ConsumerStatefulWidget {
+  const ConverterPage({Key? key}) : super(key: key);
 
   @override
-  State<ConverterPage> createState() => _ConverterPageState();
+  ConverterPageState createState() => ConverterPageState();
 }
 
-class _ConverterPageState extends State<ConverterPage> {
+class ConverterPageState extends ConsumerState<ConverterPage> {
   double _sqm = 1600;
   double _rai = 1;
   double _ngan = 0;
