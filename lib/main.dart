@@ -1,9 +1,13 @@
+import 'package:convert_rai/pages/new_converter_page.dart';
 import 'package:flutter/material.dart';
-import 'converter_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'pages/converter_page.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
-  runApp(const ConverRaiApp());
+  // runApp(const ConverRaiApp());
+
+  runApp(const ProviderScope(child: ConverRaiApp()));
 }
 
 class ConverRaiApp extends StatelessWidget {
@@ -22,7 +26,7 @@ class ConverRaiApp extends StatelessWidget {
         fontFamily: 'MontserratAlternates',
         useMaterial3: true,
       ),
-      home: const ConverterPage(),
+      home: const NewConverterPage(),
       debugShowCheckedModeBanner: false,
     );
   }
