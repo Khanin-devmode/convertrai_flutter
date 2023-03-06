@@ -13,14 +13,15 @@ class NewConverterPage extends ConsumerStatefulWidget {
 class NewConverterPageState extends ConsumerState<NewConverterPage> {
   @override
   Widget build(BuildContext context) {
-    final calculator = ref.watch(calcProvider);
+    final calState = ref.watch(calNotifierProvider);
+    final calNotifier = ref.watch(calNotifierProvider.notifier);
 
     return SafeArea(
       child: Scaffold(
         body: Center(
           child: Column(
             children: [
-              Text('${calculator.sqm}'),
+              Text('${calState.sqm}'),
               TextField(
                 inputFormatters: kNumberInputFormatter,
                 onChanged: (newValue) {
@@ -32,7 +33,7 @@ class NewConverterPageState extends ConsumerState<NewConverterPage> {
                   } else {
                     n = 0;
                   }
-                  calculator.convertUnit(n);
+                  calNotifier.convertUnit(n);
                 },
               ),
             ],

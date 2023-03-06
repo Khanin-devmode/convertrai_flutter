@@ -14,64 +14,57 @@ class Calculation {
   double fullSqWha = 400;
   double totalSqWha = 0;
   double sqWaaRemainder = 0;
-
-  void convertUnit(double newValue) {
-    print('converting unit');
-    switch (selectedUnit) {
-      case ConvertingUnit.rai:
-        {
-          sqm = (newValue != null) ? newValue * 1600 : 0;
-        }
-        break;
-      case ConvertingUnit.ngan:
-        {
-          sqm = (newValue != null) ? newValue * 400 : 0;
-        }
-        break;
-      case ConvertingUnit.sqWha:
-        {
-          sqm = (newValue != null) ? newValue * 4 : 0;
-        }
-        break;
-      case ConvertingUnit.sqm:
-        {
-          sqm = (newValue != null) ? newValue : 0;
-        }
-        break;
-      case ConvertingUnit.combined:
-        {
-          sqm = 0;
-        }
-        break;
-    }
-
-    totalSqWha = sqm / 4;
-    rai = (totalSqWha / 400).floorToDouble();
-    sqWaaRemainder = totalSqWha.remainder(400);
-    ngan = (sqWaaRemainder / 100).floorToDouble();
-    sqWha = sqWaaRemainder.remainder(100);
-
-    fullRai = sqm / 1600;
-    fullNgan = sqm / 400;
-    fullSqWha = sqm / 4;
-
-    print(sqm);
-  }
-
-  selectUnit(ConvertingUnit newUnit) {
-    selectedUnit = newUnit;
-
-    //calculate unit
-    // convertUnit(currentValue);
-  }
 }
-
-final calcProvider = Provider((ref) {
-  return Calculation();
-});
 
 class CalNotifier extends StateNotifier<Calculation> {
   CalNotifier() : super(Calculation());
 
-  void convertUnit(double newValue) {}
+  void convertUnit(double newValue) {
+    Calculation newCal = Calculation();
+
+    switch (state.selectedUnit) {
+      case ConvertingUnit.rai:
+        {
+          newCal.sqm = (newValue != null) ? newValue * 1600 : 0;
+        }
+        break;
+      case ConvertingUnit.ngan:
+        {
+          newCal.sqm = (newValue != null) ? newValue * 400 : 0;
+        }
+        break;
+      case ConvertingUnit.sqWha:
+        {
+          newCal.sqm = (newValue != null) ? newValue * 4 : 0;
+        }
+        break;
+      case ConvertingUnit.sqm:
+        {
+          newCal.sqm = (newValue != null) ? newValue : 0;
+        }
+        break;
+      case ConvertingUnit.combined:
+        {
+          newCal.sqm = 0;
+        }
+        break;
+    }
+
+    newCal.totalSqWha = state.sqm / 4;
+    newCal.rai = (newCal.totalSqWha / 400).floorToDouble();
+    newCal.sqWaaRemainder = newCal.totalSqWha.remainder(400);
+    newCal.ngan = (newCal.sqWaaRemainder / 100).floorToDouble();
+    newCal.sqWha = newCal.sqWaaRemainder.remainder(100);
+
+    newCal.fullRai = newCal.sqm / 1600;
+    newCal.fullNgan = newCal.sqm / 400;
+    newCal.fullSqWha = newCal.sqm / 4;
+
+    state = newCal;
+  }
 }
+
+final calNotifierProvider =
+    StateNotifierProvider<CalNotifier, Calculation>((ref) {
+  return CalNotifier();
+});
