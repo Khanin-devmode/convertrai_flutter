@@ -69,3 +69,9 @@ class Calculation {
 final calcProvider = Provider((ref) {
   return Calculation();
 });
+
+class CalNotifier extends StateNotifier<Calculation> {
+  CalNotifier() : super(Calculation());
+
+  void convertUnit(double newValue) {}
+}

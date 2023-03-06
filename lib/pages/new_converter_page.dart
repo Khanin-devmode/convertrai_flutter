@@ -1,17 +1,16 @@
 import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NewConverterPage extends ConsumerStatefulWidget {
   const NewConverterPage({super.key});
 
   @override
-  _NewConverterPageState createState() => _NewConverterPageState();
+  NewConverterPageState createState() => NewConverterPageState();
 }
 
-class _NewConverterPageState extends ConsumerState<NewConverterPage> {
+class NewConverterPageState extends ConsumerState<NewConverterPage> {
   @override
   Widget build(BuildContext context) {
     final calculator = ref.watch(calcProvider);
@@ -25,11 +24,17 @@ class _NewConverterPageState extends ConsumerState<NewConverterPage> {
               TextField(
                 inputFormatters: kNumberInputFormatter,
                 onChanged: (newValue) {
-                  var pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-                  double n = double.parse(pureNum);
+                  String pureNum =
+                      newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+                  double n;
+                  if (pureNum.isNotEmpty) {
+                    n = double.parse(pureNum);
+                  } else {
+                    n = 0;
+                  }
                   calculator.convertUnit(n);
                 },
-              )
+              ),
             ],
           ),
         ),
