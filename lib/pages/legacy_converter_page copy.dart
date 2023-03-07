@@ -1,30 +1,30 @@
-import 'package:convert_rai/calculate_logic.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants.dart';
 import 'package:flutter/services.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import '../ad_helper.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class ConverterPage extends ConsumerStatefulWidget {
-  const ConverterPage({super.key});
+enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
+
+class LegacyConverterPage extends StatefulWidget {
+  const LegacyConverterPage({super.key});
 
   @override
-  ConverterPageState createState() => ConverterPageState();
+  State<LegacyConverterPage> createState() => _LegacyConverterPageState();
 }
 
-class ConverterPageState extends ConsumerState<ConverterPage> {
-  // double _sqm = 1600;
-  // double _rai = 1;
-  // double _ngan = 0;
-  // double _sqWha = 0;
-  // double _fullRai = 1;
-  // double _fullNgan = 4;
-  // double _fullSqWha = 400;
-  // double _totalSqWha = 0;
+class _LegacyConverterPageState extends State<LegacyConverterPage> {
+  double _sqm = 1600;
+  double _rai = 1;
+  double _ngan = 0;
+  double _sqWha = 0;
+  double _fullRai = 1;
+  double _fullNgan = 4;
+  double _fullSqWha = 400;
+  double _totalSqWha = 0;
 
-  // ConvertingUnit selectedUnit = ConvertingUnit.sqm;
+  ConvertingUnit selectedUnit = ConvertingUnit.sqm;
 
   final _inputTextController = TextEditingController(text: '1600');
   final _raiTextController = TextEditingController();
@@ -35,142 +35,157 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
 
   BannerAd? _bannerAd;
 
-  // void selectUnit(newUnit) {
-  //   setState(() {
-  //     selectedUnit = newUnit;
-  //   });
+  void selectUnit(newUnit) {
+    setState(() {
+      selectedUnit = newUnit;
+    });
 
-  //   convertUnit(_inputTextController.text);
-  // }
+    convertUnit(_inputTextController.text);
+  }
 
-  // void convertUnit(String txtInputUnit) {
-  //   var pureNum = txtInputUnit.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-  //   var n = double.tryParse(pureNum);
+  String getUnitText(ConvertingUnit unit) {
+    switch (unit) {
+      case ConvertingUnit.rai:
+        return 'ไร่';
+      case ConvertingUnit.ngan:
+        return 'งาน';
+      case ConvertingUnit.sqWha:
+        return 'ตรว.';
+      case ConvertingUnit.sqm:
+        return 'ตรม.';
+      case ConvertingUnit.combined:
+        return 'ไร่/งาน/ตรว.';
+    }
+  }
 
-  //   switch (selectedUnit) {
-  //     case ConvertingUnit.rai:
-  //       {
-  //         _sqm = (n != null) ? n * 1600 : 0;
-  //       }
-  //       break;
-  //     case ConvertingUnit.ngan:
-  //       {
-  //         _sqm = (n != null) ? n * 400 : 0;
-  //       }
-  //       break;
-  //     case ConvertingUnit.sqWha:
-  //       {
-  //         _sqm = (n != null) ? n * 4 : 0;
-  //       }
-  //       break;
-  //     case ConvertingUnit.sqm:
-  //       {
-  //         _sqm = (n != null) ? n : 0;
-  //       }
-  //       break;
-  //     case ConvertingUnit.combined:
-  //       {
-  //         _sqm = 0;
-  //         _raiTextController.text = "";
-  //         _nganTextController.text = "";
-  //         _sqWhaTextController.text = "";
-  //       }
-  //       break;
-  //   }
+  void convertUnit(String txtInputUnit) {
+    var pureNum = txtInputUnit.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
-  //   double sqWaaRemainder;
-  //   setState(() {
-  //     _totalSqWha = _sqm / 4;
-  //     _rai = (_totalSqWha / 400).floorToDouble();
-  //     sqWaaRemainder = _totalSqWha.remainder(400);
-  //     _ngan = (sqWaaRemainder / 100).floorToDouble();
-  //     _sqWha = sqWaaRemainder.remainder(100);
+    switch (selectedUnit) {
+      case ConvertingUnit.rai:
+        {
+          _sqm = (n != null) ? n * 1600 : 0;
+        }
+        break;
+      case ConvertingUnit.ngan:
+        {
+          _sqm = (n != null) ? n * 400 : 0;
+        }
+        break;
+      case ConvertingUnit.sqWha:
+        {
+          _sqm = (n != null) ? n * 4 : 0;
+        }
+        break;
+      case ConvertingUnit.sqm:
+        {
+          _sqm = (n != null) ? n : 0;
+        }
+        break;
+      case ConvertingUnit.combined:
+        {
+          _sqm = 0;
+          _raiTextController.text = "";
+          _nganTextController.text = "";
+          _sqWhaTextController.text = "";
+        }
+        break;
+    }
 
-  //     _fullRai = _sqm / 1600;
-  //     _fullNgan = _sqm / 400;
-  //     _fullSqWha = _sqm / 4;
+    double sqWaaRemainder;
+    setState(() {
+      _totalSqWha = _sqm / 4;
+      _rai = (_totalSqWha / 400).floorToDouble();
+      sqWaaRemainder = _totalSqWha.remainder(400);
+      _ngan = (sqWaaRemainder / 100).floorToDouble();
+      _sqWha = sqWaaRemainder.remainder(100);
 
-  //     // _raiTextController.text = _rai.toString();
-  //     // _nganTextController.text = _ngan.toString();
-  //     // _sqWhaTextController.text = _sqWha.toString();
-  //   });
-  // }
+      _fullRai = _sqm / 1600;
+      _fullNgan = _sqm / 400;
+      _fullSqWha = _sqm / 4;
 
-  // String getResultText(ConvertingUnit inputUnit, ConvertingUnit outputUnit) {
-  //   String inputText;
+      // _raiTextController.text = _rai.toString();
+      // _nganTextController.text = _ngan.toString();
+      // _sqWhaTextController.text = _sqWha.toString();
+    });
+  }
 
-  //   if (inputUnit != ConvertingUnit.combined) {
-  //     inputText = '${_inputTextController.text} ${getUnitText(selectedUnit)}';
-  //   } else {
-  //     inputText =
-  //         '${_raiTextController.text} ไร่ ${_nganTextController.text} งาน ${_sqWhaTextController.text} ตรว.';
-  //   }
+  String getResultText(ConvertingUnit inputUnit, ConvertingUnit outputUnit) {
+    String inputText;
 
-  //   switch (outputUnit) {
-  //     case ConvertingUnit.rai:
-  //       {
-  //         return '$inputText = ${kNumFormat.format(_fullRai)} ไร่';
-  //       }
-  //     case ConvertingUnit.ngan:
-  //       {
-  //         return '$inputText = ${kNumFormat.format(_fullNgan)} งาน';
-  //       }
-  //     case ConvertingUnit.sqWha:
-  //       {
-  //         return '$inputText = ${kNumFormat.format(_fullSqWha)} ตรว.';
-  //       }
-  //     case ConvertingUnit.sqm:
-  //       {
-  //         return '$inputText = ${kNumFormat.format(_sqm)} ตรม.';
-  //       }
-  //     case ConvertingUnit.combined:
-  //       {
-  //         return '$inputText = ${kNumFormat.format(_rai)} ไร่ ${kNumFormat.format(_ngan)} งาน ${kNumFormat.format(_sqWha)} ตรว.';
-  //       }
-  //   }
-  // }
+    if (inputUnit != ConvertingUnit.combined) {
+      inputText = '${_inputTextController.text} ${getUnitText(selectedUnit)}';
+    } else {
+      inputText =
+          '${_raiTextController.text} ไร่ ${_nganTextController.text} งาน ${_sqWhaTextController.text} ตรว.';
+    }
 
-  // void convertRai(String raiTextInput) {
-  //   var pureNum = raiTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-  //   var n = double.tryParse(pureNum);
+    switch (outputUnit) {
+      case ConvertingUnit.rai:
+        {
+          return '$inputText = ${kNumFormat.format(_fullRai)} ไร่';
+        }
+      case ConvertingUnit.ngan:
+        {
+          return '$inputText = ${kNumFormat.format(_fullNgan)} งาน';
+        }
+      case ConvertingUnit.sqWha:
+        {
+          return '$inputText = ${kNumFormat.format(_fullSqWha)} ตรว.';
+        }
+      case ConvertingUnit.sqm:
+        {
+          return '$inputText = ${kNumFormat.format(_sqm)} ตรม.';
+        }
+      case ConvertingUnit.combined:
+        {
+          return '$inputText = ${kNumFormat.format(_rai)} ไร่ ${kNumFormat.format(_ngan)} งาน ${kNumFormat.format(_sqWha)} ตรว.';
+        }
+    }
+  }
 
-  //   _rai = (n != null) ? n : 0;
+  void convertRai(String raiTextInput) {
+    var pureNum = raiTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
-  //   setState(() {
-  //     _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
-  //     _fullRai = _sqm / 1600;
-  //     _fullNgan = _sqm / 400;
-  //     _fullSqWha = _sqm / 4;
-  //   });
-  // }
+    _rai = (n != null) ? n : 0;
 
-  // void convertNgan(String nganTextInput) {
-  //   var pureNum = nganTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-  //   var n = double.tryParse(pureNum);
+    setState(() {
+      _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
+      _fullRai = _sqm / 1600;
+      _fullNgan = _sqm / 400;
+      _fullSqWha = _sqm / 4;
+    });
+  }
 
-  //   _ngan = (n != null) ? n : 0;
+  void convertNgan(String nganTextInput) {
+    var pureNum = nganTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
-  //   setState(() {
-  //     _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
-  //     _fullRai = _sqm / 1600;
-  //     _fullNgan = _sqm / 400;
-  //     _fullSqWha = _sqm / 4;
-  //   });
-  // }
+    _ngan = (n != null) ? n : 0;
 
-  // void convertSqWha(String sqWhaTextInput) {
-  //   var pureNum = sqWhaTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-  //   var n = double.tryParse(pureNum);
+    setState(() {
+      _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
+      _fullRai = _sqm / 1600;
+      _fullNgan = _sqm / 400;
+      _fullSqWha = _sqm / 4;
+    });
+  }
 
-  //   _sqWha = (n != null) ? n : 0;
+  void convertSqWha(String sqWhaTextInput) {
+    var pureNum = sqWhaTextInput.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    var n = double.tryParse(pureNum);
 
-  //   setState(() {
-  //     _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
-  //     _fullRai = _sqm / 1600;
-  //     _fullNgan = _sqm / 400;
-  //     _fullSqWha = _sqm / 4;
-  //   });
-  // }
+    _sqWha = (n != null) ? n : 0;
+
+    setState(() {
+      _sqm = (_rai * 1600) + (_ngan * 400) + (_sqWha) * 4;
+      _fullRai = _sqm / 1600;
+      _fullNgan = _sqm / 400;
+      _fullSqWha = _sqm / 4;
+    });
+  }
 
   void saveResult(String result) {
     setState(() {
@@ -213,9 +228,6 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final calState = ref.watch(calNotifierProvider);
-    final calNotifier = ref.watch(calNotifierProvider.notifier);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBgColor,
@@ -255,36 +267,35 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                    flex: 4,
-                    child: calState.selectedUnit != ConvertingUnit.combined
-                        ? UnitInputField(
-                            convertUnit: (calNotifier.convertUnit),
-                            label:
-                                'เปลี่ยนหน่วย ${getUnitText(calState.selectedUnit)}',
-                            textEditingController: _inputTextController)
-                        // : Row(
-                        //     children: [
-                        //       Flexible(
-                        //         child: UnitInputField(
-                        //             convertUnit: convertRai,
-                        //             label: 'ไร่',
-                        //             textEditingController: _raiTextController),
-                        //       ),
-                        //       Flexible(
-                        //         child: UnitInputField(
-                        //             convertUnit: convertNgan,
-                        //             label: 'งาน',
-                        //             textEditingController: _nganTextController),
-                        //       ),
-                        //       Flexible(
-                        //         child: UnitInputField(
-                        //             convertUnit: convertSqWha,
-                        //             label: 'ตรว.',
-                        //             textEditingController: _sqWhaTextController),
-                        //       ),
-                        //     ],
-                        //   ),
-                        : SizedBox()),
+                  flex: 4,
+                  child: selectedUnit != ConvertingUnit.combined
+                      ? UnitInputField(
+                          convertUnit: convertUnit,
+                          label: 'เปลี่ยนหน่วย ${getUnitText(selectedUnit)}',
+                          textEditingController: _inputTextController)
+                      : Row(
+                          children: [
+                            Flexible(
+                              child: UnitInputField(
+                                  convertUnit: convertRai,
+                                  label: 'ไร่',
+                                  textEditingController: _raiTextController),
+                            ),
+                            Flexible(
+                              child: UnitInputField(
+                                  convertUnit: convertNgan,
+                                  label: 'งาน',
+                                  textEditingController: _nganTextController),
+                            ),
+                            Flexible(
+                              child: UnitInputField(
+                                  convertUnit: convertSqWha,
+                                  label: 'ตรว.',
+                                  textEditingController: _sqWhaTextController),
+                            ),
+                          ],
+                        ),
+                ),
                 Flexible(
                   flex: 2,
                   child: Container(
@@ -299,12 +310,12 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(12)),
                         alignment: Alignment.center,
-                        value: calState.selectedUnit,
+                        value: selectedUnit,
                         items: ConvertingUnit.values.map((ConvertingUnit unit) {
                           return DropdownMenuItem<ConvertingUnit>(
                               value: unit, child: Text(getUnitText(unit)));
                         }).toList(),
-                        onChanged: null,
+                        onChanged: selectUnit,
                       )),
                 )
               ],
@@ -316,40 +327,40 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               child: Column(
                 children: [
-                  // calState.selectedUnit != ConvertingUnit.combined
-                  //     ? ResultRow(
-                  //         resultText: getResultText(
-                  //           selectedUnit,
-                  //           ConvertingUnit.combined,
-                  //         ),
-                  //         saveFunction: saveResult,
-                  //       )
-                  //     : Row(),
-                  calState.selectedUnit != ConvertingUnit.sqm
+                  selectedUnit != ConvertingUnit.combined
                       ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.sqm, ConvertingUnit.sqm),
+                          resultText: getResultText(
+                            selectedUnit,
+                            ConvertingUnit.combined,
+                          ),
                           saveFunction: saveResult,
                         )
                       : Row(),
-                  calState.selectedUnit != ConvertingUnit.rai
+                  selectedUnit != ConvertingUnit.sqm
                       ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.rai, ConvertingUnit.rai),
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.sqm),
                           saveFunction: saveResult,
                         )
                       : Row(),
-                  calState.selectedUnit != ConvertingUnit.ngan
+                  selectedUnit != ConvertingUnit.rai
                       ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.ngan, ConvertingUnit.ngan),
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.rai),
                           saveFunction: saveResult,
                         )
                       : Row(),
-                  calState.selectedUnit != ConvertingUnit.sqWha
+                  selectedUnit != ConvertingUnit.ngan
                       ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.sqWha, ConvertingUnit.sqWha),
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.ngan),
+                          saveFunction: saveResult,
+                        )
+                      : Row(),
+                  selectedUnit != ConvertingUnit.sqWha
+                      ? ResultRow(
+                          resultText:
+                              getResultText(selectedUnit, ConvertingUnit.sqWha),
                           saveFunction: saveResult,
                         )
                       : Row(),
@@ -473,26 +484,6 @@ class ResultRow extends StatelessWidget {
   }
 }
 
-String getUnitText(ConvertingUnit unit) {
-  switch (unit) {
-    case ConvertingUnit.rai:
-      return 'ไร่';
-    case ConvertingUnit.ngan:
-      return 'งาน';
-    case ConvertingUnit.sqWha:
-      return 'ตรว.';
-    case ConvertingUnit.sqm:
-      return 'ตรม.';
-    case ConvertingUnit.combined:
-      return 'ไร่/งาน/ตรว.';
-  }
-}
-
-String getResultText(double input, ConvertingUnit inputUnit, double output,
-    ConvertingUnit outputUnit) {
-  return '$input ${getUnitText(inputUnit)} = $output ${getUnitText(outputUnit)}';
-}
-
 class SavedRow extends StatelessWidget {
   const SavedRow(
       {Key? key,
@@ -576,7 +567,7 @@ class UnitInputField extends StatelessWidget {
       required this.label,
       required this.textEditingController});
 
-  final Function(double) convertUnit;
+  final Function(String) convertUnit;
   final TextEditingController textEditingController;
   final String label;
 
@@ -585,17 +576,7 @@ class UnitInputField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: TextField(
-        onChanged: (newValue) {
-          String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-          double n;
-          if (pureNum.isNotEmpty) {
-            n = double.parse(pureNum);
-          } else {
-            n = 0;
-          }
-
-          convertUnit(n);
-        },
+        onChanged: convertUnit,
         controller: textEditingController,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [ThousandsFormatter()],

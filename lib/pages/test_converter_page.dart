@@ -2,6 +2,7 @@ import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 class NewConverterPage extends ConsumerStatefulWidget {
   const NewConverterPage({super.key});
@@ -18,7 +19,37 @@ class NewConverterPageState extends ConsumerState<NewConverterPage> {
 
     return SafeArea(
       child: Scaffold(
-        body: Center(
+        appBar: AppBar(
+          backgroundColor: kBgColor,
+          elevation: 0,
+          centerTitle: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Flexible(
+                flex: 6,
+                child: Text(
+                  'Convert Rai',
+                  style: kTitleTextStyle,
+                ),
+              ),
+              Flexible(
+                flex: 6,
+                child: Container(
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: kTitleColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(2),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: Container(
+          color: kBgColor,
           child: Column(
             children: [
               Text('${calState.sqm}'),
