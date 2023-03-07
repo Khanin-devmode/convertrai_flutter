@@ -256,7 +256,7 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
               children: [
                 Flexible(
                     flex: 4,
-                    child: calState.selectedUnit != ConvertingUnit.combined
+                    child: calState.selectedUnit != ConvertingUnit.raiNganSqWha
                         ? UnitInputField(
                             convertUnit: (calNotifier.convertUnit),
                             label:
@@ -288,24 +288,24 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                 Flexible(
                   flex: 2,
                   child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
-                      margin: const EdgeInsets.only(right: 9),
-                      // child: Text(unitLabel)),
-                      child: DropdownButton<ConvertingUnit>(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12)),
-                        alignment: Alignment.center,
-                        value: calState.selectedUnit,
-                        items: ConvertingUnit.values.map((ConvertingUnit unit) {
-                          return DropdownMenuItem<ConvertingUnit>(
-                              value: unit, child: Text(getUnitText(unit)));
-                        }).toList(),
-                        onChanged: null,
-                      )),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12))),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    margin: const EdgeInsets.only(right: 9),
+                    // child: Text(unitLabel)),
+                    child: DropdownButton<ConvertingUnit>(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      alignment: Alignment.center,
+                      value: calState.selectedUnit,
+                      items: ConvertingUnit.values.map((ConvertingUnit unit) {
+                        return DropdownMenuItem<ConvertingUnit>(
+                            value: unit, child: Text(getUnitText(unit)));
+                      }).toList(),
+                      onChanged: null,
+                    ),
+                  ),
                 )
               ],
             ),
@@ -483,7 +483,7 @@ String getUnitText(ConvertingUnit unit) {
       return 'ตรว.';
     case ConvertingUnit.sqm:
       return 'ตรม.';
-    case ConvertingUnit.combined:
+    case ConvertingUnit.raiNganSqWha:
       return 'ไร่/งาน/ตรว.';
   }
 }

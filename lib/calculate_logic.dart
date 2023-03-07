@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
+enum ConvertingUnit { sqm, rai, ngan, sqWha, raiNganSqWha }
 
 class Calculation {
   ConvertingUnit selectedUnit = ConvertingUnit.rai;
@@ -12,7 +12,6 @@ class Calculation {
   double fullRai = 1;
   double fullNgan = 4;
   double fullSqWha = 400;
-  double totalSqWha = 0;
   double sqWaaRemainder = 0;
 }
 
@@ -22,45 +21,68 @@ class CalNotifier extends StateNotifier<Calculation> {
   void convertUnit(double newValue) {
     Calculation newCal = Calculation();
 
-    switch (state.selectedUnit) {
+    newCal.selectedUnit = state.selectedUnit;
+
+    switch (newCal.selectedUnit) {
       case ConvertingUnit.rai:
         {
-          newCal.sqm = (newValue != null) ? newValue * 1600 : 0;
+          newCal.sqm = newValue * 1600;
         }
         break;
       case ConvertingUnit.ngan:
         {
-          newCal.sqm = (newValue != null) ? newValue * 400 : 0;
+          newCal.sqm = newValue * 400;
         }
         break;
       case ConvertingUnit.sqWha:
         {
-          newCal.sqm = (newValue != null) ? newValue * 4 : 0;
+          newCal.sqm = newValue * 4;
         }
         break;
       case ConvertingUnit.sqm:
         {
-          newCal.sqm = (newValue != null) ? newValue : 0;
+          newCal.sqm = newValue;
         }
         break;
-      case ConvertingUnit.combined:
+      case ConvertingUnit.raiNganSqWha:
         {
           newCal.sqm = 0;
         }
         break;
     }
 
-    newCal.totalSqWha = state.sqm / 4;
-    newCal.rai = (newCal.totalSqWha / 400).floorToDouble();
-    newCal.sqWaaRemainder = newCal.totalSqWha.remainder(400);
-    newCal.ngan = (newCal.sqWaaRemainder / 100).floorToDouble();
-    newCal.sqWha = newCal.sqWaaRemainder.remainder(100);
-
     newCal.fullRai = newCal.sqm / 1600;
     newCal.fullNgan = newCal.sqm / 400;
     newCal.fullSqWha = newCal.sqm / 4;
 
+    newCal.fullSqWha = newCal.sqm / 4;
+    newCal.rai = (newCal.fullSqWha / 400).floorToDouble();
+    newCal.sqWaaRemainder = newCal.fullSqWha.remainder(400);
+    newCal.ngan = (newCal.sqWaaRemainder / 100).floorToDouble();
+    newCal.sqWha = newCal.sqWaaRemainder.remainder(100);
+
     state = newCal;
+  }
+
+  void selectUnit(newUnit) {
+    print(state.selectedUnit);
+    Calculation newState = Calculation();
+    // newState = state;
+    // newState.selectedUnit = newUnit;
+    // print(state.selectedUnit);
+    // print(newState.selectedUnit);
+    newState.selectedUnit = newUnit;
+
+    newState.sqm = state.sqm;
+    newState.rai = state.rai;
+    newState.ngan = state.ngan;
+    newState.sqWha = state.sqWha;
+    newState.fullRai = state.fullRai;
+    newState.fullNgan = state.fullNgan;
+    newState.fullSqWha = state.fullSqWha;
+    newState.sqWaaRemainder = state.sqWaaRemainder;
+
+    state = newState;
   }
 }
 

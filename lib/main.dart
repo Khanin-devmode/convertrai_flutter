@@ -1,3 +1,4 @@
+import 'pages/test_converter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'pages/converter_page.dart';
@@ -25,7 +26,7 @@ class ConverRaiApp extends StatelessWidget {
         fontFamily: 'MontserratAlternates',
         useMaterial3: true,
       ),
-      home: const ConverterPage(),
+      home: const TestConverterPage(),
       debugShowCheckedModeBanner: false,
     );
   }

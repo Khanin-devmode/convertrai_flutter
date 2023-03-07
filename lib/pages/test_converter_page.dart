@@ -2,16 +2,15 @@ import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pattern_formatter/pattern_formatter.dart';
 
-class NewConverterPage extends ConsumerStatefulWidget {
-  const NewConverterPage({super.key});
+class TestConverterPage extends ConsumerStatefulWidget {
+  const TestConverterPage({super.key});
 
   @override
-  NewConverterPageState createState() => NewConverterPageState();
+  TestConverterPageState createState() => TestConverterPageState();
 }
 
-class NewConverterPageState extends ConsumerState<NewConverterPage> {
+class TestConverterPageState extends ConsumerState<TestConverterPage> {
   @override
   Widget build(BuildContext context) {
     final calState = ref.watch(calNotifierProvider);
@@ -52,21 +51,40 @@ class NewConverterPageState extends ConsumerState<NewConverterPage> {
           color: kBgColor,
           child: Column(
             children: [
-              Text('${calState.sqm}'),
-              TextField(
-                inputFormatters: kNumberInputFormatter,
-                onChanged: (newValue) {
-                  String pureNum =
-                      newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-                  double n;
-                  if (pureNum.isNotEmpty) {
-                    n = double.parse(pureNum);
-                  } else {
-                    n = 0;
-                  }
-                  calNotifier.convertUnit(n);
-                },
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      inputFormatters: kNumberInputFormatter,
+                      onChanged: (newValue) {
+                        String pureNum =
+                            newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+                        double n;
+                        if (pureNum.isNotEmpty) {
+                          n = double.parse(pureNum);
+                        } else {
+                          n = 0;
+                        }
+                        calNotifier.convertUnit(n);
+                      },
+                    ),
+                  ),
+                  DropdownButton<ConvertingUnit>(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    alignment: Alignment.center,
+                    value: calState.selectedUnit,
+                    items: ConvertingUnit.values.map((ConvertingUnit unit) {
+                      return DropdownMenuItem<ConvertingUnit>(
+                          value: unit, child: Text(unit.toString()));
+                    }).toList(),
+                    onChanged: (newUnit) => calNotifier.selectUnit(newUnit),
+                  ),
+                ],
               ),
+              Text('${calState.sqm} ตรม.'),
+              Text('${calState.fullNgan} งาน.'),
+              Text('${calState.fullSqWha} ตรว.'),
+              Text('${calState.selectedUnit}')
             ],
           ),
         ),
