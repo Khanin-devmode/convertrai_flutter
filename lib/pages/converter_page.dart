@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import '../constants.dart';
 import 'package:flutter/services.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+import '../ad_helper.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
 
@@ -30,6 +32,8 @@ class _ConverterPageState extends State<ConverterPage> {
   final _sqWhaTextController = TextEditingController();
 
   List<String> saveResults = [];
+
+  BannerAd? _bannerAd;
 
   void selectUnit(newUnit) {
     setState(() {
@@ -196,6 +200,33 @@ class _ConverterPageState extends State<ConverterPage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _bannerAd = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    ).load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -273,7 +304,7 @@ class _ConverterPageState extends State<ConverterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(12))),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
-                      margin: const EdgeInsets.only(right: 12),
+                      margin: const EdgeInsets.only(right: 9),
                       // child: Text(unitLabel)),
                       child: DropdownButton<ConvertingUnit>(
                         borderRadius:
@@ -383,16 +414,19 @@ class _ConverterPageState extends State<ConverterPage> {
                       ),
               ),
             ),
-            // myBanner != null
-            //     ? Container(
-            //         color: Colors.blue,
-            //         width: 320,
-            //         height: 100,
-            //         alignment: Alignment.center,
-            //         // child: Text('Ad Banner'),
-            //         child: AdWidget(ad: myBanner!),
-            //       )
-            //     : Row(),
+            _bannerAd != null
+                ? SafeArea(
+                    bottom: true,
+                    child: Container(
+                      color: Colors.blue,
+                      width: _bannerAd!.size.width.toDouble(),
+                      height: _bannerAd!.size.height.toDouble(),
+                      alignment: Alignment.center,
+                      // child: Text('Ad Banner'),
+                      child: AdWidget(ad: _bannerAd!),
+                    ),
+                  )
+                : Row(),
           ],
         ),
       ),
