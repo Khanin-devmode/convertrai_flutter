@@ -11,6 +11,8 @@ class TestConverterPage extends ConsumerStatefulWidget {
 }
 
 class TestConverterPageState extends ConsumerState<TestConverterPage> {
+  final inputTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final calState = ref.watch(calNotifierProvider);
@@ -56,15 +58,9 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   Expanded(
                     child: TextField(
                       inputFormatters: kNumberInputFormatter,
+                      controller: inputTextController,
                       onChanged: (newValue) {
-                        String pureNum =
-                            newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-                        double n;
-                        if (pureNum.isNotEmpty) {
-                          n = double.parse(pureNum);
-                        } else {
-                          n = 0;
-                        }
+                        double n = stringToDouble(newValue);
                         calNotifier.convertUnit(n);
                       },
                     ),
@@ -77,18 +73,36 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                       return DropdownMenuItem<ConvertingUnit>(
                           value: unit, child: Text(unit.toString()));
                     }).toList(),
-                    onChanged: (newUnit) => calNotifier.selectUnit(newUnit),
+                    onChanged: (newUnit) {
+                      calNotifier.selectUnit(newUnit);
+                      double n = stringToDouble(inputTextController.text);
+                      calNotifier.convertUnit(n);
+                    },
                   ),
                 ],
               ),
-              Text('${calState.sqm} ตรม.'),
-              Text('${calState.fullNgan} งาน.'),
-              Text('${calState.fullSqWha} ตรว.'),
+              Text(
+                  '${inputTextController.text} ${calState.selectedUnit} = ${calState.sqm} ตรม.'),
+              Text(
+                  '${inputTextController.text} ${calState.selectedUnit} ${calState.fullNgan} งาน.'),
+              Text(
+                  '${inputTextController.text} ${calState.selectedUnit} ${calState.fullSqWha} ตรว.'),
               Text('${calState.selectedUnit}')
             ],
           ),
         ),
       ),
     );
+  }
+
+  double stringToDouble(String newValue) {
+    String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
+    double n;
+    if (pureNum.isNotEmpty) {
+      n = double.parse(pureNum);
+    } else {
+      n = 0;
+    }
+    return n;
   }
 }

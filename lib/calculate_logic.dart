@@ -65,12 +65,9 @@ class CalNotifier extends StateNotifier<Calculation> {
   }
 
   void selectUnit(newUnit) {
-    print(state.selectedUnit);
     Calculation newState = Calculation();
-    // newState = state;
-    // newState.selectedUnit = newUnit;
-    // print(state.selectedUnit);
-    // print(newState.selectedUnit);
+
+    //must find better solution, this is fine for this small project.
     newState.selectedUnit = newUnit;
 
     newState.sqm = state.sqm;
