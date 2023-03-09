@@ -2,6 +2,7 @@ import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pattern_formatter/numeric_formatter.dart';
 
 class TestConverterPage extends ConsumerStatefulWidget {
   const TestConverterPage({super.key});
@@ -53,33 +54,70 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
           color: kBgColor,
           child: Column(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      inputFormatters: kNumberInputFormatter,
-                      controller: inputTextController,
-                      onChanged: (newValue) {
-                        double n = stringToDouble(newValue);
-                        calNotifier.convertUnit(n);
-                      },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: TextField(
+                        onChanged: (newValue) {
+                          double n = stringToDouble(newValue);
+                          calNotifier.convertUnit(n);
+                        },
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        inputFormatters: [ThousandsFormatter()],
+                        decoration: InputDecoration(
+                          // label: Text(label),
+                          hintText: 'label',
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: const BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  DropdownButton<ConvertingUnit>(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    alignment: Alignment.center,
-                    value: calState.selectedUnit,
-                    items: ConvertingUnit.values.map((ConvertingUnit unit) {
-                      return DropdownMenuItem<ConvertingUnit>(
-                          value: unit, child: Text(unit.toString()));
-                    }).toList(),
-                    onChanged: (newUnit) {
-                      calNotifier.selectUnit(newUnit);
-                      double n = stringToDouble(inputTextController.text);
-                      calNotifier.convertUnit(n);
-                    },
-                  ),
-                ],
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(12),
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
+                        margin: const EdgeInsets.only(right: 9),
+                        child: DropdownButton<ConvertingUnit>(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
+                          alignment: Alignment.center,
+                          value: calState.selectedUnit,
+                          items:
+                              ConvertingUnit.values.map((ConvertingUnit unit) {
+                            return DropdownMenuItem<ConvertingUnit>(
+                                value: unit, child: Text(getUnitText(unit)));
+                          }).toList(),
+                          onChanged: (newUnit) {
+                            calNotifier.selectUnit(newUnit);
+                            double n = stringToDouble(inputTextController.text);
+                            calNotifier.convertUnit(n);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Text(
                   '${inputTextController.text} ${calState.selectedUnit} = ${calState.sqm} ตรม.'),
@@ -104,5 +142,20 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
       n = 0;
     }
     return n;
+  }
+
+  String getUnitText(ConvertingUnit unit) {
+    switch (unit) {
+      case ConvertingUnit.rai:
+        return 'ไร่';
+      case ConvertingUnit.ngan:
+        return 'งาน';
+      case ConvertingUnit.sqWha:
+        return 'ตรว.';
+      case ConvertingUnit.sqm:
+        return 'ตรม.';
+      case ConvertingUnit.raiNganSqWha:
+        return 'ไร่/งาน/ตรว.';
+    }
   }
 }
