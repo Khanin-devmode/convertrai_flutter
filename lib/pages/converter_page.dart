@@ -1,4 +1,5 @@
 import 'package:convert_rai/calculate_logic.dart';
+import 'package:convert_rai/components/result_row.dart';
 import 'package:convert_rai/components/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -164,8 +165,11 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
             Container(
               margin: const EdgeInsets.all(12),
               decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12),
+                ),
+              ),
               child: Column(
                 children: [
                   // calState.selectedUnit != ConvertingUnit.combined
@@ -177,34 +181,34 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                   //         saveFunction: saveResult,
                   //       )
                   //     : Row(),
-                  calState.selectedUnit != ConvertingUnit.sqm
-                      ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.sqm, ConvertingUnit.sqm),
-                          saveFunction: saveResult,
-                        )
-                      : Row(),
-                  calState.selectedUnit != ConvertingUnit.rai
-                      ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.fullRai, ConvertingUnit.rai),
-                          saveFunction: saveResult,
-                        )
-                      : Row(),
-                  calState.selectedUnit != ConvertingUnit.ngan
-                      ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.fullNgan, ConvertingUnit.ngan),
-                          saveFunction: saveResult,
-                        )
-                      : Row(),
-                  calState.selectedUnit != ConvertingUnit.sqWha
-                      ? ResultRow(
-                          resultText: getResultText(0, calState.selectedUnit,
-                              calState.fullSqWha, ConvertingUnit.sqWha),
-                          saveFunction: saveResult,
-                        )
-                      : Row(),
+                  //   calState.selectedUnit != ConvertingUnit.sqm
+                  //       ? ResultRow(
+                  //           resultText: getResultText(0, calState.selectedUnit,
+                  //               calState.sqm, ConvertingUnit.sqm),
+                  //           saveFunction: saveResult,
+                  //         )
+                  //       : Row(),
+                  //   calState.selectedUnit != ConvertingUnit.rai
+                  //       ? ResultRow(
+                  //           resultText: getResultText(0, calState.selectedUnit,
+                  //               calState.fullRai, ConvertingUnit.rai),
+                  //           saveFunction: saveResult,
+                  //         )
+                  //       : Row(),
+                  //   calState.selectedUnit != ConvertingUnit.ngan
+                  //       ? ResultRow(
+                  //           resultText: getResultText(0, calState.selectedUnit,
+                  //               calState.fullNgan, ConvertingUnit.ngan),
+                  //           saveFunction: saveResult,
+                  //         )
+                  //       : Row(),
+                  //   calState.selectedUnit != ConvertingUnit.sqWha
+                  //       ? ResultRow(
+                  //           resultText: getResultText(0, calState.selectedUnit,
+                  //               calState.fullSqWha, ConvertingUnit.sqWha),
+                  //           saveFunction: saveResult,
+                  //         )
+                  //       : Row(),
                 ],
               ),
             ),
@@ -272,55 +276,6 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
         ),
       ),
 // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-
-class ResultRow extends StatelessWidget {
-  const ResultRow(
-      {Key? key, required this.resultText, required this.saveFunction})
-      : super(key: key);
-
-  final String resultText;
-  final Function(String) saveFunction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            // kNumFormat.format(resultText),
-            resultText,
-            style: kBodyText,
-          ),
-        ),
-        Row(
-          children: [
-            IconButton(
-              icon: const Icon(
-                Icons.save_outlined,
-                color: kIconColor,
-              ),
-              onPressed: () async {
-                saveFunction(resultText);
-              },
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.copy,
-                color: kIconColor,
-              ),
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: resultText));
-                showSnackBar(context);
-              },
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

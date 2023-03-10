@@ -1,6 +1,10 @@
 import 'package:convert_rai/calculate_logic.dart';
+import 'package:convert_rai/components/result_row.dart';
+import 'package:convert_rai/components/snackbar.dart';
 import 'package:convert_rai/constants.dart';
+import 'package:convert_rai/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pattern_formatter/numeric_formatter.dart';
 
@@ -55,7 +59,7 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Row(
                   children: [
                     Expanded(
@@ -83,8 +87,8 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 8,
+                    const SizedBox(
+                      width: 12,
                     ),
                     Expanded(
                       flex: 2,
@@ -97,7 +101,6 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                         ),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 8),
-                        margin: const EdgeInsets.only(right: 9),
                         child: DropdownButton<ConvertingUnit>(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(12)),
@@ -119,6 +122,23 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   ],
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.all(12),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    ResultRow(
+                      resultText:
+                          '${inputTextController.text} ${getUnitText(calState.selectedUnit)} = ${calState.sqm} ตรม.',
+                    )
+                  ],
+                ),
+              ),
               Text(
                   '${inputTextController.text} ${calState.selectedUnit} = ${calState.sqm} ตรม.'),
               Text(
@@ -131,31 +151,5 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
         ),
       ),
     );
-  }
-
-  double stringToDouble(String newValue) {
-    String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-    double n;
-    if (pureNum.isNotEmpty) {
-      n = double.parse(pureNum);
-    } else {
-      n = 0;
-    }
-    return n;
-  }
-
-  String getUnitText(ConvertingUnit unit) {
-    switch (unit) {
-      case ConvertingUnit.rai:
-        return 'ไร่';
-      case ConvertingUnit.ngan:
-        return 'งาน';
-      case ConvertingUnit.sqWha:
-        return 'ตรว.';
-      case ConvertingUnit.sqm:
-        return 'ตรม.';
-      case ConvertingUnit.raiNganSqWha:
-        return 'ไร่/งาน/ตรว.';
-    }
   }
 }
