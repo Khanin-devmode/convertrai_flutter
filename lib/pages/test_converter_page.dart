@@ -65,6 +65,7 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                     Expanded(
                       flex: 4,
                       child: TextField(
+                        controller: inputTextController,
                         onChanged: (newValue) {
                           double n = stringToDouble(newValue);
                           calNotifier.convertUnit(n);
@@ -134,18 +135,23 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   children: [
                     ResultRow(
                       resultText:
-                          '${inputTextController.text} ${getUnitText(calState.selectedUnit)} = ${calState.sqm} ตรม.',
-                    )
+                          '${inputTextController.text} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.sqm)} ตรม.',
+                    ),
+                    ResultRow(
+                      resultText:
+                          '${inputTextController.text} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullRai)} ไร่.',
+                    ),
+                    ResultRow(
+                      resultText:
+                          '${inputTextController.text} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullNgan)} งาน.',
+                    ),
+                    ResultRow(
+                      resultText:
+                          '${inputTextController.text} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+                    ),
                   ],
                 ),
               ),
-              Text(
-                  '${inputTextController.text} ${calState.selectedUnit} = ${calState.sqm} ตรม.'),
-              Text(
-                  '${inputTextController.text} ${calState.selectedUnit} ${calState.fullNgan} งาน.'),
-              Text(
-                  '${inputTextController.text} ${calState.selectedUnit} ${calState.fullSqWha} ตรว.'),
-              Text('${calState.selectedUnit}')
             ],
           ),
         ),
