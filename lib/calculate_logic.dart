@@ -61,7 +61,7 @@ class CalNotifier extends StateNotifier<Calculation> {
         break;
       case ConvertingUnit.raiNganSqWha:
         {
-          newCal.sqm = 0;
+          newCal.sqm = newValue;
         }
         break;
     }
@@ -70,13 +70,18 @@ class CalNotifier extends StateNotifier<Calculation> {
     newCal.fullNgan = newCal.sqm / 400;
     newCal.fullSqWha = newCal.sqm / 4;
 
-    newCal.fullSqWha = newCal.sqm / 4;
     newCal.rai = (newCal.fullSqWha / 400).floorToDouble();
     newCal.sqWhaRemainder = newCal.fullSqWha.remainder(400);
     newCal.ngan = (newCal.sqWhaRemainder / 100).floorToDouble();
     newCal.sqWha = newCal.sqWhaRemainder.remainder(100);
 
     state = newCal;
+  }
+
+  void convertCombinedUnit(double rai, double ngan, double sqWha) {
+    double sqm = (rai * 1600) + (ngan * 400) + (sqWha * 4);
+
+    convertUnit(sqm);
   }
 
   void selectUnit(newUnit) {

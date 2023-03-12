@@ -1,10 +1,8 @@
 import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/components/result_row.dart';
-import 'package:convert_rai/components/snackbar.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/helper_function.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pattern_formatter/numeric_formatter.dart';
 
@@ -67,52 +65,71 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   children: [
                     Expanded(
                       flex: 4,
-                      child:
-                          calState.selectedUnit != ConvertingUnit.raiNganSqWha
-                              ? CustomInputField(
-                                  inputTextController: singleInputCtrl,
-                                  calNotifier: calNotifier,
-                                  onChanged: (newValue) {
-                                    double n = stringToDouble(newValue);
-                                    calNotifier.convertUnit(n);
-                                  },
-                                )
-                              : Row(
-                                  children: [
-                                    Expanded(
-                                      child: CustomInputField(
-                                        inputTextController: raiInputCtrl,
-                                        calNotifier: calNotifier,
-                                        onChanged: (newValue) {
-                                          double n = stringToDouble(newValue);
-                                          calNotifier.convertUnit(n);
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: CustomInputField(
-                                        inputTextController: nganInputCtrl,
-                                        calNotifier: calNotifier,
-                                        onChanged: (newValue) {
-                                          double n = stringToDouble(newValue);
-                                          calNotifier.convertUnit(n);
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: CustomInputField(
-                                        inputTextController: sqWhaInputCtrl,
-                                        calNotifier: calNotifier,
-                                        onChanged: (newValue) {
-                                          double n = stringToDouble(newValue);
-                                          calNotifier.convertUnit(n);
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                      child: calState.selectedUnit !=
+                              ConvertingUnit.raiNganSqWha
+                          ? CustomInputField(
+                              label: getUnitText(calState.selectedUnit),
+                              inputTextController: singleInputCtrl,
+                              calNotifier: calNotifier,
+                              onChanged: (newValue) {
+                                double n = stringToDouble(newValue);
+                                calNotifier.convertUnit(n);
+                              },
+                            )
+                          : Row(
+                              children: [
+                                Expanded(
+                                  child: CustomInputField(
+                                    label: 'ไร่',
+                                    inputTextController: raiInputCtrl,
+                                    calNotifier: calNotifier,
+                                    onChanged: (newValue) {
+                                      double rai = stringToDouble(newValue);
+                                      double ngan =
+                                          stringToDouble(nganInputCtrl.text);
+                                      double sqWha =
+                                          stringToDouble(sqWhaInputCtrl.text);
+                                      calNotifier.convertCombinedUnit(
+                                          rai, ngan, sqWha);
+                                    },
+                                  ),
                                 ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: CustomInputField(
+                                    label: 'งาน',
+                                    inputTextController: nganInputCtrl,
+                                    calNotifier: calNotifier,
+                                    onChanged: (newValue) {
+                                      double rai =
+                                          stringToDouble(raiInputCtrl.text);
+                                      double ngan = stringToDouble(newValue);
+                                      double sqWha =
+                                          stringToDouble(sqWhaInputCtrl.text);
+                                      calNotifier.convertCombinedUnit(
+                                          rai, ngan, sqWha);
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: CustomInputField(
+                                    label: 'ตรว.',
+                                    inputTextController: sqWhaInputCtrl,
+                                    calNotifier: calNotifier,
+                                    onChanged: (newValue) {
+                                      double rai =
+                                          stringToDouble(raiInputCtrl.text);
+                                      double ngan =
+                                          stringToDouble(nganInputCtrl.text);
+                                      double sqWha = stringToDouble(newValue);
+                                      calNotifier.convertCombinedUnit(
+                                          rai, ngan, sqWha);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                     ),
                     const SizedBox(
                       width: 12,
@@ -139,23 +156,23 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   children: [
                     ResultRow(
                       resultText:
-                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.',
+                          '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.',
                     ),
                     ResultRow(
                       resultText:
-                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.sqm)} ตรม.',
+                          '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.sqm)} ตรม.',
                     ),
                     ResultRow(
                       resultText:
-                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullRai)} ไร่.',
+                          '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.fullRai)} ไร่.',
                     ),
                     ResultRow(
                       resultText:
-                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullNgan)} งาน.',
+                          '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.fullNgan)} งาน.',
                     ),
                     ResultRow(
                       resultText:
-                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+                          '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
                     ),
                   ],
                 ),
@@ -173,11 +190,13 @@ class CustomInputField extends StatelessWidget {
       {super.key,
       required this.inputTextController,
       required this.calNotifier,
-      required this.onChanged});
+      required this.onChanged,
+      required this.label});
 
   final TextEditingController inputTextController;
   final CalNotifier calNotifier;
   final Function(String) onChanged;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +207,7 @@ class CustomInputField extends StatelessWidget {
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
         // label: Text(label),
-        hintText: 'label',
+        hintText: label,
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(
@@ -240,5 +259,14 @@ class UnitSelectDropdown extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+String getInputText(
+    TextEditingController singleInputCtrl, Calculation calState) {
+  if (calState.selectedUnit != ConvertingUnit.raiNganSqWha) {
+    return '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)}';
+  } else {
+    return '${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.';
   }
 }
