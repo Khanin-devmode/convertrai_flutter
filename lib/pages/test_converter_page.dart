@@ -16,7 +16,10 @@ class TestConverterPage extends ConsumerStatefulWidget {
 }
 
 class TestConverterPageState extends ConsumerState<TestConverterPage> {
-  final inputTextController = TextEditingController();
+  final singleInputCtrl = TextEditingController();
+  final raiInputCtrl = TextEditingController();
+  final nganInputCtrl = TextEditingController();
+  final sqWhaInputCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -64,32 +67,52 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   children: [
                     Expanded(
                       flex: 4,
-                      child: calState.selectedUnit !=
-                              ConvertingUnit.raiNganSqWha
-                          ? CustomInputField(
-                              inputTextController: inputTextController,
-                              calNotifier: calNotifier)
-                          : Row(
-                              children: [
-                                Expanded(
-                                  child: CustomInputField(
-                                      inputTextController: inputTextController,
-                                      calNotifier: calNotifier),
+                      child:
+                          calState.selectedUnit != ConvertingUnit.raiNganSqWha
+                              ? CustomInputField(
+                                  inputTextController: singleInputCtrl,
+                                  calNotifier: calNotifier,
+                                  onChanged: (newValue) {
+                                    double n = stringToDouble(newValue);
+                                    calNotifier.convertUnit(n);
+                                  },
+                                )
+                              : Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomInputField(
+                                        inputTextController: raiInputCtrl,
+                                        calNotifier: calNotifier,
+                                        onChanged: (newValue) {
+                                          double n = stringToDouble(newValue);
+                                          calNotifier.convertUnit(n);
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: CustomInputField(
+                                        inputTextController: nganInputCtrl,
+                                        calNotifier: calNotifier,
+                                        onChanged: (newValue) {
+                                          double n = stringToDouble(newValue);
+                                          calNotifier.convertUnit(n);
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: CustomInputField(
+                                        inputTextController: sqWhaInputCtrl,
+                                        calNotifier: calNotifier,
+                                        onChanged: (newValue) {
+                                          double n = stringToDouble(newValue);
+                                          calNotifier.convertUnit(n);
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: CustomInputField(
-                                      inputTextController: inputTextController,
-                                      calNotifier: calNotifier),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: CustomInputField(
-                                      inputTextController: inputTextController,
-                                      calNotifier: calNotifier),
-                                ),
-                              ],
-                            ),
                     ),
                     const SizedBox(
                       width: 12,
@@ -99,7 +122,7 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                       child: UnitSelectDropdown(
                           calState: calState,
                           calNotifier: calNotifier,
-                          inputTextController: inputTextController),
+                          inputTextController: singleInputCtrl),
                     ),
                   ],
                 ),
@@ -116,19 +139,23 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   children: [
                     ResultRow(
                       resultText:
-                          '${inputTextController.text.isNotEmpty ? inputTextController.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.sqm)} ตรม.',
+                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.',
                     ),
                     ResultRow(
                       resultText:
-                          '${inputTextController.text.isNotEmpty ? inputTextController.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullRai)} ไร่.',
+                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.sqm)} ตรม.',
                     ),
                     ResultRow(
                       resultText:
-                          '${inputTextController.text.isNotEmpty ? inputTextController.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullNgan)} งาน.',
+                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullRai)} ไร่.',
                     ),
                     ResultRow(
                       resultText:
-                          '${inputTextController.text.isNotEmpty ? inputTextController.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullNgan)} งาน.',
+                    ),
+                    ResultRow(
+                      resultText:
+                          '${singleInputCtrl.text.isNotEmpty ? singleInputCtrl.text : 0} ${getUnitText(calState.selectedUnit)} = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
                     ),
                   ],
                 ),
@@ -142,23 +169,21 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
 }
 
 class CustomInputField extends StatelessWidget {
-  const CustomInputField({
-    super.key,
-    required this.inputTextController,
-    required this.calNotifier,
-  });
+  const CustomInputField(
+      {super.key,
+      required this.inputTextController,
+      required this.calNotifier,
+      required this.onChanged});
 
   final TextEditingController inputTextController;
   final CalNotifier calNotifier;
+  final Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: inputTextController,
-      onChanged: (newValue) {
-        double n = stringToDouble(newValue);
-        calNotifier.convertUnit(n);
-      },
+      onChanged: onChanged,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(

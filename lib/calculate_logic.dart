@@ -12,7 +12,22 @@ class Calculation {
   double fullRai = 1;
   double fullNgan = 4;
   double fullSqWha = 400;
-  double sqWaaRemainder = 0;
+  double sqWhaRemainder = 0;
+
+  String getTextValueSelectedUnit(ConvertingUnit selectedUnit) {
+    switch (selectedUnit) {
+      case ConvertingUnit.rai:
+        return '$rai';
+      case ConvertingUnit.ngan:
+        return '$ngan';
+      case ConvertingUnit.sqWha:
+        return '$sqWha.';
+      case ConvertingUnit.sqm:
+        return '$sqm';
+      case ConvertingUnit.raiNganSqWha:
+        return '0';
+    }
+  }
 }
 
 class CalNotifier extends StateNotifier<Calculation> {
@@ -57,9 +72,9 @@ class CalNotifier extends StateNotifier<Calculation> {
 
     newCal.fullSqWha = newCal.sqm / 4;
     newCal.rai = (newCal.fullSqWha / 400).floorToDouble();
-    newCal.sqWaaRemainder = newCal.fullSqWha.remainder(400);
-    newCal.ngan = (newCal.sqWaaRemainder / 100).floorToDouble();
-    newCal.sqWha = newCal.sqWaaRemainder.remainder(100);
+    newCal.sqWhaRemainder = newCal.fullSqWha.remainder(400);
+    newCal.ngan = (newCal.sqWhaRemainder / 100).floorToDouble();
+    newCal.sqWha = newCal.sqWhaRemainder.remainder(100);
 
     state = newCal;
   }
@@ -77,7 +92,7 @@ class CalNotifier extends StateNotifier<Calculation> {
     newState.fullRai = state.fullRai;
     newState.fullNgan = state.fullNgan;
     newState.fullSqWha = state.fullSqWha;
-    newState.sqWaaRemainder = state.sqWaaRemainder;
+    newState.sqWhaRemainder = state.sqWhaRemainder;
 
     state = newState;
   }
