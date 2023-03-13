@@ -101,6 +101,10 @@ class CalNotifier extends StateNotifier<Calculation> {
 
     state = newState;
   }
+
+  void resetState() {
+    state = Calculation();
+  }
 }
 
 final calNotifierProvider =

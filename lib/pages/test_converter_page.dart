@@ -14,8 +14,8 @@ class TestConverterPage extends ConsumerStatefulWidget {
 }
 
 class TestConverterPageState extends ConsumerState<TestConverterPage> {
-  final singleInputCtrl = TextEditingController();
-  final raiInputCtrl = TextEditingController();
+  final singleInputCtrl = TextEditingController(text: '1');
+  final raiInputCtrl = TextEditingController(text: '1');
   final nganInputCtrl = TextEditingController();
   final sqWhaInputCtrl = TextEditingController();
 
@@ -137,9 +137,13 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                     Expanded(
                       flex: 2,
                       child: UnitSelectDropdown(
-                          calState: calState,
-                          calNotifier: calNotifier,
-                          inputTextController: singleInputCtrl),
+                        calState: calState,
+                        calNotifier: calNotifier,
+                        singleInputCtrl: singleInputCtrl,
+                        raiInputCtrl: raiInputCtrl,
+                        nganInputCtrl: nganInputCtrl,
+                        sqWhaInputCtrl: sqWhaInputCtrl,
+                      ),
                     ),
                   ],
                 ),
@@ -183,6 +187,13 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
       ),
     );
   }
+
+  void resetInputCtrl() {
+    singleInputCtrl.text = '';
+    raiInputCtrl.text = '';
+    nganInputCtrl.text = '';
+    sqWhaInputCtrl.text = '';
+  }
 }
 
 class CustomInputField extends StatelessWidget {
@@ -223,16 +234,21 @@ class CustomInputField extends StatelessWidget {
 }
 
 class UnitSelectDropdown extends StatelessWidget {
-  const UnitSelectDropdown({
-    super.key,
-    required this.calState,
-    required this.calNotifier,
-    required this.inputTextController,
-  });
+  const UnitSelectDropdown(
+      {super.key,
+      required this.calState,
+      required this.calNotifier,
+      required this.singleInputCtrl,
+      required this.raiInputCtrl,
+      required this.nganInputCtrl,
+      required this.sqWhaInputCtrl});
 
   final Calculation calState;
   final CalNotifier calNotifier;
-  final TextEditingController inputTextController;
+  final TextEditingController singleInputCtrl;
+  final TextEditingController raiInputCtrl;
+  final TextEditingController nganInputCtrl;
+  final TextEditingController sqWhaInputCtrl;
 
   @override
   Widget build(BuildContext context) {
@@ -254,8 +270,16 @@ class UnitSelectDropdown extends StatelessWidget {
         }).toList(),
         onChanged: (newUnit) {
           calNotifier.selectUnit(newUnit);
-          double n = stringToDouble(inputTextController.text);
-          calNotifier.convertUnit(n);
+
+          if (newUnit != ConvertingUnit.raiNganSqWha) {
+            double n = stringToDouble(singleInputCtrl.text);
+            calNotifier.convertUnit(n);
+          } else {
+            double rai = stringToDouble(raiInputCtrl.text);
+            double ngan = stringToDouble(nganInputCtrl.text);
+            double sqWha = stringToDouble(sqWhaInputCtrl.text);
+            calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+          }
         },
       ),
     );
