@@ -12,4 +12,5 @@ class SaveNotifier extends StateNotifier<List<String>> {
   }
 }
 
-final saveNotifierProvider = StateNotifierProvider((ref) => SaveNotifier());
+final saveNotifierProvider =
+    StateNotifierProvider<SaveNotifier, List<String>>((ref) => SaveNotifier());

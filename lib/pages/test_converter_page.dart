@@ -1,12 +1,12 @@
 import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/components/custom_input.dart';
 import 'package:convert_rai/components/result_row.dart';
-import 'package:convert_rai/components/select_dropdown.dart';
+import 'package:convert_rai/components/unit_select_dropdown.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/helper_function.dart';
+import 'package:convert_rai/saving_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pattern_formatter/numeric_formatter.dart';
 
 class TestConverterPage extends ConsumerStatefulWidget {
   const TestConverterPage({super.key});
@@ -25,6 +25,7 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
   Widget build(BuildContext context) {
     final calState = ref.watch(calNotifierProvider);
     final calNotifier = ref.watch(calNotifierProvider.notifier);
+    final List<String> saveState = ref.watch(saveNotifierProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -193,6 +194,10 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   ],
                 ),
               ),
+              Column(
+                children:
+                    List.generate(saveState.length, (i) => Text(saveState[i])),
+              )
             ],
           ),
         ),

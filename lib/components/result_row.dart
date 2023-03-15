@@ -1,15 +1,19 @@
 import 'package:convert_rai/components/snackbar.dart';
 import 'package:convert_rai/constants.dart';
+import 'package:convert_rai/saving_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ResultRow extends StatelessWidget {
+class ResultRow extends ConsumerWidget {
   const ResultRow({Key? key, required this.resultText}) : super(key: key);
 
   final String resultText;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    SaveNotifier saveNotifier = ref.watch(saveNotifierProvider.notifier);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -30,6 +34,7 @@ class ResultRow extends StatelessWidget {
               ),
               onPressed: () async {
                 //Save with notifier
+                saveNotifier.saveResult(resultText);
               },
             ),
             IconButton(
