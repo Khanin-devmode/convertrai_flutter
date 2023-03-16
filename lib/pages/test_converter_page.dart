@@ -1,6 +1,7 @@
 import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/components/custom_input.dart';
 import 'package:convert_rai/components/result_row.dart';
+import 'package:convert_rai/components/saved_result_row.dart';
 import 'package:convert_rai/components/unit_select_dropdown.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/helper_function.dart';
@@ -192,6 +193,38 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                           )
                         : const SizedBox(),
                   ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  child: saveState.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: saveState.length,
+                          itemBuilder: (context, index) {
+                            final result = saveState[index];
+                            return SavedResultRow(
+                              resultText: result,
+                              deleteFunction: saveState,
+                              index: index,
+                            );
+                          })
+                      : Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text("กด"),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 4),
+                                child: Icon(
+                                  Icons.save_outlined,
+                                  color: kIconColor,
+                                ),
+                              ),
+                              Text("เพื่อบันทึกผลแปลงหน่วยที่นี่")
+                            ],
+                          ),
+                        ),
                 ),
               ),
               Column(
