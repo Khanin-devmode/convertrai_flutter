@@ -1,3 +1,4 @@
+import 'package:convert_rai/ad_helper.dart';
 import 'package:convert_rai/calculate_logic.dart';
 import 'package:convert_rai/components/custom_input.dart';
 import 'package:convert_rai/components/result_row.dart';
@@ -8,6 +9,7 @@ import 'package:convert_rai/helper_function.dart';
 import 'package:convert_rai/saving_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class TestConverterPage extends ConsumerStatefulWidget {
   const TestConverterPage({super.key});
@@ -21,6 +23,35 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
   final raiInputCtrl = TextEditingController(text: '1');
   final nganInputCtrl = TextEditingController();
   final sqWhaInputCtrl = TextEditingController();
+
+  BannerAd? _bannerAd;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _bannerAd = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    ).load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +273,19 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                         ),
                 ),
               ),
+              _bannerAd != null
+                  ? SafeArea(
+                      bottom: true,
+                      child: Container(
+                        color: Colors.blue,
+                        width: _bannerAd!.size.width.toDouble(),
+                        height: _bannerAd!.size.height.toDouble(),
+                        alignment: Alignment.center,
+                        // child: Text('Ad Banner'),
+                        child: AdWidget(ad: _bannerAd!),
+                      ),
+                    )
+                  : Row(),
             ],
           ),
         ),
