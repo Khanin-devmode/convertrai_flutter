@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SavedResultRow extends StatelessWidget {
-  const SavedResultRow(
-      {Key? key,
-      required this.resultText,
-      required this.deleteFunction,
-      required this.index})
-      : super(key: key);
+  const SavedResultRow({
+    Key? key,
+    required this.resultText,
+    required this.deleteFunction,
+  }) : super(key: key);
 
   final String resultText;
-  final Function(int) deleteFunction;
-  final int index;
+  final Function(String) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class SavedResultRow extends StatelessWidget {
                   color: kIconColor,
                 ),
                 onPressed: () async {
-                  deleteFunction(index);
+                  deleteFunction(resultText);
                 },
               ),
               IconButton(

@@ -27,6 +27,7 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
     final calState = ref.watch(calNotifierProvider);
     final calNotifier = ref.watch(calNotifierProvider.notifier);
     final List<String> saveState = ref.watch(saveNotifierProvider);
+    final saveNotifier = ref.watch(saveNotifierProvider.notifier);
 
     return SafeArea(
       child: Scaffold(
@@ -195,6 +196,21 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                   ],
                 ),
               ),
+              Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20))),
+                child: Column(children: [
+                  Container(
+                      padding: const EdgeInsets.only(left: 16, top: 16),
+                      alignment: Alignment.topLeft,
+                      child: const Text(
+                        'บันทึกผล',
+                        style: kSecondTitleTextStyle,
+                      )),
+                ]),
+              ),
               Expanded(
                 child: Container(
                   color: Colors.white,
@@ -205,8 +221,7 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                             final result = saveState[index];
                             return SavedResultRow(
                               resultText: result,
-                              deleteFunction: saveState,
-                              index: index,
+                              deleteFunction: saveNotifier.deleteResult,
                             );
                           })
                       : Center(
@@ -227,10 +242,6 @@ class TestConverterPageState extends ConsumerState<TestConverterPage> {
                         ),
                 ),
               ),
-              Column(
-                children:
-                    List.generate(saveState.length, (i) => Text(saveState[i])),
-              )
             ],
           ),
         ),
