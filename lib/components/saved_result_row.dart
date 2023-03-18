@@ -8,10 +8,12 @@ class SavedResultRow extends StatelessWidget {
     Key? key,
     required this.resultText,
     required this.deleteFunction,
+    required this.index,
   }) : super(key: key);
 
   final String resultText;
-  final Function(String) deleteFunction;
+  final Function(int) deleteFunction;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class SavedResultRow extends StatelessWidget {
                   color: kIconColor,
                 ),
                 onPressed: () async {
-                  deleteFunction(resultText);
+                  deleteFunction(index);
                 },
               ),
               IconButton(

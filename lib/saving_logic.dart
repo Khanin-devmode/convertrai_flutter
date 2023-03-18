@@ -7,8 +7,14 @@ class SaveNotifier extends StateNotifier<List<String>> {
     state = [...state, result];
   }
 
-  void deleteResult(String deleteResult) {
-    state = state.where((result) => result != deleteResult).toList();
+  // void deleteAllResult(String deleteResult) {
+  //   state = state.where((result) => result != deleteResult).toList();
+  // }
+
+  void deleteResult(int i) {
+    var fist = state.sublist(0, i);
+    var second = state.sublist(i + 1, state.length);
+    state = fist + second;
   }
 }
 
