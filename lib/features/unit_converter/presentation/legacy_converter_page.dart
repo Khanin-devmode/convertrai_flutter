@@ -1,9 +1,9 @@
+import 'package:convert_rai/ad_helper.dart';
 import 'package:flutter/material.dart';
-import '../constants.dart';
 import 'package:flutter/services.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
-import '../ad_helper.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:convert_rai/constants.dart';
 
 enum ConvertingUnit { sqm, rai, ngan, sqWha, combined }
 
@@ -201,10 +201,9 @@ class _LegacyConverterPageState extends State<LegacyConverterPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     BannerAd(
       adUnitId: AdHelper.bannerAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
@@ -213,11 +212,12 @@ class _LegacyConverterPageState extends State<LegacyConverterPage> {
           });
         },
         onAdFailedToLoad: (ad, err) {
-          print('Failed to load a banner ad: ${err.message}');
+          // print('Failed to load a banner ad: ${err.message}');
           ad.dispose();
         },
       ),
     ).load();
+    super.initState();
   }
 
   @override

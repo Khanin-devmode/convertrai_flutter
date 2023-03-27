@@ -1,5 +1,6 @@
-import 'package:convert_rai/calculate_logic.dart';
-import 'package:convert_rai/helper_function.dart';
+import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
+import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
+import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
 
 class UnitSelectDropdown extends StatelessWidget {

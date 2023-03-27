@@ -1,6 +1,6 @@
-import 'package:convert_rai/components/snackbar.dart';
 import 'package:convert_rai/constants.dart';
-import 'package:convert_rai/saving_logic.dart';
+import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
+import 'package:convert_rai/features/unit_converter/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

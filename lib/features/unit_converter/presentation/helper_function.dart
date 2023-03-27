@@ -1,4 +1,4 @@
-import 'package:convert_rai/calculate_logic.dart';
+import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 
 double stringToDouble(String newValue) {
   String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
