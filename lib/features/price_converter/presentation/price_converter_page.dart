@@ -2,8 +2,8 @@ import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
-import 'package:convert_rai/features/unit_converter/presentation/widgets/custom_input.dart';
-import 'package:convert_rai/features/unit_converter/presentation/widgets/unit_select_dropdown.dart';
+import 'package:convert_rai/features/unit_converter/presentation/component_widgets/custom_input.dart';
+import 'package:convert_rai/features/unit_converter/presentation/component_widgets/unit_select_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

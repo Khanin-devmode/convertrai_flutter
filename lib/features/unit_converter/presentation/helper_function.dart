@@ -1,4 +1,6 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
+import 'package:flutter/material.dart';
+import 'package:convert_rai/constants.dart';
 
 double stringToDouble(String newValue) {
   String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
@@ -23,5 +25,13 @@ String getUnitText(ConvertingUnit unit) {
       return 'ตรม.';
     case ConvertingUnit.raiNganSqWha:
       return 'ไร่/งาน/ตรว.';
+  }
+}
+
+String getInputText(TextEditingController inputControl, Calculation calState) {
+  if (calState.selectedUnit == ConvertingUnit.raiNganSqWha) {
+    return '${kNumFormat.format(stringToDouble(inputControl.text))} ไร่ ${kNumFormat.format(stringToDouble(inputControl.text))} งาน ${kNumFormat.format(stringToDouble(inputControl.text))} ตรว.';
+  } else {
+    return '${kNumFormat.format(stringToDouble(inputControl.text))} ${getUnitText(calState.selectedUnit)}';
   }
 }
