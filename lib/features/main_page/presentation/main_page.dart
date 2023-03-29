@@ -1,5 +1,6 @@
 import 'package:convert_rai/ad_helper.dart';
 import 'package:convert_rai/constants.dart';
+import 'package:convert_rai/features/price_converter/presentation/price_converter_page.dart';
 import 'package:convert_rai/features/unit_converter/presentation/converter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,6 +44,19 @@ class MainPageState extends ConsumerState<MainPage> {
     super.dispose();
   }
 
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    const ConverterPage(),
+    const PriceConverterPage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,8 +71,8 @@ class MainPageState extends ConsumerState<MainPage> {
           color: kBgColor,
           child: Column(
             children: [
-              const Expanded(
-                child: ConverterPage(),
+              Expanded(
+                child: _pages.elementAt(_selectedIndex),
               ),
               _bannerAd != null
                   ? SafeArea(
@@ -68,13 +82,27 @@ class MainPageState extends ConsumerState<MainPage> {
                         width: _bannerAd!.size.width.toDouble(),
                         height: _bannerAd!.size.height.toDouble(),
                         alignment: Alignment.center,
-                        // child: Text('Ad Banner'),
                         child: AdWidget(ad: _bannerAd!),
                       ),
                     )
                   : Row(),
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.change_circle_outlined),
+              label: 'Unit Converter',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.currency_exchange_outlined),
+              label: 'Price Converter',
+            )
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: (_onItemTapped),
         ),
       ),
     );

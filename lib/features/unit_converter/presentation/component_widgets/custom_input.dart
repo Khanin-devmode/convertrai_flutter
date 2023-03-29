@@ -1,4 +1,3 @@
-import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/numeric_formatter.dart';
 
@@ -6,12 +5,10 @@ class CustomInputField extends StatelessWidget {
   const CustomInputField(
       {super.key,
       required this.inputTextController,
-      required this.calNotifier,
       required this.onChanged,
       required this.label});
 
   final TextEditingController inputTextController;
-  final CalNotifier calNotifier;
   final Function(String) onChanged;
   final String label;
 

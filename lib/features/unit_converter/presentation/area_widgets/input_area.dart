@@ -35,7 +35,6 @@ class InputArea extends StatelessWidget {
                 ? CustomInputField(
                     label: getUnitText(calState.selectedUnit),
                     inputTextController: singleInputCtrl,
-                    calNotifier: calNotifier,
                     onChanged: (newValue) {
                       double n = stringToDouble(newValue);
                       calNotifier.convertUnit(n);
@@ -47,7 +46,6 @@ class InputArea extends StatelessWidget {
                         child: CustomInputField(
                           label: 'ไร่',
                           inputTextController: raiInputCtrl,
-                          calNotifier: calNotifier,
                           onChanged: (newValue) {
                             double rai = stringToDouble(newValue);
                             double ngan = stringToDouble(nganInputCtrl.text);
@@ -61,7 +59,6 @@ class InputArea extends StatelessWidget {
                         child: CustomInputField(
                           label: 'งาน',
                           inputTextController: nganInputCtrl,
-                          calNotifier: calNotifier,
                           onChanged: (newValue) {
                             double rai = stringToDouble(raiInputCtrl.text);
                             double ngan = stringToDouble(newValue);
@@ -75,7 +72,6 @@ class InputArea extends StatelessWidget {
                         child: CustomInputField(
                           label: 'ตรว.',
                           inputTextController: sqWhaInputCtrl,
-                          calNotifier: calNotifier,
                           onChanged: (newValue) {
                             double rai = stringToDouble(raiInputCtrl.text);
                             double ngan = stringToDouble(nganInputCtrl.text);
@@ -93,12 +89,24 @@ class InputArea extends StatelessWidget {
           Expanded(
             flex: 2,
             child: UnitSelectDropdown(
-              calState: calState,
-              calNotifier: calNotifier,
+              selectedUnit: calState.selectedUnit,
               singleInputCtrl: singleInputCtrl,
               raiInputCtrl: raiInputCtrl,
               nganInputCtrl: nganInputCtrl,
               sqWhaInputCtrl: sqWhaInputCtrl,
+              onChanged: (newUnit) {
+                calNotifier.selectUnit(newUnit);
+
+                if (newUnit != ConvertingUnit.raiNganSqWha) {
+                  double n = stringToDouble(singleInputCtrl.text);
+                  calNotifier.convertUnit(n);
+                } else {
+                  double rai = stringToDouble(raiInputCtrl.text);
+                  double ngan = stringToDouble(nganInputCtrl.text);
+                  double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                  calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                }
+              },
             ),
           ),
         ],

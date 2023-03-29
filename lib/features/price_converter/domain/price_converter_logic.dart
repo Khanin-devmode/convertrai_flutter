@@ -84,7 +84,7 @@ class PriceCalNotifier extends StateNotifier<double> {
   }
 }
 
-final calNotifierProvider =
+final priceCalNotifierProvider =
     StateNotifierProvider<PriceCalNotifier, double>((ref) {
   return PriceCalNotifier();
 });

@@ -1,4 +1,5 @@
 import 'package:convert_rai/constants.dart';
+import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
@@ -19,11 +20,14 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
   final raiInputCtrl = TextEditingController(text: '1');
   final nganInputCtrl = TextEditingController();
   final sqWhaInputCtrl = TextEditingController();
+  final priceInputCtrl = TextEditingController();
+
+  ConvertingUnit seletedUnit = ConvertingUnit.rai;
 
   @override
   Widget build(BuildContext context) {
-    final calState = ref.watch(calNotifierProvider);
-    final calNotifier = ref.watch(calNotifierProvider.notifier);
+    final priceCalState = ref.watch(priceCalNotifierProvider);
+    final PriceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
 
     return Container(
       color: kBgColor,
@@ -35,14 +39,13 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
               children: [
                 Expanded(
                   flex: 4,
-                  child: calState.selectedUnit != ConvertingUnit.raiNganSqWha
+                  child: seletedUnit != ConvertingUnit.raiNganSqWha
                       ? CustomInputField(
-                          label: getUnitText(calState.selectedUnit),
+                          label: getUnitText(seletedUnit),
                           inputTextController: singleInputCtrl,
-                          calNotifier: calNotifier,
                           onChanged: (newValue) {
                             double n = stringToDouble(newValue);
-                            calNotifier.convertUnit(n);
+                            // calNotifier.convertUnit(n);
                           },
                         )
                       : Row(
@@ -51,15 +54,14 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                               child: CustomInputField(
                                 label: 'ไร่',
                                 inputTextController: raiInputCtrl,
-                                calNotifier: calNotifier,
                                 onChanged: (newValue) {
                                   double rai = stringToDouble(newValue);
                                   double ngan =
                                       stringToDouble(nganInputCtrl.text);
                                   double sqWha =
                                       stringToDouble(sqWhaInputCtrl.text);
-                                  calNotifier.convertCombinedUnit(
-                                      rai, ngan, sqWha);
+                                  // calNotifier.convertCombinedUnit(
+                                  //     rai, ngan, sqWha);
                                 },
                               ),
                             ),
@@ -68,15 +70,14 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                               child: CustomInputField(
                                 label: 'งาน',
                                 inputTextController: nganInputCtrl,
-                                calNotifier: calNotifier,
                                 onChanged: (newValue) {
                                   double rai =
                                       stringToDouble(raiInputCtrl.text);
                                   double ngan = stringToDouble(newValue);
                                   double sqWha =
                                       stringToDouble(sqWhaInputCtrl.text);
-                                  calNotifier.convertCombinedUnit(
-                                      rai, ngan, sqWha);
+                                  // calNotifier.convertCombinedUnit(
+                                  //     rai, ngan, sqWha);
                                 },
                               ),
                             ),
@@ -85,15 +86,14 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                               child: CustomInputField(
                                 label: 'ตรว.',
                                 inputTextController: sqWhaInputCtrl,
-                                calNotifier: calNotifier,
                                 onChanged: (newValue) {
                                   double rai =
                                       stringToDouble(raiInputCtrl.text);
                                   double ngan =
                                       stringToDouble(nganInputCtrl.text);
                                   double sqWha = stringToDouble(newValue);
-                                  calNotifier.convertCombinedUnit(
-                                      rai, ngan, sqWha);
+                                  // calNotifier.convertCombinedUnit(
+                                  //     rai, ngan, sqWha);
                                 },
                               ),
                             ),
@@ -103,20 +103,28 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 const SizedBox(
                   width: 12,
                 ),
-                Expanded(
-                  flex: 2,
-                  child: UnitSelectDropdown(
-                    calState: calState,
-                    calNotifier: calNotifier,
-                    singleInputCtrl: singleInputCtrl,
-                    raiInputCtrl: raiInputCtrl,
-                    nganInputCtrl: nganInputCtrl,
-                    sqWhaInputCtrl: sqWhaInputCtrl,
-                  ),
-                ),
+                // Expanded(
+                //   flex: 2,
+                //   child: UnitSelectDropdown(
+                //     selectedUnit: seletedUnit,
+                //     singleInputCtrl: singleInputCtrl,
+                //     raiInputCtrl: raiInputCtrl,
+                //     nganInputCtrl: nganInputCtrl,
+                //     sqWhaInputCtrl: sqWhaInputCtrl,
+                //     onChanged: () {},
+                //   ),
+                // ),
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: CustomInputField(
+                inputTextController: priceInputCtrl,
+                onChanged: (newvalue) {},
+                label: 'ราคาที่ดิน'),
+          ),
+          Text(''),
           Container(
             margin: const EdgeInsets.all(12),
             decoration: const BoxDecoration(
