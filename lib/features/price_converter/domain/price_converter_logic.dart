@@ -37,31 +37,22 @@ class PriceCalNotifier extends StateNotifier<double> {
         break;
     }
 
-    // var fullRai = sqm / 1600;
-    // var fullNgan = sqm / 400;
-    // var fullSqWha = sqm / 4;
-
-    // var rai = (fullSqWha / 400).floorToDouble();
-    // var sqWhaRemainder = fullSqWha.remainder(400);
-    // var ngan = (sqWhaRemainder / 100).floorToDouble();
-    // var sqWha = sqWhaRemainder.remainder(100);
-
     pricerPerSqm = inputPrice / sqm;
 
     switch (outputUnit) {
       case ConvertingUnit.rai:
         {
-          state = pricerPerSqm * 0.000625;
+          state = pricerPerSqm / 0.000625;
         }
         break;
       case ConvertingUnit.ngan:
         {
-          state = pricerPerSqm * 0.0025;
+          state = pricerPerSqm / 0.0025;
         }
         break;
       case ConvertingUnit.sqWha:
         {
-          state = pricerPerSqm * 0.25;
+          state = pricerPerSqm / 0.25;
         }
         break;
       case ConvertingUnit.sqm:

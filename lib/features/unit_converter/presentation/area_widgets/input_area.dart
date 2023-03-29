@@ -89,11 +89,14 @@ class InputArea extends StatelessWidget {
           Expanded(
             flex: 2,
             child: UnitSelectDropdown(
+              selectableUnits: const [
+                ConvertingUnit.sqm,
+                ConvertingUnit.rai,
+                ConvertingUnit.ngan,
+                ConvertingUnit.sqWha,
+                ConvertingUnit.raiNganSqWha
+              ],
               selectedUnit: calState.selectedUnit,
-              singleInputCtrl: singleInputCtrl,
-              raiInputCtrl: raiInputCtrl,
-              nganInputCtrl: nganInputCtrl,
-              sqWhaInputCtrl: sqWhaInputCtrl,
               onChanged: (newUnit) {
                 calNotifier.selectUnit(newUnit);
 

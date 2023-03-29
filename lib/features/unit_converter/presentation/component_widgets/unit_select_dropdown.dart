@@ -1,5 +1,4 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
 
@@ -8,17 +7,11 @@ class UnitSelectDropdown extends StatelessWidget {
       {super.key,
       required this.selectedUnit,
       required this.onChanged,
-      required this.singleInputCtrl,
-      required this.raiInputCtrl,
-      required this.nganInputCtrl,
-      required this.sqWhaInputCtrl});
+      required this.selectableUnits});
 
   final ConvertingUnit selectedUnit;
-  final Function(ConvertingUnit?) onChanged;
-  final TextEditingController singleInputCtrl;
-  final TextEditingController raiInputCtrl;
-  final TextEditingController nganInputCtrl;
-  final TextEditingController sqWhaInputCtrl;
+  final Function(dynamic) onChanged;
+  final List<ConvertingUnit> selectableUnits;
 
   @override
   Widget build(BuildContext context) {
@@ -34,25 +27,15 @@ class UnitSelectDropdown extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           alignment: Alignment.center,
           value: selectedUnit,
-          items: ConvertingUnit.values.map((ConvertingUnit unit) {
+          items: selectableUnits.map((ConvertingUnit unit) {
             return DropdownMenuItem<ConvertingUnit>(
-                value: unit, child: Text(getUnitText(unit)));
+              value: unit,
+              child: Text(
+                getUnitText(unit),
+              ),
+            );
           }).toList(),
-          onChanged: onChanged
-          // onChanged: (newUnit) {
-          //   calNotifier.selectUnit(newUnit);
-
-          //   if (newUnit != ConvertingUnit.raiNganSqWha) {
-          //     double n = stringToDouble(singleInputCtrl.text);
-          //     calNotifier.convertUnit(n);
-          //   } else {
-          //     double rai = stringToDouble(raiInputCtrl.text);
-          //     double ngan = stringToDouble(nganInputCtrl.text);
-          //     double sqWha = stringToDouble(sqWhaInputCtrl.text);
-          //     calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-          //   }
-          // },
-          ),
+          onChanged: onChanged),
     );
   }
 }

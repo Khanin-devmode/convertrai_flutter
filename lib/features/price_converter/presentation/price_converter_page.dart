@@ -1,10 +1,9 @@
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
+import 'package:convert_rai/features/unit_converter/presentation/component_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:convert_rai/features/unit_converter/presentation/component_widgets/custom_input.dart';
-import 'package:convert_rai/features/unit_converter/presentation/component_widgets/unit_select_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,12 +21,13 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
   final sqWhaInputCtrl = TextEditingController();
   final priceInputCtrl = TextEditingController();
 
-  ConvertingUnit seletedUnit = ConvertingUnit.rai;
+  ConvertingUnit seletedInputUnit = ConvertingUnit.rai;
+  ConvertingUnit seletedOutputUnit = ConvertingUnit.rai;
 
   @override
   Widget build(BuildContext context) {
     final priceCalState = ref.watch(priceCalNotifierProvider);
-    final PriceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
+    final priceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
 
     return Container(
       color: kBgColor,
@@ -39,13 +39,16 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
               children: [
                 Expanded(
                   flex: 4,
-                  child: seletedUnit != ConvertingUnit.raiNganSqWha
+                  child: seletedInputUnit != ConvertingUnit.raiNganSqWha
                       ? CustomInputField(
-                          label: getUnitText(seletedUnit),
+                          label: getUnitText(seletedInputUnit),
                           inputTextController: singleInputCtrl,
                           onChanged: (newValue) {
-                            double n = stringToDouble(newValue);
-                            // calNotifier.convertUnit(n);
+                            double unitValue = stringToDouble(newValue);
+                            double inputPrice =
+                                stringToDouble(priceInputCtrl.text);
+                            priceCalNotifier.convertPrice(inputPrice, unitValue,
+                                seletedInputUnit, seletedOutputUnit);
                           },
                         )
                       : Row(
@@ -60,8 +63,14 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                                       stringToDouble(nganInputCtrl.text);
                                   double sqWha =
                                       stringToDouble(sqWhaInputCtrl.text);
-                                  // calNotifier.convertCombinedUnit(
-                                  //     rai, ngan, sqWha);
+                                  double inputPrice =
+                                      stringToDouble(priceInputCtrl.text);
+                                  priceCalNotifier.convertCombinedUnit(
+                                      rai,
+                                      ngan,
+                                      sqWha,
+                                      inputPrice,
+                                      seletedOutputUnit);
                                 },
                               ),
                             ),
@@ -76,8 +85,14 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                                   double ngan = stringToDouble(newValue);
                                   double sqWha =
                                       stringToDouble(sqWhaInputCtrl.text);
-                                  // calNotifier.convertCombinedUnit(
-                                  //     rai, ngan, sqWha);
+                                  double inputPrice =
+                                      stringToDouble(priceInputCtrl.text);
+                                  priceCalNotifier.convertCombinedUnit(
+                                      rai,
+                                      ngan,
+                                      sqWha,
+                                      inputPrice,
+                                      seletedOutputUnit);
                                 },
                               ),
                             ),
@@ -92,8 +107,14 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                                   double ngan =
                                       stringToDouble(nganInputCtrl.text);
                                   double sqWha = stringToDouble(newValue);
-                                  // calNotifier.convertCombinedUnit(
-                                  //     rai, ngan, sqWha);
+                                  double inputPrice =
+                                      stringToDouble(priceInputCtrl.text);
+                                  priceCalNotifier.convertCombinedUnit(
+                                      rai,
+                                      ngan,
+                                      sqWha,
+                                      inputPrice,
+                                      seletedOutputUnit);
                                 },
                               ),
                             ),
@@ -103,17 +124,38 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 const SizedBox(
                   width: 12,
                 ),
-                // Expanded(
-                //   flex: 2,
-                //   child: UnitSelectDropdown(
-                //     selectedUnit: seletedUnit,
-                //     singleInputCtrl: singleInputCtrl,
-                //     raiInputCtrl: raiInputCtrl,
-                //     nganInputCtrl: nganInputCtrl,
-                //     sqWhaInputCtrl: sqWhaInputCtrl,
-                //     onChanged: () {},
-                //   ),
-                // ),
+                Expanded(
+                  flex: 2,
+                  child: UnitSelectDropdown(
+                    selectableUnits: const [
+                      ConvertingUnit.sqm,
+                      ConvertingUnit.rai,
+                      ConvertingUnit.ngan,
+                      ConvertingUnit.sqWha,
+                      ConvertingUnit.raiNganSqWha
+                    ],
+                    selectedUnit: seletedInputUnit,
+                    onChanged: (newUnit) {
+                      setState(() {
+                        seletedInputUnit = newUnit;
+                      });
+                      var inputPrice = stringToDouble(priceInputCtrl.text);
+
+                      if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
+                        var unitValue = stringToDouble(singleInputCtrl.text);
+                        priceCalNotifier.convertPrice(inputPrice, unitValue,
+                            seletedInputUnit, seletedOutputUnit);
+                      } else {
+                        double rai = stringToDouble(raiInputCtrl.text);
+                        double ngan = stringToDouble(nganInputCtrl.text);
+                        double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                        double inputPrice = stringToDouble(priceInputCtrl.text);
+                        priceCalNotifier.convertCombinedUnit(
+                            rai, ngan, sqWha, inputPrice, seletedOutputUnit);
+                      }
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -121,10 +163,26 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
             padding: const EdgeInsets.all(12),
             child: CustomInputField(
                 inputTextController: priceInputCtrl,
-                onChanged: (newvalue) {},
+                onChanged: (newvalue) {
+                  var inputPrice = stringToDouble(newvalue);
+
+                  if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
+                    var unitValue = stringToDouble(singleInputCtrl.text);
+                    priceCalNotifier.convertPrice(inputPrice, unitValue,
+                        seletedInputUnit, seletedOutputUnit);
+                  } else {
+                    double rai = stringToDouble(raiInputCtrl.text);
+                    double ngan = stringToDouble(nganInputCtrl.text);
+                    double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                    double inputPrice = stringToDouble(priceInputCtrl.text);
+                    priceCalNotifier.convertCombinedUnit(
+                        rai, ngan, sqWha, inputPrice, seletedOutputUnit);
+                  }
+                },
                 label: 'ราคาที่ดิน'),
           ),
-          Text(''),
+          Text(
+              ' ${getUnitText(seletedOutputUnit)} ละ ${priceCalState.toString()}'),
           Container(
             margin: const EdgeInsets.all(12),
             decoration: const BoxDecoration(
@@ -133,8 +191,40 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 Radius.circular(12),
               ),
             ),
-            child: Column(
-              children: [],
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: UnitSelectDropdown(
+                    selectableUnits: const [
+                      ConvertingUnit.sqm,
+                      ConvertingUnit.rai,
+                      ConvertingUnit.ngan,
+                      ConvertingUnit.sqWha,
+                    ],
+                    selectedUnit: seletedOutputUnit,
+                    onChanged: (newUnit) {
+                      setState(() {
+                        seletedOutputUnit = newUnit;
+                      });
+                      var inputPrice = stringToDouble(priceInputCtrl.text);
+
+                      if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
+                        var unitValue = stringToDouble(singleInputCtrl.text);
+                        priceCalNotifier.convertPrice(inputPrice, unitValue,
+                            seletedInputUnit, seletedOutputUnit);
+                      } else {
+                        double rai = stringToDouble(raiInputCtrl.text);
+                        double ngan = stringToDouble(nganInputCtrl.text);
+                        double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                        double inputPrice = stringToDouble(priceInputCtrl.text);
+                        priceCalNotifier.convertCombinedUnit(
+                            rai, ngan, sqWha, inputPrice, seletedOutputUnit);
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],
