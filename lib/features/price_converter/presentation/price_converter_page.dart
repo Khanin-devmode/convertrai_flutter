@@ -32,7 +32,15 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
     return Container(
       color: kBgColor,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              'ขนาดและราคาที่ดิน',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
@@ -181,20 +189,24 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 },
                 label: 'ราคาที่ดิน'),
           ),
-          Text(
-              ' ${getUnitText(seletedOutputUnit)} ละ ${priceCalState.toString()}'),
-          Container(
-            margin: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(12),
-              ),
-            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  flex: 2,
+                const Text(
+                  'ราคาต่อหน่วย',
+                  style: TextStyle(fontSize: 18),
+                ),
+                Container(
+                  width: 120,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
                   child: UnitSelectDropdown(
                     selectableUnits: const [
                       ConvertingUnit.sqm,
@@ -225,6 +237,29 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   ),
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '${getUnitText(seletedOutputUnit)} ละ',
+                    style: kBodyText,
+                  ),
+                  Text(
+                    priceCalState.toString(),
+                    style: TextStyle(fontSize: 48),
+                  ),
+                  const Text(
+                    'บาท',
+                    style: kBodyText,
+                  )
+                ],
+              ),
             ),
           ),
         ],
