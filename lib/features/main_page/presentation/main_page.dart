@@ -1,7 +1,7 @@
 import 'package:convert_rai/ad_helper.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/price_converter/presentation/price_converter_page.dart';
-import 'package:convert_rai/features/unit_converter/presentation/converter_page.dart';
+import 'package:convert_rai/features/unit_converter/presentation/pages/converter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';

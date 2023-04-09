@@ -1,7 +1,7 @@
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:convert_rai/features/unit_converter/presentation/component_widgets/custom_input.dart';
-import 'package:convert_rai/features/unit_converter/presentation/component_widgets/unit_select_dropdown.dart';
+import 'package:convert_rai/shared_widgets/custom_input.dart';
+import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
 

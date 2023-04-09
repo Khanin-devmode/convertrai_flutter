@@ -1,5 +1,5 @@
 import 'package:convert_rai/constants.dart';
-import 'package:convert_rai/features/unit_converter/presentation/component_widgets/snackbar.dart';
+import 'package:convert_rai/shared_widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

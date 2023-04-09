@@ -1,7 +1,7 @@
 import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
-import 'package:convert_rai/features/unit_converter/presentation/area_widgets/input_area.dart';
-import 'package:convert_rai/features/unit_converter/presentation/area_widgets/result_area.dart';
-import 'package:convert_rai/features/unit_converter/presentation/area_widgets/save_result_area.dart';
+import 'package:convert_rai/features/unit_converter/presentation/sections/input_unit_section.dart';
+import 'package:convert_rai/features/unit_converter/presentation/sections/output_unit_section.dart';
+import 'package:convert_rai/features/unit_converter/presentation/sections/save_result_section.dart';
 import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

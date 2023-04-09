@@ -1,6 +1,6 @@
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
-import 'package:convert_rai/features/unit_converter/presentation/component_widgets/saved_result_row.dart';
+import 'package:convert_rai/shared_widgets/saved_result_row.dart';
 import 'package:flutter/material.dart';
 
 class SaveResultArea extends StatelessWidget {
