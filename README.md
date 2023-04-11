@@ -1,16 +1,21 @@
-# convertrai_flutter
+# Convert Rai
 
-A new Flutter project.
+A simple Thai land unit converter application in both iOS and Android. 
 
-## Getting Started
+## Features
+- Convert Thai land unit(ไร่/งาน/ตรว.) to other units.
+- Calculate price per unit area from input land area size and price.
 
-This project is a starting point for a Flutter application.
+## Technical implemenation
+- Implement Riverpod as state management.
+- Calulation/Conversion/Saving logic with StateNotifier in Riverpod.
+- Custom TextField with TextEditingController, Formatter and etc.
+- Ads from google_mobile_ads package on both iOS and Android.
+- Refactored to apply Clean Architecture by features, each feature contain layer/folder of Data, Domain and Presentation.
 
-A few resources to get you started if this is your first Flutter project:
+## Downloads 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [iOS](https://apps.apple.com/us/app/convert-rai/id6444877065)
+- [Android](https://play.google.com/store/apps/details?id=dev.khanin.convertrai_flutter)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
