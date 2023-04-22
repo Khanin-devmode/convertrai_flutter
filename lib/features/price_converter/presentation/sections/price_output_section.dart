@@ -65,7 +65,7 @@ class PriceOutputSection extends StatelessWidget {
                 ),
                 Text(
                   outputText,
-                  style: TextStyle(fontSize: 48),
+                  style: const TextStyle(fontSize: 48),
                 ),
                 const Text(
                   'บาท',
