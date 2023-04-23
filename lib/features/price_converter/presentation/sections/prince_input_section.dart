@@ -54,8 +54,8 @@ class PriceInputSection extends StatelessWidget {
                           double unitValue = stringToDouble(newValue);
                           double inputPrice =
                               stringToDouble(priceInputCtrl.text);
-                          priceCalNotifier.convertPrice(inputPrice, unitValue,
-                              seletedInputUnit, seletedOutputUnit);
+                          priceCalNotifier.convertPrice(
+                              inputPrice, unitValue, seletedInputUnit);
                         },
                       )
                     : Row(
@@ -134,8 +134,8 @@ class PriceInputSection extends StatelessWidget {
 
                     if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
                       var unitValue = stringToDouble(singleInputCtrl.text);
-                      priceCalNotifier.convertPrice(inputPrice, unitValue,
-                          seletedInputUnit, seletedOutputUnit);
+                      priceCalNotifier.convertPrice(
+                          inputPrice, unitValue, seletedInputUnit);
                     } else {
                       double rai = stringToDouble(raiInputCtrl.text);
                       double ngan = stringToDouble(nganInputCtrl.text);
@@ -163,8 +163,8 @@ class PriceInputSection extends StatelessWidget {
 
                       if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
                         var unitValue = stringToDouble(singleInputCtrl.text);
-                        priceCalNotifier.convertPrice(inputPrice, unitValue,
-                            seletedInputUnit, seletedOutputUnit);
+                        priceCalNotifier.convertPrice(
+                            inputPrice, unitValue, seletedInputUnit);
                       } else {
                         double rai = stringToDouble(raiInputCtrl.text);
                         double ngan = stringToDouble(nganInputCtrl.text);

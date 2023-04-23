@@ -34,7 +34,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
   Widget build(BuildContext context) {
     final priceCalState = ref.watch(priceCalNotifierProvider);
     final priceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
-    final outputText = kNumFormat.format(priceCalState).toString();
+    // final outputText = kNumFormat.format(priceCalState).toString();
 
     onOutputUnitSelected(newUnit) {
       setState(() {
@@ -45,8 +45,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
 
       if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
         var unitValue = stringToDouble(singleInputCtrl.text);
-        priceCalNotifier.convertPrice(
-            inputPrice, unitValue, seletedInputUnit, seletedOutputUnit);
+        priceCalNotifier.convertPrice(inputPrice, unitValue, seletedInputUnit);
       } else {
         double rai = stringToDouble(raiInputCtrl.text);
         double ngan = stringToDouble(nganInputCtrl.text);
@@ -76,7 +75,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
           Expanded(
             child: PriceOutputSection(
                 seletedOutputUnit: seletedOutputUnit,
-                outputText: outputText,
+                // outputText: outputText,
                 onOutputUnitSelected: onOutputUnitSelected),
           ),
         ],
