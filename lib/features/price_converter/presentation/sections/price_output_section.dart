@@ -80,10 +80,11 @@ class PriceOutputSection extends ConsumerWidget {
         // ),
         Column(
           children: [
-            Text(priceOutput.pricePerSqm.toString()),
-            Text(priceOutput.pricePerRai.toString()),
-            Text(priceOutput.pricePerNgan.toString()),
-            Text(priceOutput.pricePerSqWha.toString()),
+            Text('ตรม. ละ ${kBahtFormat.format(priceOutput.pricePerSqm)} บาท'),
+            Text('ไร่ ละ ${kBahtFormat.format(priceOutput.pricePerRai)} บาท'),
+            Text('งาน ละ ${kBahtFormat.format(priceOutput.pricePerNgan)} บาท'),
+            Text(
+                'ตรว. ละ ${kBahtFormat.format(priceOutput.pricePerSqWha)} บาท'),
           ],
         )
       ],

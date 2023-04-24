@@ -19,3 +19,4 @@ const kSecondTitleTextStyle =
 const kBodyText = TextStyle(fontSize: 16);
 
 var kNumFormat = NumberFormat(',###.######', 'en_US');
+var kBahtFormat = NumberFormat(',###.##', 'en_US');
