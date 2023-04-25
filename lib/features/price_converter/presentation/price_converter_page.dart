@@ -74,9 +74,9 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
           ),
           Expanded(
             child: PriceOutputSection(
-                seletedOutputUnit: seletedOutputUnit,
-                // outputText: outputText,
-                onOutputUnitSelected: onOutputUnitSelected),
+              headerLabel:
+                  '${singleInputCtrl.text} ${getUnitText(seletedInputUnit)} = ${priceInputCtrl.text} บาท',
+            ),
           ),
         ],
       ),
