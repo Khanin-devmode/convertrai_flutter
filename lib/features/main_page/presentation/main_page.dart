@@ -61,12 +61,12 @@ class MainPageState extends ConsumerState<MainPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: kBgColor,
-          elevation: 0,
-          centerTitle: false,
-          title: const CustomAppBarTitle(),
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0,
+        //   centerTitle: false,
+        //   // title: const CustomAppBarTitle(),
+        // ),
         body: Container(
           color: kBgColor,
           child: Column(

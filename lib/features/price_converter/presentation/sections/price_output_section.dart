@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class PriceOutputSection extends ConsumerWidget {
   const PriceOutputSection({super.key, required this.headerLabel});
 
-  final headerLabel;
+  final String headerLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
