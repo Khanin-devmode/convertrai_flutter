@@ -4,6 +4,7 @@ import 'package:convert_rai/features/price_converter/presentation/sections/price
 import 'package:convert_rai/features/price_converter/presentation/sections/prince_input_section.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
+import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -61,6 +62,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const HeaderLabel(label: 'Price Converter'),
           PriceInputSection(
             seletedInputUnit: seletedInputUnit,
             singleInputCtrl: singleInputCtrl,

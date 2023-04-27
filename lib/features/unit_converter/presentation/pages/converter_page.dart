@@ -3,6 +3,7 @@ import 'package:convert_rai/features/unit_converter/presentation/sections/input_
 import 'package:convert_rai/features/unit_converter/presentation/sections/output_unit_section.dart';
 import 'package:convert_rai/features/unit_converter/presentation/sections/save_result_section.dart';
 import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
+import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,7 +28,9 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
     final saveNotifier = ref.watch(saveNotifierProvider.notifier);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const HeaderLabel(label: 'Unit Converter'),
         InputArea(
             calState: calState,
             singleInputCtrl: singleInputCtrl,
