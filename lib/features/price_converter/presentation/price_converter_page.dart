@@ -57,31 +57,28 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
       }
     }
 
-    return Container(
-      color: kBgColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const HeaderLabel(label: 'Price Converter'),
-          PriceInputSection(
-            seletedInputUnit: seletedInputUnit,
-            singleInputCtrl: singleInputCtrl,
-            priceInputCtrl: priceInputCtrl,
-            priceCalNotifier: priceCalNotifier,
-            seletedOutputUnit: seletedOutputUnit,
-            raiInputCtrl: raiInputCtrl,
-            nganInputCtrl: nganInputCtrl,
-            sqWhaInputCtrl: sqWhaInputCtrl,
-            selectInputUnit: selectInputUnit,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const HeaderLabel(label: 'Price Converter'),
+        PriceInputSection(
+          seletedInputUnit: seletedInputUnit,
+          singleInputCtrl: singleInputCtrl,
+          priceInputCtrl: priceInputCtrl,
+          priceCalNotifier: priceCalNotifier,
+          seletedOutputUnit: seletedOutputUnit,
+          raiInputCtrl: raiInputCtrl,
+          nganInputCtrl: nganInputCtrl,
+          sqWhaInputCtrl: sqWhaInputCtrl,
+          selectInputUnit: selectInputUnit,
+        ),
+        Expanded(
+          child: PriceOutputSection(
+            headerLabel:
+                '${singleInputCtrl.text} ${getUnitText(seletedInputUnit)} = ${priceInputCtrl.text} บาท',
           ),
-          Expanded(
-            child: PriceOutputSection(
-              headerLabel:
-                  '${singleInputCtrl.text} ${getUnitText(seletedInputUnit)} = ${priceInputCtrl.text} บาท',
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

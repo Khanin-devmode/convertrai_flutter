@@ -61,18 +61,23 @@ class MainPageState extends ConsumerState<MainPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.transparent,
-        //   elevation: 0,
-        //   centerTitle: false,
-        //   // title: const CustomAppBarTitle(),
-        // ),
         body: Container(
           color: kBgColor,
           child: Column(
             children: [
               Expanded(
-                child: _pages.elementAt(_selectedIndex),
+                child: Stack(children: [
+                  Container(
+                    height: 220,
+                    decoration: const BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(100),
+                      ),
+                    ),
+                  ),
+                  _pages.elementAt(_selectedIndex),
+                ]),
               ),
               _bannerAd != null
                   ? SafeArea(
@@ -105,40 +110,6 @@ class MainPageState extends ConsumerState<MainPage> {
           onTap: (_onItemTapped),
         ),
       ),
-    );
-  }
-}
-
-class CustomAppBarTitle extends StatelessWidget {
-  const CustomAppBarTitle({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Flexible(
-          flex: 6,
-          child: Text(
-            'Convert Rai',
-            style: kTitleTextStyle,
-          ),
-        ),
-        Flexible(
-          flex: 6,
-          child: Container(
-            height: 8,
-            decoration: const BoxDecoration(
-              color: kTitleColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(2),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
