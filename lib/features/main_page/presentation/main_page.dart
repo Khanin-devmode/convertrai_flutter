@@ -62,7 +62,7 @@ class MainPageState extends ConsumerState<MainPage> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          color: kBgColor,
+          color: Colors.white,
           child: Column(
             children: [
               Expanded(
