@@ -45,14 +45,14 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                   )),
               child: Column(
                 children: [
-                  InputArea(
+                  InputSection(
                       calState: calState,
                       singleInputCtrl: singleInputCtrl,
                       calNotifier: calNotifier,
                       raiInputCtrl: raiInputCtrl,
                       nganInputCtrl: nganInputCtrl,
                       sqWhaInputCtrl: sqWhaInputCtrl),
-                  ResultArea(
+                  OutputUnitSection(
                       calState: calState, singleInputCtrl: singleInputCtrl),
                   const SaveResultAreaHeader(),
                   SaveResultArea(

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:convert_rai/constants.dart';
 
-class ResultArea extends StatelessWidget {
-  const ResultArea({
+class OutputUnitSection extends StatelessWidget {
+  const OutputUnitSection({
     super.key,
     required this.calState,
     required this.singleInputCtrl,
@@ -17,7 +17,7 @@ class ResultArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(vertical: 12),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
