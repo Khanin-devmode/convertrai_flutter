@@ -15,27 +15,33 @@ class UnitSelectDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-      child: DropdownButton<ConvertingUnit>(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          alignment: Alignment.center,
-          value: selectedUnit,
-          items: selectableUnits.map((ConvertingUnit unit) {
-            return DropdownMenuItem<ConvertingUnit>(
-              value: unit,
-              child: Text(
-                getUnitText(unit),
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
               ),
-            );
-          }).toList(),
-          onChanged: onChanged),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            child: DropdownButton<ConvertingUnit>(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                alignment: Alignment.centerLeft,
+                value: selectedUnit,
+                items: selectableUnits.map((ConvertingUnit unit) {
+                  return DropdownMenuItem<ConvertingUnit>(
+                    value: unit,
+                    child: Text(
+                      getUnitText(unit),
+                    ),
+                  );
+                }).toList(),
+                onChanged: onChanged),
+          ),
+        ),
+      ],
     );
   }
 }

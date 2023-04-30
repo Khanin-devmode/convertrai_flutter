@@ -29,6 +29,9 @@ flutter:
     - family: MontserratAlternates
       fonts:
         - asset: fonts/MontserratAlternates-Regular.ttf
+    - family: Prompt
+      fonts:
+        - asset: fonts/Prompt-Regular.ttf
   uses-material-design: true
 
 flutter_icons:

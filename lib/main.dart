@@ -22,7 +22,7 @@ class ConverRaiApp extends StatelessWidget {
     return MaterialApp(
       title: 'Convert Rai',
       theme: ThemeData(
-        fontFamily: 'MontserratAlternates',
+        fontFamily: 'Prompt',
         useMaterial3: true,
       ),
       home: const MainPage(),
