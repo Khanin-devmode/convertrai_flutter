@@ -20,8 +20,8 @@ class CustomInputField extends StatelessWidget {
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [ThousandsFormatter()],
       decoration: InputDecoration(
-        // label: Text(label),
-        hintText: label,
+        // labelText: label,
+        // hintText: label,
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(

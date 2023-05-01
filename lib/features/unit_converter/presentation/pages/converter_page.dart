@@ -52,6 +52,9 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                       raiInputCtrl: raiInputCtrl,
                       nganInputCtrl: nganInputCtrl,
                       sqWhaInputCtrl: sqWhaInputCtrl),
+                  const Divider(
+                    height: 40,
+                  ),
                   OutputUnitSection(
                       calState: calState, singleInputCtrl: singleInputCtrl),
                   const SaveResultAreaHeader(),

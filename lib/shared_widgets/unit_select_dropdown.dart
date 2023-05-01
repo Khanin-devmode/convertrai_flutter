@@ -25,10 +25,11 @@ class UnitSelectDropdown extends StatelessWidget {
                 Radius.circular(12),
               ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: DropdownButton<ConvertingUnit>(
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                 alignment: Alignment.centerLeft,
+                isExpanded: true,
                 value: selectedUnit,
                 items: selectableUnits.map((ConvertingUnit unit) {
                   return DropdownMenuItem<ConvertingUnit>(

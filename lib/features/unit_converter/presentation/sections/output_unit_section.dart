@@ -17,7 +17,7 @@ class OutputUnitSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 12),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
@@ -26,34 +26,44 @@ class OutputUnitSection extends StatelessWidget {
       ),
       child: Column(
         children: [
+          Container(
+            child: Center(
+              child: Text('${getInputText(singleInputCtrl, calState)}'),
+            ),
+            height: 40,
+            decoration: const BoxDecoration(
+              color: Colors.orangeAccent,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
+          ),
           calState.selectedUnit != ConvertingUnit.raiNganSqWha
               ? ResultRow(
                   resultText:
-                      '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.',
+                      ' = ${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.sqm
               ? ResultRow(
-                  resultText:
-                      '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.sqm)} ตรม.',
+                  resultText: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.rai
               ? ResultRow(
-                  resultText:
-                      '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.fullRai)} ไร่.',
+                  resultText: ' = ${kNumFormat.format(calState.fullRai)} ไร่.',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.ngan
               ? ResultRow(
-                  resultText:
-                      '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.fullNgan)} งาน.',
+                  resultText: ' = ${kNumFormat.format(calState.fullNgan)} งาน.',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.sqWha
               ? ResultRow(
                   resultText:
-                      '${getInputText(singleInputCtrl, calState)} = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+                      ' = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
                 )
               : const SizedBox(),
         ],

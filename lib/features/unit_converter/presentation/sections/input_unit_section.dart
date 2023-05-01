@@ -58,65 +58,99 @@ class InputSection extends StatelessWidget {
             }
           },
         ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'ขนาดพื้นที่',
-            style: TextStyle(fontSize: 16),
-          ),
-        ),
         calState.selectedUnit != ConvertingUnit.raiNganSqWha
-            ? CustomInputField(
-                label: getUnitText(calState.selectedUnit),
-                inputTextController: singleInputCtrl,
-                onChanged: (newValue) {
-                  double n = stringToDouble(newValue);
-                  calNotifier.convertUnit(n);
-                },
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const InputLabel(label: 'หน่วยพื้นที่'),
+                  CustomInputField(
+                    label: getUnitText(calState.selectedUnit),
+                    inputTextController: singleInputCtrl,
+                    onChanged: (newValue) {
+                      double n = stringToDouble(newValue);
+                      calNotifier.convertUnit(n);
+                    },
+                  ),
+                ],
               )
             : Row(
                 children: [
                   Expanded(
-                    child: CustomInputField(
-                      label: 'ไร่',
-                      inputTextController: raiInputCtrl,
-                      onChanged: (newValue) {
-                        double rai = stringToDouble(newValue);
-                        double ngan = stringToDouble(nganInputCtrl.text);
-                        double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                        calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-                      },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const InputLabel(label: 'ไร่'),
+                        CustomInputField(
+                          label: 'ไร่',
+                          inputTextController: raiInputCtrl,
+                          onChanged: (newValue) {
+                            double rai = stringToDouble(newValue);
+                            double ngan = stringToDouble(nganInputCtrl.text);
+                            double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                            calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: CustomInputField(
-                      label: 'งาน',
-                      inputTextController: nganInputCtrl,
-                      onChanged: (newValue) {
-                        double rai = stringToDouble(raiInputCtrl.text);
-                        double ngan = stringToDouble(newValue);
-                        double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                        calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-                      },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const InputLabel(label: 'งาน'),
+                        CustomInputField(
+                          label: 'งาน',
+                          inputTextController: nganInputCtrl,
+                          onChanged: (newValue) {
+                            double rai = stringToDouble(raiInputCtrl.text);
+                            double ngan = stringToDouble(newValue);
+                            double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                            calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: CustomInputField(
-                      label: 'ตรว.',
-                      inputTextController: sqWhaInputCtrl,
-                      onChanged: (newValue) {
-                        double rai = stringToDouble(raiInputCtrl.text);
-                        double ngan = stringToDouble(nganInputCtrl.text);
-                        double sqWha = stringToDouble(newValue);
-                        calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-                      },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const InputLabel(label: 'ตรว.'),
+                        CustomInputField(
+                          label: 'ตรว.',
+                          inputTextController: sqWhaInputCtrl,
+                          onChanged: (newValue) {
+                            double rai = stringToDouble(raiInputCtrl.text);
+                            double ngan = stringToDouble(nganInputCtrl.text);
+                            double sqWha = stringToDouble(newValue);
+                            calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
       ],
+    );
+  }
+}
+
+class InputLabel extends StatelessWidget {
+  const InputLabel({super.key, required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        label,
+        style: const TextStyle(fontSize: 16),
+      ),
     );
   }
 }
