@@ -28,10 +28,15 @@ String getUnitText(ConvertingUnit unit) {
   }
 }
 
-String getInputText(TextEditingController inputControl, Calculation calState) {
+String getInputText(
+    TextEditingController singleInputCtrl,
+    TextEditingController raiInputCtrl,
+    TextEditingController nganInputCtrl,
+    TextEditingController sqWhaInputCtrl,
+    Calculation calState) {
   if (calState.selectedUnit == ConvertingUnit.raiNganSqWha) {
-    return '${kNumFormat.format(stringToDouble(inputControl.text))} ไร่ ${kNumFormat.format(stringToDouble(inputControl.text))} งาน ${kNumFormat.format(stringToDouble(inputControl.text))} ตรว.';
+    return '${kNumFormat.format(stringToDouble(raiInputCtrl.text))} ไร่ ${kNumFormat.format(stringToDouble(nganInputCtrl.text))} งาน ${kNumFormat.format(stringToDouble(sqWhaInputCtrl.text))} ตรว.';
   } else {
-    return '${kNumFormat.format(stringToDouble(inputControl.text))} ${getUnitText(calState.selectedUnit)}';
+    return '${kNumFormat.format(stringToDouble(singleInputCtrl.text))} ${getUnitText(calState.selectedUnit)}';
   }
 }

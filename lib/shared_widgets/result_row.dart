@@ -6,9 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ResultRow extends ConsumerWidget {
-  const ResultRow({Key? key, required this.resultText}) : super(key: key);
+  const ResultRow({Key? key, required this.resultText, this.inputText})
+      : super(key: key);
 
   final String resultText;
+  final String? inputText;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,7 +36,7 @@ class ResultRow extends ConsumerWidget {
               ),
               onPressed: () async {
                 //Save with notifier
-                saveNotifier.saveResult(resultText);
+                saveNotifier.saveResult('$inputText$resultText');
               },
             ),
             IconButton(
@@ -43,7 +45,7 @@ class ResultRow extends ConsumerWidget {
                 color: kIconColor,
               ),
               onPressed: () {
-                Clipboard.setData(ClipboardData(text: resultText));
+                Clipboard.setData(ClipboardData(text: '$inputText$resultText'));
                 showSnackBar(context);
               },
             ),
