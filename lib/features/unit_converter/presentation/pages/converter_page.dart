@@ -31,42 +31,41 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const HeaderLabel(label: 'Unit Converter'),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Container(
-              padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
-              decoration: const BoxDecoration(
-                  color: Color(
-                    0xFFF6F5F1,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  )),
-              child: Column(
-                children: [
-                  InputSection(
-                      calState: calState,
-                      singleInputCtrl: singleInputCtrl,
-                      calNotifier: calNotifier,
-                      raiInputCtrl: raiInputCtrl,
-                      nganInputCtrl: nganInputCtrl,
-                      sqWhaInputCtrl: sqWhaInputCtrl),
-                  const Divider(
-                    height: 40,
-                  ),
-                  OutputUnitSection(
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          child: Container(
+            padding:
+                const EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 12),
+            decoration: const BoxDecoration(
+                color: Color(
+                  0xFFF6F5F1,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                )),
+            child: Column(
+              children: [
+                InputSection(
                     calState: calState,
                     singleInputCtrl: singleInputCtrl,
+                    calNotifier: calNotifier,
                     raiInputCtrl: raiInputCtrl,
                     nganInputCtrl: nganInputCtrl,
-                    sqWhaInputCtrl: sqWhaInputCtrl,
-                  ),
-                  const SaveResultAreaHeader(),
-                  SaveResultArea(
-                      saveState: saveState, saveNotifier: saveNotifier),
-                ],
-              ),
+                    sqWhaInputCtrl: sqWhaInputCtrl),
+                const Divider(
+                  height: 40,
+                ),
+                OutputUnitSection(
+                  calState: calState,
+                  singleInputCtrl: singleInputCtrl,
+                  raiInputCtrl: raiInputCtrl,
+                  nganInputCtrl: nganInputCtrl,
+                  sqWhaInputCtrl: sqWhaInputCtrl,
+                ),
+                const SaveResultAreaHeader(),
+                SaveResultArea(
+                    saveState: saveState, saveNotifier: saveNotifier),
+              ],
             ),
           ),
         ),

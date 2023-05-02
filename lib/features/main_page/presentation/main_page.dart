@@ -61,38 +61,19 @@ class MainPageState extends ConsumerState<MainPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(
-                child: Stack(children: [
-                  Container(
-                    height: 220,
-                    decoration: const BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(100),
-                      ),
-                    ),
-                  ),
-                  _pages.elementAt(_selectedIndex),
-                ]),
+        body: SingleChildScrollView(
+          child: Stack(children: [
+            Container(
+              height: 220,
+              decoration: const BoxDecoration(
+                color: Colors.orange,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(100),
+                ),
               ),
-              _bannerAd != null
-                  ? SafeArea(
-                      bottom: true,
-                      child: Container(
-                        color: Colors.blue,
-                        width: _bannerAd!.size.width.toDouble(),
-                        height: _bannerAd!.size.height.toDouble(),
-                        alignment: Alignment.center,
-                        child: AdWidget(ad: _bannerAd!),
-                      ),
-                    )
-                  : Row(),
-            ],
-          ),
+            ),
+            _pages.elementAt(_selectedIndex),
+          ]),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
@@ -113,3 +94,16 @@ class MainPageState extends ConsumerState<MainPage> {
     );
   }
 }
+
+ // _bannerAd != null
+              //     ? SafeArea(
+              //         bottom: true,
+              //         child: Container(
+              //           color: Colors.blue,
+              //           width: _bannerAd!.size.width.toDouble(),
+              //           height: _bannerAd!.size.height.toDouble(),
+              //           alignment: Alignment.center,
+              //           child: AdWidget(ad: _bannerAd!),
+              //         ),
+              //       )
+              //     : Row(),

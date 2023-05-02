@@ -15,37 +15,38 @@ class SaveResultArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
+    return Container(
+      constraints: const BoxConstraints(minHeight: 100),
+      decoration: const BoxDecoration(
         color: Colors.white,
-        child: saveState.isNotEmpty
-            ? ListView.builder(
-                itemCount: saveState.length,
-                itemBuilder: (context, index) {
-                  final result = saveState[index];
-                  return SavedResultRow(
-                    resultText: result,
-                    deleteFunction: saveNotifier.deleteResult,
-                    index: index,
-                  );
-                })
-            : Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text("กด"),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4),
-                      child: Icon(
-                        Icons.save_outlined,
-                        color: kIconColor,
-                      ),
-                    ),
-                    Text("เพื่อบันทึกผลแปลงหน่วยที่นี่")
-                  ],
-                ),
-              ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
       ),
+      child: saveState.isNotEmpty
+          ? Column(
+              children: List.generate(
+                  saveState.length,
+                  (i) => SavedResultRow(
+                        resultText: saveState[i],
+                        deleteFunction: saveNotifier.deleteResult,
+                        index: i,
+                      )),
+            )
+          : Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text("กด"),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: Icon(
+                      Icons.save_outlined,
+                      color: kIconColor,
+                    ),
+                  ),
+                  Text("เพื่อบันทึกผลแปลงหน่วยที่นี่")
+                ],
+              ),
+            ),
     );
   }
 }
