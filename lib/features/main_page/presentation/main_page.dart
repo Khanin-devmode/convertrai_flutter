@@ -1,5 +1,4 @@
 import 'package:convert_rai/ad_helper.dart';
-import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/price_converter/presentation/price_converter_page.dart';
 import 'package:convert_rai/features/unit_converter/presentation/pages/converter_page.dart';
 import 'package:flutter/material.dart';
@@ -59,22 +58,36 @@ class MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Stack(children: [
-            Container(
-              height: 220,
-              decoration: const BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(100),
-                ),
+        body: Stack(children: [
+          Container(
+            height: 220,
+            decoration: const BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(100),
               ),
             ),
-            _pages.elementAt(_selectedIndex),
-          ]),
-        ),
+          ),
+          SingleChildScrollView(
+            child: _pages.elementAt(_selectedIndex),
+          ),
+          _bannerAd != null
+              ? Positioned(
+                  bottom: 16,
+                  left: (screenSize.width / 2 - _bannerAd!.size.width / 2),
+                  child: Container(
+                    color: Colors.blue,
+                    width: _bannerAd!.size.width.toDouble(),
+                    height: _bannerAd!.size.height.toDouble(),
+                    alignment: Alignment.center,
+                    child: AdWidget(ad: _bannerAd!),
+                  ))
+              : const SizedBox()
+        ]),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -94,16 +107,3 @@ class MainPageState extends ConsumerState<MainPage> {
     );
   }
 }
-
- // _bannerAd != null
-              //     ? SafeArea(
-              //         bottom: true,
-              //         child: Container(
-              //           color: Colors.blue,
-              //           width: _bannerAd!.size.width.toDouble(),
-              //           height: _bannerAd!.size.height.toDouble(),
-              //           alignment: Alignment.center,
-              //           child: AdWidget(ad: _bannerAd!),
-              //         ),
-              //       )
-              //     : Row(),

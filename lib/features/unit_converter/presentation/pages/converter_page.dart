@@ -69,6 +69,9 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
             ),
           ),
         ),
+        const SizedBox(
+          height: 80,
+        )
       ],
     );
   }
