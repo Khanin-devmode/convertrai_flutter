@@ -55,6 +55,10 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                 const Divider(
                   height: 40,
                 ),
+                const Text(
+                  'ประมวลผล',
+                  style: TextStyle(fontSize: 20),
+                ),
                 OutputUnitSection(
                   calState: calState,
                   singleInputCtrl: singleInputCtrl,
@@ -62,7 +66,13 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                   nganInputCtrl: nganInputCtrl,
                   sqWhaInputCtrl: sqWhaInputCtrl,
                 ),
-                const SaveResultAreaHeader(),
+                const Text(
+                  'บันทึกผล',
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 SaveResultArea(
                     saveState: saveState, saveNotifier: saveNotifier),
               ],

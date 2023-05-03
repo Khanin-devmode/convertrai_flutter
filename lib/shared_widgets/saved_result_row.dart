@@ -20,39 +20,38 @@ class SavedResultRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            resultText,
-            style: kBodyText,
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              resultText,
+              style: kBodyText,
+            ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                icon: const Icon(
-                  Icons.delete_outlined,
-                  color: kIconColor,
-                ),
-                onPressed: () async {
-                  deleteFunction(index);
-                },
+        Row(
+          children: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.delete_outlined,
+                color: kIconColor,
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.copy,
-                  color: kIconColor,
-                ),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: resultText));
-                  showSnackBar(context);
-                },
+              onPressed: () async {
+                deleteFunction(index);
+              },
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.copy,
+                color: kIconColor,
               ),
-            ],
-          ),
-        )
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: resultText));
+                showSnackBar(context);
+              },
+            ),
+          ],
+        ),
       ],
     );
   }

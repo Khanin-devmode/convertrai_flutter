@@ -35,15 +35,18 @@ class OutputUnitSection extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            child: Center(
-              child: Text('$inputText'),
-            ),
             height: 40,
             decoration: const BoxDecoration(
               color: Colors.orangeAccent,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                inputText,
+                style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
           ),

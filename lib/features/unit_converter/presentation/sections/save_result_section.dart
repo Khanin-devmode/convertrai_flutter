@@ -19,7 +19,7 @@ class SaveResultArea extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 100),
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: saveState.isNotEmpty
           ? Column(
