@@ -7,14 +7,14 @@ import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ConverterPage extends ConsumerStatefulWidget {
-  const ConverterPage({super.key});
+class UnitConverterPage extends ConsumerStatefulWidget {
+  const UnitConverterPage({super.key});
 
   @override
   ConverterPageState createState() => ConverterPageState();
 }
 
-class ConverterPageState extends ConsumerState<ConverterPage> {
+class ConverterPageState extends ConsumerState<UnitConverterPage> {
   final singleInputCtrl = TextEditingController(text: '1');
   final raiInputCtrl = TextEditingController(text: '1');
   final nganInputCtrl = TextEditingController();
@@ -70,7 +70,7 @@ class ConverterPageState extends ConsumerState<ConverterPage> {
                   'บันทึกผล',
                   style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SaveResultArea(

@@ -1,6 +1,7 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
 import 'package:convert_rai/shared_widgets/custom_input.dart';
+import 'package:convert_rai/shared_widgets/input_label.dart';
 import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -134,23 +135,6 @@ class InputSection extends StatelessWidget {
                 ],
               ),
       ],
-    );
-  }
-}
-
-class InputLabel extends StatelessWidget {
-  const InputLabel({super.key, required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: 16),
-      ),
     );
   }
 }

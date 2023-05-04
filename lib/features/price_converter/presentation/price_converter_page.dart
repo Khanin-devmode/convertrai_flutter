@@ -1,7 +1,6 @@
-import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/price_converter/presentation/sections/price_output_section.dart';
-import 'package:convert_rai/features/price_converter/presentation/sections/prince_input_section.dart';
+import 'package:convert_rai/features/price_converter/presentation/sections/price_input_section.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
@@ -61,23 +60,43 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const HeaderLabel(label: 'Price Converter'),
-        PriceInputSection(
-          seletedInputUnit: seletedInputUnit,
-          singleInputCtrl: singleInputCtrl,
-          priceInputCtrl: priceInputCtrl,
-          priceCalNotifier: priceCalNotifier,
-          seletedOutputUnit: seletedOutputUnit,
-          raiInputCtrl: raiInputCtrl,
-          nganInputCtrl: nganInputCtrl,
-          sqWhaInputCtrl: sqWhaInputCtrl,
-          selectInputUnit: selectInputUnit,
-        ),
-        Expanded(
-          child: PriceOutputSection(
-            headerLabel:
-                '${singleInputCtrl.text} ${getUnitText(seletedInputUnit)} = ${priceInputCtrl.text} บาท',
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Container(
+            padding:
+                const EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 12),
+            decoration: const BoxDecoration(
+              color: Color(
+                0xFFF6F5F1,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              children: [
+                PriceInputSection(
+                  seletedInputUnit: seletedInputUnit,
+                  singleInputCtrl: singleInputCtrl,
+                  priceInputCtrl: priceInputCtrl,
+                  priceCalNotifier: priceCalNotifier,
+                  seletedOutputUnit: seletedOutputUnit,
+                  raiInputCtrl: raiInputCtrl,
+                  nganInputCtrl: nganInputCtrl,
+                  sqWhaInputCtrl: sqWhaInputCtrl,
+                  selectInputUnit: selectInputUnit,
+                ),
+                PriceOutputSection(
+                  headerLabel:
+                      '${singleInputCtrl.text} ${getUnitText(seletedInputUnit)} = ${priceInputCtrl.text} บาท',
+                ),
+              ],
+            ),
           ),
         ),
+        const SizedBox(
+          height: 80,
+        )
       ],
     );
   }
