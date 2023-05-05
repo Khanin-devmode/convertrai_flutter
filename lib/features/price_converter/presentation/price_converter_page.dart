@@ -17,9 +17,9 @@ class PriceConverterPage extends ConsumerStatefulWidget {
 class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
   final singleInputCtrl = TextEditingController(text: '1');
   final raiInputCtrl = TextEditingController(text: '1');
-  final nganInputCtrl = TextEditingController();
-  final sqWhaInputCtrl = TextEditingController();
-  final priceInputCtrl = TextEditingController();
+  final nganInputCtrl = TextEditingController(text: '0');
+  final sqWhaInputCtrl = TextEditingController(text: '0');
+  final priceInputCtrl = TextEditingController(text: '0');
 
   ConvertingUnit seletedInputUnit = ConvertingUnit.rai;
   ConvertingUnit seletedOutputUnit = ConvertingUnit.rai;
@@ -32,7 +32,6 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final priceCalState = ref.watch(priceCalNotifierProvider);
     final priceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
     // final outputText = kNumFormat.format(priceCalState).toString();
 
@@ -85,6 +84,13 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   nganInputCtrl: nganInputCtrl,
                   sqWhaInputCtrl: sqWhaInputCtrl,
                   selectInputUnit: selectInputUnit,
+                ),
+                const Divider(
+                  height: 40,
+                ),
+                const Text(
+                  'ราคาต่อหน่วย',
+                  style: TextStyle(fontSize: 20),
                 ),
                 PriceOutputSection(
                   headerLabel:

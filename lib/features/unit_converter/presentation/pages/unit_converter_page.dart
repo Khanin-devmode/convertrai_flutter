@@ -17,8 +17,8 @@ class UnitConverterPage extends ConsumerStatefulWidget {
 class ConverterPageState extends ConsumerState<UnitConverterPage> {
   final singleInputCtrl = TextEditingController(text: '1');
   final raiInputCtrl = TextEditingController(text: '1');
-  final nganInputCtrl = TextEditingController();
-  final sqWhaInputCtrl = TextEditingController();
+  final nganInputCtrl = TextEditingController(text: '0');
+  final sqWhaInputCtrl = TextEditingController(text: '0');
 
   @override
   Widget build(BuildContext context) {
