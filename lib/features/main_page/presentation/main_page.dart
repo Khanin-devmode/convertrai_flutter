@@ -70,6 +70,12 @@ class MainPageState extends ConsumerState<MainPage> {
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(100),
               ),
+              gradient: LinearGradient(
+                colors: [Color(0xffff8900), Color(0xffffbf74)],
+                stops: [0, 1],
+                begin: Alignment.bottomLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ),
           SingleChildScrollView(
