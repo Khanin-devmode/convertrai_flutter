@@ -77,7 +77,14 @@ class PricePerUnitRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
-          Text('${kBahtFormat.format(pricePerUnit)} บาท / ${unit}'),
+          Text(
+            '${kBahtFormat.format(pricePerUnit)}',
+            style: kAccentBodyText,
+          ),
+          Text(
+            ' บาท / $unit',
+            style: kBodyText,
+          ),
         ],
       ),
     );

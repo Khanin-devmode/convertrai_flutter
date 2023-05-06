@@ -17,6 +17,7 @@ const kTitleTextStyle =
 const kSecondTitleTextStyle =
     TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kTitleColor);
 const kBodyText = TextStyle(fontSize: 16);
+const kAccentBodyText = TextStyle(fontSize: 16, color: Color(0xffff8900));
 
 var kNumFormat = NumberFormat(',###.######', 'en_US');
 var kBahtFormat = NumberFormat(',###.##', 'en_US');

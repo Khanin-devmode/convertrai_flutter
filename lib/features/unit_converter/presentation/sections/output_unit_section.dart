@@ -53,33 +53,62 @@ class OutputUnitSection extends StatelessWidget {
           calState.selectedUnit != ConvertingUnit.raiNganSqWha
               ? ResultRow(
                   inputText: inputText,
-                  resultText:
-                      ' = ${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.',
+                  valueList: [
+                    ValueUnitPair(
+                        value: calState.rai, unit: ConvertingUnit.rai),
+                    ValueUnitPair(
+                        value: calState.ngan, unit: ConvertingUnit.ngan),
+                    ValueUnitPair(
+                        value: calState.sqWha, unit: ConvertingUnit.sqWha),
+                  ],
+                  // resultValue:
+                  //     ' = ${kNumFormat.format(calState.rai)} ไร่ ${kNumFormat.format(calState.ngan)} งาน ${kNumFormat.format(calState.sqWha)} ตรว.',
+                  // resultUnit: '',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.sqm
               ? ResultRow(
                   inputText: inputText,
-                  resultText: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
+                  valueList: [
+                    ValueUnitPair(value: calState.sqm, unit: ConvertingUnit.sqm)
+                  ],
+                  // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
+                  // resultUnit: '',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.rai
               ? ResultRow(
                   inputText: inputText,
-                  resultText: ' = ${kNumFormat.format(calState.fullRai)} ไร่.',
+                  valueList: [
+                    ValueUnitPair(
+                        value: calState.fullRai, unit: ConvertingUnit.rai)
+                  ],
+                  // resultValue: ' = ${kNumFormat.format(calState.fullRai)} ไร่.',
+                  // resultUnit: '',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.ngan
               ? ResultRow(
                   inputText: inputText,
-                  resultText: ' = ${kNumFormat.format(calState.fullNgan)} งาน.',
+                  valueList: [
+                    ValueUnitPair(
+                        value: calState.fullNgan, unit: ConvertingUnit.ngan)
+                  ],
+                  // resultValue:
+                  //     ' = ${kNumFormat.format(calState.fullNgan)} งาน.',
+                  // resultUnit: '',
                 )
               : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.sqWha
               ? ResultRow(
                   inputText: inputText,
-                  resultText:
-                      ' = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+                  valueList: [
+                    ValueUnitPair(
+                        value: calState.fullSqWha, unit: ConvertingUnit.sqWha)
+                  ],
+                  // resultValue:
+                  //     ' = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+                  // resultUnit: '',
                 )
               : const SizedBox(),
         ],
