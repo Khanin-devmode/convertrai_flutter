@@ -73,7 +73,7 @@ class PriceInputSection extends StatelessWidget {
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const InputLabel(label: 'หน่วยพื้นที่'),
+                  const InputLabel(label: 'ขนาดพื้นที่'),
                   CustomInputField(
                     label: getUnitText(seletedInputUnit),
                     inputTextController: singleInputCtrl,
