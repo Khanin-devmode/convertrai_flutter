@@ -66,16 +66,6 @@ class OutputUnitSection extends StatelessWidget {
                   // resultUnit: '',
                 )
               : const SizedBox(),
-          calState.selectedUnit != ConvertingUnit.sqm
-              ? ResultRow(
-                  inputText: inputText,
-                  valueList: [
-                    ValueUnitPair(value: calState.sqm, unit: ConvertingUnit.sqm)
-                  ],
-                  // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
-                  // resultUnit: '',
-                )
-              : const SizedBox(),
           calState.selectedUnit != ConvertingUnit.rai
               ? ResultRow(
                   inputText: inputText,
@@ -108,6 +98,16 @@ class OutputUnitSection extends StatelessWidget {
                   ],
                   // resultValue:
                   //     ' = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+                  // resultUnit: '',
+                )
+              : const SizedBox(),
+          calState.selectedUnit != ConvertingUnit.sqm
+              ? ResultRow(
+                  inputText: inputText,
+                  valueList: [
+                    ValueUnitPair(value: calState.sqm, unit: ConvertingUnit.sqm)
+                  ],
+                  // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
                   // resultUnit: '',
                 )
               : const SizedBox(),

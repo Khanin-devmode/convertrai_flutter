@@ -15,10 +15,10 @@ class UnitConverterPage extends ConsumerStatefulWidget {
 }
 
 class ConverterPageState extends ConsumerState<UnitConverterPage> {
-  final singleInputCtrl = TextEditingController(text: '1');
-  final raiInputCtrl = TextEditingController(text: '1');
-  final nganInputCtrl = TextEditingController(text: '0');
-  final sqWhaInputCtrl = TextEditingController(text: '0');
+  // final singleInputCtrl = TextEditingController(text: '1');
+  // final raiInputCtrl = TextEditingController(text: '1');
+  // final nganInputCtrl = TextEditingController(text: '0');
+  // final sqWhaInputCtrl = TextEditingController(text: '0');
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +26,10 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
     final calNotifier = ref.watch(calNotifierProvider.notifier);
     final List<String> saveState = ref.watch(saveNotifierProvider);
     final saveNotifier = ref.watch(saveNotifierProvider.notifier);
+    final singleInputCtrl = ref.watch(singleInputCtrlProvider);
+    final raiInputCtrl = ref.watch(raiInputCtrlProvider);
+    final nganInputCtrl = ref.watch(nganInputCtrlProvider);
+    final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

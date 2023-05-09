@@ -1,7 +1,7 @@
 enum ConvertingUnit { sqm, rai, ngan, sqWha, raiNganSqWha }
 
 class Calculation {
-  ConvertingUnit selectedUnit = ConvertingUnit.rai;
+  ConvertingUnit selectedUnit = ConvertingUnit.raiNganSqWha;
 
   double sqm = 1600;
   double rai = 1;

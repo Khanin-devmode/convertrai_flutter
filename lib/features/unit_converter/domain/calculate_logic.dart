@@ -1,5 +1,15 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final singleInputCtrlProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '1'));
+final raiInputCtrlProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '1'));
+final nganInputCtrlProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '0'));
+final sqWhaInputCtrlProvider = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '0'));
 
 class CalNotifier extends StateNotifier<Calculation> {
   CalNotifier() : super(Calculation());
