@@ -2,7 +2,6 @@ import 'package:convert_rai/features/unit_converter/data/calculation_model.dart'
 import 'package:convert_rai/shared_widgets/result_row.dart';
 import 'package:flutter/material.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
-import 'package:convert_rai/constants.dart';
 
 class OutputUnitSection extends StatelessWidget {
   const OutputUnitSection(
@@ -21,8 +20,8 @@ class OutputUnitSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inputText = getInputText(
-        singleInputCtrl, raiInputCtrl, nganInputCtrl, sqWhaInputCtrl, calState);
+    final inputText = getInputText(singleInputCtrl, raiInputCtrl, nganInputCtrl,
+        sqWhaInputCtrl, calState.selectedUnit);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),

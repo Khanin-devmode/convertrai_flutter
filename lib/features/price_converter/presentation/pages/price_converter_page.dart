@@ -15,13 +15,13 @@ class PriceConverterPage extends ConsumerStatefulWidget {
 }
 
 class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
-  final singleInputCtrl = TextEditingController(text: '1');
-  final raiInputCtrl = TextEditingController(text: '1');
-  final nganInputCtrl = TextEditingController(text: '0');
-  final sqWhaInputCtrl = TextEditingController(text: '0');
-  final priceInputCtrl = TextEditingController(text: '0');
+  // final singleInputCtrl = TextEditingController(text: '1');
+  // final raiInputCtrl = TextEditingController(text: '1');
+  // final nganInputCtrl = TextEditingController(text: '0');
+  // final sqWhaInputCtrl = TextEditingController(text: '0');
+  // final priceInputCtrl = TextEditingController(text: '0');
 
-  ConvertingUnit seletedInputUnit = ConvertingUnit.rai;
+  ConvertingUnit seletedInputUnit = ConvertingUnit.sqWha;
   ConvertingUnit seletedOutputUnit = ConvertingUnit.rai;
 
   selectInputUnit(ConvertingUnit unit) {
@@ -34,26 +34,31 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
   Widget build(BuildContext context) {
     final priceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
     // final outputText = kNumFormat.format(priceCalState).toString();
+    final singleInputCtrl = ref.watch(singleInputCtrlProviderPriceCon);
+    final raiInputCtrl = ref.watch(raiInputCtrlProviderPriceCon);
+    final nganInputCtrl = ref.watch(nganInputCtrlProviderPriceCon);
+    final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderPriceCon);
+    final priceInputCtrl = ref.watch(priceInputCtrlProviderPriceCon);
 
-    onOutputUnitSelected(newUnit) {
-      setState(() {
-        seletedOutputUnit = newUnit;
-      });
+    // onOutputUnitSelected(newUnit) {
+    //   setState(() {
+    //     seletedOutputUnit = newUnit;
+    //   });
 
-      var inputPrice = stringToDouble(priceInputCtrl.text);
+    //   var inputPrice = stringToDouble(priceInputCtrl.text);
 
-      if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
-        var unitValue = stringToDouble(singleInputCtrl.text);
-        priceCalNotifier.convertPrice(inputPrice, unitValue, seletedInputUnit);
-      } else {
-        double rai = stringToDouble(raiInputCtrl.text);
-        double ngan = stringToDouble(nganInputCtrl.text);
-        double sqWha = stringToDouble(sqWhaInputCtrl.text);
-        double inputPrice = stringToDouble(priceInputCtrl.text);
-        priceCalNotifier.convertCombinedUnit(
-            rai, ngan, sqWha, inputPrice, seletedOutputUnit);
-      }
-    }
+    //   if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
+    //     var unitValue = stringToDouble(singleInputCtrl.text);
+    //     priceCalNotifier.convertPrice(inputPrice, unitValue, seletedInputUnit);
+    //   } else {
+    //     double rai = stringToDouble(raiInputCtrl.text);
+    //     double ngan = stringToDouble(nganInputCtrl.text);
+    //     double sqWha = stringToDouble(sqWhaInputCtrl.text);
+    //     double inputPrice = stringToDouble(priceInputCtrl.text);
+    //     priceCalNotifier.convertCombinedUnit(
+    //         rai, ngan, sqWha, inputPrice, seletedOutputUnit);
+    //   }
+    // }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,8 +98,12 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   style: TextStyle(fontSize: 20),
                 ),
                 PriceOutputSection(
-                  headerLabel:
-                      '${singleInputCtrl.text} ${getUnitText(seletedInputUnit)} = ${priceInputCtrl.text} บาท',
+                  singleInputCtrl: singleInputCtrl,
+                  raiInputCtrl: raiInputCtrl,
+                  nganInputCtrl: nganInputCtrl,
+                  sqWhaInputCtrl: sqWhaInputCtrl,
+                  priceInputCtrl: priceInputCtrl,
+                  selectedInputUnit: seletedInputUnit,
                 ),
               ],
             ),

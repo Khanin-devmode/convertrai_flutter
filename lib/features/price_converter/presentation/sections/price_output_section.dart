@@ -1,17 +1,36 @@
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/price_converter/data/price_output_model.dart';
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
+import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
+import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PriceOutputSection extends ConsumerWidget {
-  const PriceOutputSection({super.key, required this.headerLabel});
+  const PriceOutputSection(
+      {super.key,
+      required this.singleInputCtrl,
+      required this.priceInputCtrl,
+      required this.raiInputCtrl,
+      required this.nganInputCtrl,
+      required this.sqWhaInputCtrl,
+      required this.selectedInputUnit});
 
-  final String headerLabel;
+  final TextEditingController singleInputCtrl;
+  final TextEditingController priceInputCtrl;
+  final TextEditingController raiInputCtrl;
+  final TextEditingController nganInputCtrl;
+  final TextEditingController sqWhaInputCtrl;
+  final ConvertingUnit selectedInputUnit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     PriceOutput priceOutput = ref.watch(priceCalNotifierProvider);
+
+    final inputText = getInputText(singleInputCtrl, raiInputCtrl, nganInputCtrl,
+        sqWhaInputCtrl, selectedInputUnit);
+
+    final String headerLabel = '$inputText = ${priceInputCtrl.text} บาท';
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -40,10 +59,6 @@ class PriceOutputSection extends ConsumerWidget {
             ),
           ),
           PricePerUnitRow(
-            pricePerUnit: priceOutput.pricePerSqm,
-            unit: 'ตรม.',
-          ),
-          PricePerUnitRow(
             pricePerUnit: priceOutput.pricePerRai,
             unit: 'ไร่.',
           ),
@@ -54,6 +69,10 @@ class PriceOutputSection extends ConsumerWidget {
           PricePerUnitRow(
             pricePerUnit: priceOutput.pricePerSqWha,
             unit: 'ตรว.',
+          ),
+          PricePerUnitRow(
+            pricePerUnit: priceOutput.pricePerSqm,
+            unit: 'ตรม.',
           ),
         ],
       ),

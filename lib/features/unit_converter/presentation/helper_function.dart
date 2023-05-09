@@ -33,10 +33,10 @@ String getInputText(
     TextEditingController raiInputCtrl,
     TextEditingController nganInputCtrl,
     TextEditingController sqWhaInputCtrl,
-    Calculation calState) {
-  if (calState.selectedUnit == ConvertingUnit.raiNganSqWha) {
+    ConvertingUnit selectedUnit) {
+  if (selectedUnit == ConvertingUnit.raiNganSqWha) {
     return '${kNumFormat.format(stringToDouble(raiInputCtrl.text))} ไร่ ${kNumFormat.format(stringToDouble(nganInputCtrl.text))} งาน ${kNumFormat.format(stringToDouble(sqWhaInputCtrl.text))} ตรว.';
   } else {
-    return '${kNumFormat.format(stringToDouble(singleInputCtrl.text))} ${getUnitText(calState.selectedUnit)}';
+    return '${kNumFormat.format(stringToDouble(singleInputCtrl.text))} ${getUnitText(selectedUnit)}';
   }
 }

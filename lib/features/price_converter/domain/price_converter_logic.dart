@@ -1,6 +1,18 @@
 import 'package:convert_rai/features/price_converter/data/price_output_model.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final singleInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '1'));
+final raiInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '1'));
+final nganInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '0'));
+final sqWhaInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '0'));
+final priceInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
+    (ref) => TextEditingController(text: '0'));
 
 class PriceCalNotifier extends StateNotifier<PriceOutput> {
   PriceCalNotifier()

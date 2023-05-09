@@ -15,21 +15,16 @@ class UnitConverterPage extends ConsumerStatefulWidget {
 }
 
 class ConverterPageState extends ConsumerState<UnitConverterPage> {
-  // final singleInputCtrl = TextEditingController(text: '1');
-  // final raiInputCtrl = TextEditingController(text: '1');
-  // final nganInputCtrl = TextEditingController(text: '0');
-  // final sqWhaInputCtrl = TextEditingController(text: '0');
-
   @override
   Widget build(BuildContext context) {
     final calState = ref.watch(calNotifierProvider);
     final calNotifier = ref.watch(calNotifierProvider.notifier);
     final List<String> saveState = ref.watch(saveNotifierProvider);
     final saveNotifier = ref.watch(saveNotifierProvider.notifier);
-    final singleInputCtrl = ref.watch(singleInputCtrlProvider);
-    final raiInputCtrl = ref.watch(raiInputCtrlProvider);
-    final nganInputCtrl = ref.watch(nganInputCtrlProvider);
-    final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProvider);
+    final singleInputCtrl = ref.watch(singleInputCtrlProviderUnitCon);
+    final raiInputCtrl = ref.watch(raiInputCtrlProviderUnitCon);
+    final nganInputCtrl = ref.watch(nganInputCtrlProviderUnitCon);
+    final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderUnitCon);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

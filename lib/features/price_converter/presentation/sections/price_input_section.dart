@@ -44,11 +44,11 @@ class PriceInputSection extends StatelessWidget {
         ),
         UnitSelectDropdown(
           selectableUnits: const [
-            ConvertingUnit.sqm,
+            ConvertingUnit.raiNganSqWha,
             ConvertingUnit.rai,
             ConvertingUnit.ngan,
             ConvertingUnit.sqWha,
-            ConvertingUnit.raiNganSqWha
+            ConvertingUnit.sqm,
           ],
           selectedUnit: seletedInputUnit,
           onChanged: (newUnit) {
