@@ -2,7 +2,6 @@ import 'package:convert_rai/features/price_converter/domain/price_converter_logi
 import 'package:convert_rai/features/price_converter/presentation/sections/price_output_section.dart';
 import 'package:convert_rai/features/price_converter/presentation/sections/price_input_section.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
