@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pattern_formatter/numeric_formatter.dart';
 
 class CustomInputField extends StatelessWidget {
   const CustomInputField(
@@ -18,7 +17,7 @@ class CustomInputField extends StatelessWidget {
       controller: inputTextController,
       onChanged: onChanged,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [ThousandsFormatter()],
+      inputFormatters: [],
       decoration: InputDecoration(
         // labelText: label,
         // hintText: label,

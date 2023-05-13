@@ -1,7 +1,6 @@
 import 'package:convert_rai/ad_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:convert_rai/constants.dart';
 
@@ -579,7 +578,7 @@ class UnitInputField extends StatelessWidget {
         onChanged: convertUnit,
         controller: textEditingController,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [ThousandsFormatter()],
+        inputFormatters: [],
         decoration: InputDecoration(
           // label: Text(label),
           hintText: label,
