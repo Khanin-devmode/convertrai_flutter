@@ -6,6 +6,7 @@ import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UnitConverterPage extends ConsumerStatefulWidget {
   const UnitConverterPage({super.key});
@@ -26,10 +27,13 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
     final nganInputCtrl = ref.watch(nganInputCtrlProviderUnitCon);
     final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderUnitCon);
 
+    final appLocal = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const HeaderLabel(label: 'Unit Converter'),
+        Text(appLocal.helloWorld),
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Container(
