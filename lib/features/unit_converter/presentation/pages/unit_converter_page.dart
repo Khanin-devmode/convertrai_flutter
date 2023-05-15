@@ -1,3 +1,4 @@
+import 'package:convert_rai/features/main_page/presentation/main_app_state.dart';
 import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
 import 'package:convert_rai/features/unit_converter/presentation/sections/input_unit_section.dart';
 import 'package:convert_rai/features/unit_converter/presentation/sections/output_unit_section.dart';
@@ -33,7 +34,21 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const HeaderLabel(label: 'Unit Converter'),
-        Text(appLocal.helloWorld),
+        Row(
+          children: [
+            Text(appLocal.helloWorld),
+            TextButton(
+                onPressed: (() => ref
+                    .read(localLangCodeProvider.notifier)
+                    .update((state) => 'th')),
+                child: Text('th')),
+            TextButton(
+                onPressed: (() => ref
+                    .read(localLangCodeProvider.notifier)
+                    .update((state) => 'en')),
+                child: Text('en'))
+          ],
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Container(
