@@ -1,7 +1,16 @@
 {
-    "helloWorld": "สวัสดีชาวโลก!"
+    "helloWorld": "สวัสดีชาวโลก!",
     "rai": "ไร่",
     "ngan": "งาน",
     "sqWha": "ตรว.",
     "sqm": "ตรม.",
+    "unit":"หน่วย",
+    "raiNganSqWha":"ไร่/งาน/ตรว.",
+    "conversion":"ประมวลผล",
+    "saveResult":"บันทึกผล",
+    "press":"กด",
+    "saveResultHere":"เพื่อบันทึกผลแปลงหน่วยที่นี่",
+    "price":"ราคา",
+    "pricePerUnit":"ราคาต่อหน่วย",
+    "baht":"บาท"
 }

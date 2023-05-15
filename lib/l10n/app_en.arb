@@ -1,10 +1,16 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
-  "rai": "Rai",
-  "ngan": "Ngan",
-  "sqWha": "Sqwa.",
-  "sqm": "Sqm.",
+    "helloWorld": "Hello World!",
+    "rai": "Rai",
+    "ngan": "Ngan",
+    "sqWha": "Sqwa.",
+    "sqm": "Sqm.",
+    "unit":"Unit",
+    "raiNganSqWha":"Rai/Ngan/sqwha.",
+    "conversion":"Conversion",
+    "saveResult":"Save Results",
+    "press":"Press",
+    "saveResultHere":"to save results here.",
+    "price":"Price",
+    "pricePerUnit":"Price per unit",
+    "baht":"Baht"
 }
