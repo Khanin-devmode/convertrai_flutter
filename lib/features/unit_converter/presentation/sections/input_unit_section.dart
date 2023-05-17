@@ -5,17 +5,18 @@ import 'package:convert_rai/shared_widgets/input_label.dart';
 import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InputSection extends StatelessWidget {
-  const InputSection({
-    super.key,
-    required this.calState,
-    required this.singleInputCtrl,
-    required this.calNotifier,
-    required this.raiInputCtrl,
-    required this.nganInputCtrl,
-    required this.sqWhaInputCtrl,
-  });
+  const InputSection(
+      {super.key,
+      required this.calState,
+      required this.singleInputCtrl,
+      required this.calNotifier,
+      required this.raiInputCtrl,
+      required this.nganInputCtrl,
+      required this.sqWhaInputCtrl,
+      required this.appLocal});
 
   final Calculation calState;
   final TextEditingController singleInputCtrl;
@@ -23,17 +24,18 @@ class InputSection extends StatelessWidget {
   final TextEditingController raiInputCtrl;
   final TextEditingController nganInputCtrl;
   final TextEditingController sqWhaInputCtrl;
+  final AppLocalizations appLocal;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Text(
-            'หน่วย',
-            style: TextStyle(fontSize: 16),
+            appLocal.unit,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
         UnitSelectDropdown(

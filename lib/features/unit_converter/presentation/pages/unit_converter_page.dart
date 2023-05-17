@@ -36,7 +36,6 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
         const HeaderLabel(label: 'Unit Converter'),
         Row(
           children: [
-            Text(appLocal.helloWorld),
             TextButton(
                 onPressed: (() => ref
                     .read(localLangCodeProvider.notifier)
@@ -64,17 +63,19 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
             child: Column(
               children: [
                 InputSection(
-                    calState: calState,
-                    singleInputCtrl: singleInputCtrl,
-                    calNotifier: calNotifier,
-                    raiInputCtrl: raiInputCtrl,
-                    nganInputCtrl: nganInputCtrl,
-                    sqWhaInputCtrl: sqWhaInputCtrl),
+                  calState: calState,
+                  singleInputCtrl: singleInputCtrl,
+                  calNotifier: calNotifier,
+                  raiInputCtrl: raiInputCtrl,
+                  nganInputCtrl: nganInputCtrl,
+                  sqWhaInputCtrl: sqWhaInputCtrl,
+                  appLocal: appLocal,
+                ),
                 const Divider(
                   height: 40,
                 ),
-                const Text(
-                  'ประมวลผล',
+                Text(
+                  appLocal.conversion,
                   style: TextStyle(fontSize: 20),
                 ),
                 OutputUnitSection(
@@ -84,9 +85,9 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                   nganInputCtrl: nganInputCtrl,
                   sqWhaInputCtrl: sqWhaInputCtrl,
                 ),
-                const Text(
-                  'บันทึกผล',
-                  style: TextStyle(fontSize: 20),
+                Text(
+                  appLocal.saveResult,
+                  style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(
                   height: 10,
