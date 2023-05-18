@@ -46,6 +46,7 @@ class InputSection extends StatelessWidget {
             ConvertingUnit.sqWha,
             ConvertingUnit.sqm,
           ],
+          appLocal: appLocal,
           selectedUnit: calState.selectedUnit,
           onChanged: (newUnit) {
             calNotifier.selectUnit(newUnit);
@@ -67,7 +68,7 @@ class InputSection extends StatelessWidget {
                 children: [
                   const InputLabel(label: 'ขนาดพื้นที่'),
                   CustomInputField(
-                    label: getUnitText(calState.selectedUnit),
+                    label: getUnitText(calState.selectedUnit, appLocal),
                     inputTextController: singleInputCtrl,
                     onChanged: (newValue) {
                       double n = stringToDouble(newValue);

@@ -5,6 +5,7 @@ import 'package:convert_rai/features/unit_converter/data/calculation_model.dart'
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PriceOutputSection extends ConsumerWidget {
   const PriceOutputSection(
@@ -14,7 +15,8 @@ class PriceOutputSection extends ConsumerWidget {
       required this.raiInputCtrl,
       required this.nganInputCtrl,
       required this.sqWhaInputCtrl,
-      required this.selectedInputUnit});
+      required this.selectedInputUnit,
+      required this.appLocal});
 
   final TextEditingController singleInputCtrl;
   final TextEditingController priceInputCtrl;
@@ -22,13 +24,14 @@ class PriceOutputSection extends ConsumerWidget {
   final TextEditingController nganInputCtrl;
   final TextEditingController sqWhaInputCtrl;
   final ConvertingUnit selectedInputUnit;
+  final AppLocalizations appLocal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     PriceOutput priceOutput = ref.watch(priceCalNotifierProvider);
 
     final inputText = getInputText(singleInputCtrl, raiInputCtrl, nganInputCtrl,
-        sqWhaInputCtrl, selectedInputUnit);
+        sqWhaInputCtrl, selectedInputUnit, appLocal);
 
     final String headerLabel = '$inputText = ${priceInputCtrl.text} บาท';
 

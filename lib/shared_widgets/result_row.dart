@@ -6,16 +6,19 @@ import 'package:convert_rai/shared_widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResultRow extends ConsumerWidget {
   const ResultRow({
     Key? key,
     required this.valueList,
+    required this.appLocal,
     this.inputText,
   }) : super(key: key);
 
   final String? inputText;
   final List<ValueUnitPair> valueList;
+  final AppLocalizations appLocal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +27,7 @@ class ResultRow extends ConsumerWidget {
     String resultText = ' =';
     for (var pairValue in valueList) {
       resultText =
-          '$resultText ${kNumFormat.format(pairValue.value)} ${getUnitText(pairValue.unit)}';
+          '$resultText ${kNumFormat.format(pairValue.value)} ${getUnitText(pairValue.unit, appLocal)}';
     }
 
     return Row(
@@ -44,7 +47,7 @@ class ResultRow extends ConsumerWidget {
                         text: kNumFormat.format(valueList[i].value) + ' ',
                         style: kAccentBodyText),
                     TextSpan(
-                        text: getUnitText(valueList[i].unit) + ' ',
+                        text: getUnitText(valueList[i].unit, appLocal) + ' ',
                         style: kBodyText),
                   ],
                 ),

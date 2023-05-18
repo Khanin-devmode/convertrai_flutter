@@ -1,6 +1,7 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:flutter/material.dart';
 import 'package:convert_rai/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 double stringToDouble(String newValue) {
   String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
@@ -13,18 +14,18 @@ double stringToDouble(String newValue) {
   return n;
 }
 
-String getUnitText(ConvertingUnit unit) {
+String getUnitText(ConvertingUnit unit, AppLocalizations appLocal) {
   switch (unit) {
     case ConvertingUnit.rai:
-      return 'ไร่';
+      return appLocal.rai;
     case ConvertingUnit.ngan:
-      return 'งาน';
+      return appLocal.ngan;
     case ConvertingUnit.sqWha:
-      return 'ตรว.';
+      return appLocal.sqWha;
     case ConvertingUnit.sqm:
-      return 'ตรม.';
+      return appLocal.sqm;
     case ConvertingUnit.raiNganSqWha:
-      return 'ไร่/งาน/ตรว.';
+      return appLocal.raiNganSqWha;
   }
 }
 
@@ -33,10 +34,11 @@ String getInputText(
     TextEditingController raiInputCtrl,
     TextEditingController nganInputCtrl,
     TextEditingController sqWhaInputCtrl,
-    ConvertingUnit selectedUnit) {
+    ConvertingUnit selectedUnit,
+    AppLocalizations appLocal) {
   if (selectedUnit == ConvertingUnit.raiNganSqWha) {
     return '${kNumFormat.format(stringToDouble(raiInputCtrl.text))} ไร่ ${kNumFormat.format(stringToDouble(nganInputCtrl.text))} งาน ${kNumFormat.format(stringToDouble(sqWhaInputCtrl.text))} ตรว.';
   } else {
-    return '${kNumFormat.format(stringToDouble(singleInputCtrl.text))} ${getUnitText(selectedUnit)}';
+    return '${kNumFormat.format(stringToDouble(singleInputCtrl.text))} ${getUnitText(selectedUnit, appLocal)}';
   }
 }

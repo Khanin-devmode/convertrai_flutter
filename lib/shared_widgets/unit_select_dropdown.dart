@@ -1,17 +1,20 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UnitSelectDropdown extends StatelessWidget {
   const UnitSelectDropdown(
       {super.key,
       required this.selectedUnit,
       required this.onChanged,
-      required this.selectableUnits});
+      required this.selectableUnits,
+      required this.appLocal});
 
   final ConvertingUnit selectedUnit;
   final Function(dynamic) onChanged;
   final List<ConvertingUnit> selectableUnits;
+  final AppLocalizations appLocal;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class UnitSelectDropdown extends StatelessWidget {
                   return DropdownMenuItem<ConvertingUnit>(
                     value: unit,
                     child: Text(
-                      getUnitText(unit),
+                      getUnitText(unit, appLocal),
                     ),
                   );
                 }).toList(),

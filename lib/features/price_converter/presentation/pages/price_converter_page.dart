@@ -5,6 +5,7 @@ import 'package:convert_rai/features/unit_converter/data/calculation_model.dart'
 import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PriceConverterPage extends ConsumerStatefulWidget {
   const PriceConverterPage({super.key});
@@ -38,6 +39,8 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
     final nganInputCtrl = ref.watch(nganInputCtrlProviderPriceCon);
     final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderPriceCon);
     final priceInputCtrl = ref.watch(priceInputCtrlProviderPriceCon);
+
+    final appLocal = AppLocalizations.of(context)!;
 
     // onOutputUnitSelected(newUnit) {
     //   setState(() {
@@ -88,6 +91,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   nganInputCtrl: nganInputCtrl,
                   sqWhaInputCtrl: sqWhaInputCtrl,
                   selectInputUnit: selectInputUnit,
+                  appLocal: appLocal,
                 ),
                 const Divider(
                   height: 40,
@@ -103,6 +107,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   sqWhaInputCtrl: sqWhaInputCtrl,
                   priceInputCtrl: priceInputCtrl,
                   selectedInputUnit: seletedInputUnit,
+                  appLocal: appLocal,
                 ),
               ],
             ),

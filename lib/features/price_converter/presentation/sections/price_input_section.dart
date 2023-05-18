@@ -5,20 +5,21 @@ import 'package:convert_rai/shared_widgets/input_label.dart';
 import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PriceInputSection extends StatelessWidget {
-  const PriceInputSection({
-    super.key,
-    required this.seletedInputUnit,
-    required this.singleInputCtrl,
-    required this.priceInputCtrl,
-    required this.priceCalNotifier,
-    required this.seletedOutputUnit,
-    required this.raiInputCtrl,
-    required this.nganInputCtrl,
-    required this.sqWhaInputCtrl,
-    required this.selectInputUnit,
-  });
+  const PriceInputSection(
+      {super.key,
+      required this.seletedInputUnit,
+      required this.singleInputCtrl,
+      required this.priceInputCtrl,
+      required this.priceCalNotifier,
+      required this.seletedOutputUnit,
+      required this.raiInputCtrl,
+      required this.nganInputCtrl,
+      required this.sqWhaInputCtrl,
+      required this.selectInputUnit,
+      required this.appLocal});
 
   final ConvertingUnit seletedInputUnit;
   final TextEditingController singleInputCtrl;
@@ -29,6 +30,7 @@ class PriceInputSection extends StatelessWidget {
   final TextEditingController nganInputCtrl;
   final TextEditingController sqWhaInputCtrl;
   final Function(ConvertingUnit) selectInputUnit;
+  final AppLocalizations appLocal;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class PriceInputSection extends StatelessWidget {
             ConvertingUnit.sqWha,
             ConvertingUnit.sqm,
           ],
+          appLocal: appLocal,
           selectedUnit: seletedInputUnit,
           onChanged: (newUnit) {
             selectInputUnit(newUnit);
@@ -75,7 +78,7 @@ class PriceInputSection extends StatelessWidget {
                 children: [
                   const InputLabel(label: 'ขนาดพื้นที่'),
                   CustomInputField(
-                    label: getUnitText(seletedInputUnit),
+                    label: getUnitText(seletedInputUnit, appLocal),
                     inputTextController: singleInputCtrl,
                     onChanged: (newValue) {
                       double unitValue = stringToDouble(newValue);

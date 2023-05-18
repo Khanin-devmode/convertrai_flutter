@@ -84,6 +84,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                   raiInputCtrl: raiInputCtrl,
                   nganInputCtrl: nganInputCtrl,
                   sqWhaInputCtrl: sqWhaInputCtrl,
+                  appLocal: appLocal,
                 ),
                 Text(
                   appLocal.saveResult,
