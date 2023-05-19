@@ -37,7 +37,7 @@ String getInputText(
     ConvertingUnit selectedUnit,
     AppLocalizations appLocal) {
   if (selectedUnit == ConvertingUnit.raiNganSqWha) {
-    return '${kNumFormat.format(stringToDouble(raiInputCtrl.text))} ไร่ ${kNumFormat.format(stringToDouble(nganInputCtrl.text))} งาน ${kNumFormat.format(stringToDouble(sqWhaInputCtrl.text))} ตรว.';
+    return '${kNumFormat.format(stringToDouble(raiInputCtrl.text))} ${appLocal.rai} ${kNumFormat.format(stringToDouble(nganInputCtrl.text))} ${appLocal.ngan} ${kNumFormat.format(stringToDouble(sqWhaInputCtrl.text))} ${appLocal.sqWha}';
   } else {
     return '${kNumFormat.format(stringToDouble(singleInputCtrl.text))} ${getUnitText(selectedUnit, appLocal)}';
   }

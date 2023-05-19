@@ -12,5 +12,6 @@
     "saveResultHere":"to save results here.",
     "price":"Price",
     "pricePerUnit":"Price per unit",
-    "baht":"Baht"
+    "baht":"Baht",
+    "areaSize":"Area Size"
 }

@@ -66,7 +66,7 @@ class InputSection extends StatelessWidget {
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const InputLabel(label: 'ขนาดพื้นที่'),
+                  InputLabel(label: appLocal.areaSize),
                   CustomInputField(
                     label: getUnitText(calState.selectedUnit, appLocal),
                     inputTextController: singleInputCtrl,
@@ -83,9 +83,9 @@ class InputSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const InputLabel(label: 'ไร่'),
+                        InputLabel(label: appLocal.rai),
                         CustomInputField(
-                          label: 'ไร่',
+                          label: appLocal.rai,
                           inputTextController: raiInputCtrl,
                           onChanged: (newValue) {
                             double rai = stringToDouble(newValue);
@@ -102,9 +102,9 @@ class InputSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const InputLabel(label: 'งาน'),
+                        InputLabel(label: appLocal.ngan),
                         CustomInputField(
-                          label: 'งาน',
+                          label: appLocal.ngan,
                           inputTextController: nganInputCtrl,
                           onChanged: (newValue) {
                             double rai = stringToDouble(raiInputCtrl.text);
@@ -121,9 +121,9 @@ class InputSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const InputLabel(label: 'ตรว.'),
+                        InputLabel(label: appLocal.sqWha),
                         CustomInputField(
-                          label: 'ตรว.',
+                          label: appLocal.sqWha,
                           inputTextController: sqWhaInputCtrl,
                           onChanged: (newValue) {
                             double rai = stringToDouble(raiInputCtrl.text);

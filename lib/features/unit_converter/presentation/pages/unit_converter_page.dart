@@ -94,7 +94,10 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                   height: 10,
                 ),
                 SaveResultArea(
-                    saveState: saveState, saveNotifier: saveNotifier),
+                  saveState: saveState,
+                  saveNotifier: saveNotifier,
+                  appLocal: appLocal,
+                ),
               ],
             ),
           ),
