@@ -37,11 +37,11 @@ class PriceInputSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Text(
-            'หน่วย',
-            style: TextStyle(fontSize: 16),
+            appLocal.unit,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
         UnitSelectDropdown(
@@ -76,7 +76,7 @@ class PriceInputSection extends StatelessWidget {
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const InputLabel(label: 'ขนาดพื้นที่'),
+                  InputLabel(label: appLocal.areaSize),
                   CustomInputField(
                     label: getUnitText(seletedInputUnit, appLocal),
                     inputTextController: singleInputCtrl,
@@ -95,9 +95,9 @@ class PriceInputSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const InputLabel(label: 'ไร่'),
+                        InputLabel(label: appLocal.rai),
                         CustomInputField(
-                          label: 'ไร่',
+                          label: appLocal.rai,
                           inputTextController: raiInputCtrl,
                           onChanged: (newValue) {
                             double rai = stringToDouble(newValue);
@@ -117,9 +117,9 @@ class PriceInputSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const InputLabel(label: 'งาน'),
+                        InputLabel(label: appLocal.ngan),
                         CustomInputField(
-                          label: 'งาน',
+                          label: appLocal.ngan,
                           inputTextController: nganInputCtrl,
                           onChanged: (newValue) {
                             double rai = stringToDouble(raiInputCtrl.text);
@@ -139,9 +139,9 @@ class PriceInputSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const InputLabel(label: 'ตรว.'),
+                        InputLabel(label: appLocal.sqWha),
                         CustomInputField(
-                          label: 'ตรว.',
+                          label: appLocal.sqWha,
                           inputTextController: sqWhaInputCtrl,
                           onChanged: (newValue) {
                             double rai = stringToDouble(raiInputCtrl.text);
@@ -303,10 +303,9 @@ class PriceInputSection extends StatelessWidget {
         //     ],
         //   ),
         // ),
-        const InputLabel(label: 'ราคา'),
-
+        InputLabel(label: appLocal.price),
         CustomInputField(
-          label: 'ราคา',
+          label: appLocal.price,
           inputTextController: priceInputCtrl,
           onChanged: (newvalue) {
             var inputPrice = stringToDouble(newvalue);
