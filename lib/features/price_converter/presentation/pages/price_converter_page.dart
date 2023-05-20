@@ -96,9 +96,9 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 const Divider(
                   height: 40,
                 ),
-                const Text(
-                  'ราคาต่อหน่วย',
-                  style: TextStyle(fontSize: 20),
+                Text(
+                  appLocal.pricePerUnit,
+                  style: const TextStyle(fontSize: 20),
                 ),
                 PriceOutputSection(
                   singleInputCtrl: singleInputCtrl,

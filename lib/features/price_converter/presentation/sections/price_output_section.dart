@@ -33,7 +33,8 @@ class PriceOutputSection extends ConsumerWidget {
     final inputText = getInputText(singleInputCtrl, raiInputCtrl, nganInputCtrl,
         sqWhaInputCtrl, selectedInputUnit, appLocal);
 
-    final String headerLabel = '$inputText = ${priceInputCtrl.text} บาท';
+    final String headerLabel =
+        '$inputText = ${priceInputCtrl.text} ${appLocal.baht}';
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -63,19 +64,23 @@ class PriceOutputSection extends ConsumerWidget {
           ),
           PricePerUnitRow(
             pricePerUnit: priceOutput.pricePerRai,
-            unit: 'ไร่.',
+            unit: appLocal.rai,
+            appLocal: appLocal,
           ),
           PricePerUnitRow(
             pricePerUnit: priceOutput.pricePerNgan,
-            unit: 'งาน.',
+            unit: appLocal.ngan,
+            appLocal: appLocal,
           ),
           PricePerUnitRow(
             pricePerUnit: priceOutput.pricePerSqWha,
-            unit: 'ตรว.',
+            unit: appLocal.sqWha,
+            appLocal: appLocal,
           ),
           PricePerUnitRow(
             pricePerUnit: priceOutput.pricePerSqm,
-            unit: 'ตรม.',
+            unit: appLocal.sqm,
+            appLocal: appLocal,
           ),
         ],
       ),
@@ -84,14 +89,15 @@ class PriceOutputSection extends ConsumerWidget {
 }
 
 class PricePerUnitRow extends StatelessWidget {
-  const PricePerUnitRow({
-    super.key,
-    required this.pricePerUnit,
-    required this.unit,
-  });
+  const PricePerUnitRow(
+      {super.key,
+      required this.pricePerUnit,
+      required this.unit,
+      required this.appLocal});
 
   final double pricePerUnit;
   final String unit;
+  final AppLocalizations appLocal;
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +106,11 @@ class PricePerUnitRow extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            '${kBahtFormat.format(pricePerUnit)}',
+            kBahtFormat.format(pricePerUnit),
             style: kAccentBodyText,
           ),
           Text(
-            ' บาท / $unit',
+            ' ${appLocal.baht} / $unit',
             style: kBodyText,
           ),
         ],
