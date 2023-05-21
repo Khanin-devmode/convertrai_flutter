@@ -334,35 +334,35 @@ class _LegacyConverterPageState extends State<LegacyConverterPage> {
                           ),
                           saveFunction: saveResult,
                         )
-                      : Row(),
+                      : const Row(),
                   selectedUnit != ConvertingUnit.sqm
                       ? ResultRow(
                           resultText:
                               getResultText(selectedUnit, ConvertingUnit.sqm),
                           saveFunction: saveResult,
                         )
-                      : Row(),
+                      : const Row(),
                   selectedUnit != ConvertingUnit.rai
                       ? ResultRow(
                           resultText:
                               getResultText(selectedUnit, ConvertingUnit.rai),
                           saveFunction: saveResult,
                         )
-                      : Row(),
+                      : const Row(),
                   selectedUnit != ConvertingUnit.ngan
                       ? ResultRow(
                           resultText:
                               getResultText(selectedUnit, ConvertingUnit.ngan),
                           saveFunction: saveResult,
                         )
-                      : Row(),
+                      : const Row(),
                   selectedUnit != ConvertingUnit.sqWha
                       ? ResultRow(
                           resultText:
                               getResultText(selectedUnit, ConvertingUnit.sqWha),
                           saveFunction: saveResult,
                         )
-                      : Row(),
+                      : const Row(),
                 ],
               ),
             ),
@@ -395,10 +395,10 @@ class _LegacyConverterPageState extends State<LegacyConverterPage> {
                             index: index,
                           );
                         })
-                    : Center(
+                    : const Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text("กด"),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 4),
@@ -425,7 +425,7 @@ class _LegacyConverterPageState extends State<LegacyConverterPage> {
                       child: AdWidget(ad: _bannerAd!),
                     ),
                   )
-                : Row(),
+                : const Row(),
           ],
         ),
       ),
@@ -578,7 +578,7 @@ class UnitInputField extends StatelessWidget {
         onChanged: convertUnit,
         controller: textEditingController,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [],
+        inputFormatters: const [],
         decoration: InputDecoration(
           // label: Text(label),
           hintText: label,

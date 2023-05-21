@@ -17,7 +17,7 @@ class CustomInputField extends StatelessWidget {
       controller: inputTextController,
       onChanged: onChanged,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [],
+      inputFormatters: const [],
       decoration: InputDecoration(
         // labelText: label,
         // hintText: label,

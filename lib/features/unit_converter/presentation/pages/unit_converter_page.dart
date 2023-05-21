@@ -40,12 +40,12 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                 onPressed: (() => ref
                     .read(localLangCodeProvider.notifier)
                     .update((state) => 'th')),
-                child: Text('th')),
+                child: const Text('th')),
             TextButton(
                 onPressed: (() => ref
                     .read(localLangCodeProvider.notifier)
                     .update((state) => 'en')),
-                child: Text('en'))
+                child: const Text('en'))
           ],
         ),
         Padding(
@@ -76,7 +76,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                 ),
                 Text(
                   appLocal.conversion,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 OutputUnitSection(
                   calState: calState,

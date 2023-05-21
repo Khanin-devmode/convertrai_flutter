@@ -44,10 +44,10 @@ class ResultRow extends ConsumerWidget {
                   children: [
                     TextSpan(text: i == 0 ? '= ' : '', style: kBodyText),
                     TextSpan(
-                        text: kNumFormat.format(valueList[i].value) + ' ',
+                        text: '${kNumFormat.format(valueList[i].value)} ',
                         style: kAccentBodyText),
                     TextSpan(
-                        text: getUnitText(valueList[i].unit, appLocal) + ' ',
+                        text: '${getUnitText(valueList[i].unit, appLocal)} ',
                         style: kBodyText),
                   ],
                 ),
