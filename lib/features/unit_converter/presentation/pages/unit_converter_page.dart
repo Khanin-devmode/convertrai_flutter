@@ -33,21 +33,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HeaderLabel(label: 'Unit Converter'),
-        Row(
-          children: [
-            TextButton(
-                onPressed: (() => ref
-                    .read(localLangCodeProvider.notifier)
-                    .update((state) => 'th')),
-                child: const Text('th')),
-            TextButton(
-                onPressed: (() => ref
-                    .read(localLangCodeProvider.notifier)
-                    .update((state) => 'en')),
-                child: const Text('en'))
-          ],
-        ),
+        const HeaderRow(label: 'Unit Converter'),
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Container(

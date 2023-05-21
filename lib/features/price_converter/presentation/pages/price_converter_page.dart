@@ -39,7 +39,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HeaderLabel(label: 'Price Converter'),
+        const HeaderRow(label: 'Price Converter'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Container(

@@ -63,9 +63,9 @@ class MainPageState extends ConsumerState<MainPage> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          surfaceTintColor: Colors.transparent),
+      // appBar: AppBar(
+      //     backgroundColor: Colors.transparent,
+      //     surfaceTintColor: Colors.transparent),
       body: Stack(children: [
         Container(
           height: 270,
