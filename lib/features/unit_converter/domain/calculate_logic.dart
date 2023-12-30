@@ -11,6 +11,8 @@ final nganInputCtrlProviderUnitCon = StateProvider<TextEditingController>(
 final sqWhaInputCtrlProviderUnitCon = StateProvider<TextEditingController>(
     (ref) => TextEditingController(text: '0'));
 
+final unitFormKeyPrivider = StateProvider<GlobalKey>((ref) => GlobalKey());
+
 class CalNotifier extends StateNotifier<Calculation> {
   CalNotifier() : super(Calculation());
 

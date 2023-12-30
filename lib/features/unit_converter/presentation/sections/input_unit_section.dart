@@ -6,17 +6,19 @@ import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class InputSection extends StatelessWidget {
-  InputSection(
-      {super.key,
-      required this.calState,
-      required this.singleInputCtrl,
-      required this.calNotifier,
-      required this.raiInputCtrl,
-      required this.nganInputCtrl,
-      required this.sqWhaInputCtrl,
-      required this.appLocal});
+class InputSection extends ConsumerWidget {
+  const InputSection({
+    super.key,
+    required this.calState,
+    required this.singleInputCtrl,
+    required this.calNotifier,
+    required this.raiInputCtrl,
+    required this.nganInputCtrl,
+    required this.sqWhaInputCtrl,
+    required this.appLocal,
+  });
 
   final Calculation calState;
   final TextEditingController singleInputCtrl;
@@ -27,8 +29,11 @@ class InputSection extends StatelessWidget {
   final AppLocalizations appLocal;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = ref.watch(unitFormKeyPrivider);
+
     return Form(
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
