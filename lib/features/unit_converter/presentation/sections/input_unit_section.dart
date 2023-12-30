@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InputSection extends StatelessWidget {
-  const InputSection(
+  InputSection(
       {super.key,
       required this.calState,
       required this.singleInputCtrl,
@@ -28,116 +28,123 @@ class InputSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            appLocal.unit,
-            style: const TextStyle(fontSize: 16),
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              appLocal.unit,
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
-        ),
-        UnitSelectDropdown(
-          selectableUnits: const [
-            ConvertingUnit.raiNganSqWha,
-            ConvertingUnit.rai,
-            ConvertingUnit.ngan,
-            ConvertingUnit.sqWha,
-            ConvertingUnit.sqm,
-          ],
-          appLocal: appLocal,
-          selectedUnit: calState.selectedUnit,
-          onChanged: (newUnit) {
-            calNotifier.selectUnit(newUnit);
+          UnitSelectDropdown(
+            selectableUnits: const [
+              ConvertingUnit.raiNganSqWha,
+              ConvertingUnit.rai,
+              ConvertingUnit.ngan,
+              ConvertingUnit.sqWha,
+              ConvertingUnit.sqm,
+            ],
+            appLocal: appLocal,
+            selectedUnit: calState.selectedUnit,
+            onChanged: (newUnit) {
+              calNotifier.selectUnit(newUnit);
 
-            if (newUnit != ConvertingUnit.raiNganSqWha) {
-              double n = stringToDouble(singleInputCtrl.text);
-              calNotifier.convertUnit(n);
-            } else {
-              double rai = stringToDouble(raiInputCtrl.text);
-              double ngan = stringToDouble(nganInputCtrl.text);
-              double sqWha = stringToDouble(sqWhaInputCtrl.text);
-              calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-            }
-          },
-        ),
-        calState.selectedUnit != ConvertingUnit.raiNganSqWha
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InputLabel(label: appLocal.areaSize),
-                  CustomInputField(
-                    label: getUnitText(calState.selectedUnit, appLocal),
-                    inputTextController: singleInputCtrl,
-                    onChanged: (newValue) {
-                      double n = stringToDouble(newValue);
-                      calNotifier.convertUnit(n);
-                    },
-                  ),
-                ],
-              )
-            : Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InputLabel(label: appLocal.rai),
-                        CustomInputField(
-                          label: appLocal.rai,
-                          inputTextController: raiInputCtrl,
-                          onChanged: (newValue) {
-                            double rai = stringToDouble(newValue);
-                            double ngan = stringToDouble(nganInputCtrl.text);
-                            double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                            calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-                          },
-                        ),
-                      ],
+              if (newUnit != ConvertingUnit.raiNganSqWha) {
+                double n = stringToDouble(singleInputCtrl.text);
+                calNotifier.convertUnit(n);
+              } else {
+                double rai = stringToDouble(raiInputCtrl.text);
+                double ngan = stringToDouble(nganInputCtrl.text);
+                double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+              }
+            },
+          ),
+          calState.selectedUnit != ConvertingUnit.raiNganSqWha
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InputLabel(label: appLocal.areaSize),
+                    CustomInputField(
+                      label: getUnitText(calState.selectedUnit, appLocal),
+                      inputTextController: singleInputCtrl,
+                      onChanged: (newValue) {
+                        double n = stringToDouble(newValue);
+                        calNotifier.convertUnit(n);
+                      },
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InputLabel(label: appLocal.ngan),
-                        CustomInputField(
-                          label: appLocal.ngan,
-                          inputTextController: nganInputCtrl,
-                          onChanged: (newValue) {
-                            double rai = stringToDouble(raiInputCtrl.text);
-                            double ngan = stringToDouble(newValue);
-                            double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                            calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-                          },
-                        ),
-                      ],
+                  ],
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InputLabel(label: appLocal.rai),
+                          CustomInputField(
+                            key: const ValueKey('rai_input'),
+                            label: appLocal.rai,
+                            inputTextController: raiInputCtrl,
+                            onChanged: (newValue) {
+                              double rai = stringToDouble(newValue);
+                              double ngan = stringToDouble(nganInputCtrl.text);
+                              double sqWha =
+                                  stringToDouble(sqWhaInputCtrl.text);
+                              calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InputLabel(label: appLocal.sqWha),
-                        CustomInputField(
-                          label: appLocal.sqWha,
-                          inputTextController: sqWhaInputCtrl,
-                          onChanged: (newValue) {
-                            double rai = stringToDouble(raiInputCtrl.text);
-                            double ngan = stringToDouble(nganInputCtrl.text);
-                            double sqWha = stringToDouble(newValue);
-                            calNotifier.convertCombinedUnit(rai, ngan, sqWha);
-                          },
-                        ),
-                      ],
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InputLabel(label: appLocal.ngan),
+                          CustomInputField(
+                            key: const ValueKey('ngan_input'),
+                            label: appLocal.ngan,
+                            inputTextController: nganInputCtrl,
+                            onChanged: (newValue) {
+                              double rai = stringToDouble(raiInputCtrl.text);
+                              double ngan = stringToDouble(newValue);
+                              double sqWha =
+                                  stringToDouble(sqWhaInputCtrl.text);
+                              calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-      ],
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InputLabel(label: appLocal.sqWha),
+                          CustomInputField(
+                            key: const ValueKey('sqwha_input'),
+                            label: appLocal.sqWha,
+                            inputTextController: sqWhaInputCtrl,
+                            onChanged: (newValue) {
+                              double rai = stringToDouble(raiInputCtrl.text);
+                              double ngan = stringToDouble(nganInputCtrl.text);
+                              double sqWha = stringToDouble(newValue);
+                              calNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+        ],
+      ),
     );
   }
 }
