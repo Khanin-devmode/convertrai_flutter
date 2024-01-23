@@ -17,6 +17,12 @@ class UnitConverterPage extends ConsumerStatefulWidget {
 
 class ConverterPageState extends ConsumerState<UnitConverterPage> {
   @override
+  void initState() {
+    ref.read(saveNotifierProvider.notifier).initHiveSavingBox();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final calState = ref.watch(calNotifierProvider);
     final calNotifier = ref.watch(calNotifierProvider.notifier);
