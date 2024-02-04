@@ -47,6 +47,11 @@ class CalNotifier extends StateNotifier<Calculation> {
           newCal.sqm = newValue;
         }
         break;
+      case ConvertingUnit.acre:
+        {
+          newCal.sqm = newValue * 4046.86;
+        }
+        break;
     }
 
     newCal.fullRai = newCal.sqm / 1600;
@@ -57,6 +62,7 @@ class CalNotifier extends StateNotifier<Calculation> {
     newCal.sqWhaRemainder = newCal.fullSqWha.remainder(400);
     newCal.ngan = (newCal.sqWhaRemainder / 100).floorToDouble();
     newCal.sqWha = newCal.sqWhaRemainder.remainder(100);
+    newCal.acre = newCal.sqm / 4046.86;
 
     state = newCal;
   }

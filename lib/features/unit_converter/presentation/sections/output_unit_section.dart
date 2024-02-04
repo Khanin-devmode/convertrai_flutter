@@ -69,6 +69,16 @@ class OutputUnitSection extends StatelessWidget {
                   // resultUnit: '',
                 )
               : const SizedBox(),
+          if (calState.selectedUnit != ConvertingUnit.acre)
+            ResultRow(
+              inputText: inputText,
+              valueList: [
+                ValueUnitPair(value: calState.acre, unit: ConvertingUnit.acre)
+              ],
+              appLocal: appLocal,
+              // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
+              // resultUnit: '',
+            ),
           calState.selectedUnit != ConvertingUnit.rai
               ? ResultRow(
                   inputText: inputText,

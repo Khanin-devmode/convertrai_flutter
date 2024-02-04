@@ -50,6 +50,11 @@ class PriceCalNotifier extends StateNotifier<PriceOutput> {
           sqm = unitValue;
         }
         break;
+      case ConvertingUnit.acre:
+        {
+          sqm = unitValue * 4046.86;
+        }
+        break;
     }
 
     pricerPerSqm = inputPrice / sqm;

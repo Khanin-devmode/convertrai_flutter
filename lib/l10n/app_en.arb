@@ -1,5 +1,8 @@
-{
+{"@@locale": "en",
     "helloWorld": "Hello World!",
+    "@helloWorld": {
+        "description": "The conventional newborn programmer greeting"
+      },
     "rai": "Rai",
     "ngan": "Ngan",
     "sqWha": "Sqwa.",
@@ -13,5 +16,7 @@
     "price":"Price",
     "pricePerUnit":"Price per unit",
     "baht":"Baht",
-    "areaSize":"Area Size"
+    "areaSize":"Area Size",
+    "acre":"Acre"
+
 }
