@@ -79,55 +79,50 @@ class OutputUnitSection extends StatelessWidget {
               // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
               // resultUnit: '',
             ),
-          calState.selectedUnit != ConvertingUnit.rai
-              ? ResultRow(
-                  inputText: inputText,
-                  valueList: [
-                    ValueUnitPair(
-                        value: calState.fullRai, unit: ConvertingUnit.rai)
-                  ],
-                  appLocal: appLocal,
-                  // resultValue: ' = ${kNumFormat.format(calState.fullRai)} ไร่.',
-                  // resultUnit: '',
-                )
-              : const SizedBox(),
-          calState.selectedUnit != ConvertingUnit.ngan
-              ? ResultRow(
-                  inputText: inputText,
-                  valueList: [
-                    ValueUnitPair(
-                        value: calState.fullNgan, unit: ConvertingUnit.ngan)
-                  ],
-                  appLocal: appLocal,
-                  // resultValue:
-                  //     ' = ${kNumFormat.format(calState.fullNgan)} งาน.',
-                  // resultUnit: '',
-                )
-              : const SizedBox(),
-          calState.selectedUnit != ConvertingUnit.sqWha
-              ? ResultRow(
-                  inputText: inputText,
-                  valueList: [
-                    ValueUnitPair(
-                        value: calState.fullSqWha, unit: ConvertingUnit.sqWha)
-                  ],
-                  appLocal: appLocal,
-                  // resultValue:
-                  //     ' = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
-                  // resultUnit: '',
-                )
-              : const SizedBox(),
-          calState.selectedUnit != ConvertingUnit.sqm
-              ? ResultRow(
-                  inputText: inputText,
-                  valueList: [
-                    ValueUnitPair(value: calState.sqm, unit: ConvertingUnit.sqm)
-                  ],
-                  appLocal: appLocal,
-                  // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
-                  // resultUnit: '',
-                )
-              : const SizedBox(),
+          if (calState.selectedUnit != ConvertingUnit.rai)
+            ResultRow(
+              inputText: inputText,
+              valueList: [
+                ValueUnitPair(value: calState.fullRai, unit: ConvertingUnit.rai)
+              ],
+              appLocal: appLocal,
+              // resultValue: ' = ${kNumFormat.format(calState.fullRai)} ไร่.',
+              // resultUnit: '',
+            ),
+          if (calState.selectedUnit != ConvertingUnit.ngan)
+            ResultRow(
+              inputText: inputText,
+              valueList: [
+                ValueUnitPair(
+                    value: calState.fullNgan, unit: ConvertingUnit.ngan)
+              ],
+              appLocal: appLocal,
+              // resultValue:
+              //     ' = ${kNumFormat.format(calState.fullNgan)} งาน.',
+              // resultUnit: '',
+            ),
+          if (calState.selectedUnit != ConvertingUnit.sqWha)
+            ResultRow(
+              inputText: inputText,
+              valueList: [
+                ValueUnitPair(
+                    value: calState.fullSqWha, unit: ConvertingUnit.sqWha)
+              ],
+              appLocal: appLocal,
+              // resultValue:
+              //     ' = ${kNumFormat.format(calState.fullSqWha)} ตรว.',
+              // resultUnit: '',
+            ),
+          if (calState.selectedUnit != ConvertingUnit.sqm)
+            ResultRow(
+              inputText: inputText,
+              valueList: [
+                ValueUnitPair(value: calState.sqm, unit: ConvertingUnit.sqm)
+              ],
+              appLocal: appLocal,
+              // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
+              // resultUnit: '',
+            ),
         ],
       ),
     );
