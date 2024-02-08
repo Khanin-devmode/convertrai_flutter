@@ -82,6 +82,11 @@ class PriceOutputSection extends ConsumerWidget {
             unit: appLocal.sqm,
             appLocal: appLocal,
           ),
+          PricePerUnitRow(
+            pricePerUnit: priceOutput.pricePerAcre,
+            unit: appLocal.acre,
+            appLocal: appLocal,
+          ),
         ],
       ),
     );

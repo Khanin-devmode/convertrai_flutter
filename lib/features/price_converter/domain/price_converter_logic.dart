@@ -17,7 +17,11 @@ final priceInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
 class PriceCalNotifier extends StateNotifier<PriceOutput> {
   PriceCalNotifier()
       : super(PriceOutput(
-            pricePerSqm: 0, pricePerRai: 0, pricePerNgan: 0, pricePerSqWha: 0));
+            pricePerSqm: 0,
+            pricePerRai: 0,
+            pricePerNgan: 0,
+            pricePerSqWha: 0,
+            pricePerAcre: 0));
 
   void convertPrice(
       double inputPrice, double unitValue, ConvertingUnit inputUnit) {
@@ -63,7 +67,8 @@ class PriceCalNotifier extends StateNotifier<PriceOutput> {
         pricePerSqm: pricerPerSqm,
         pricePerRai: pricerPerSqm / 0.000625,
         pricePerNgan: pricerPerSqm / 0.0025,
-        pricePerSqWha: pricerPerSqm / 0.25);
+        pricePerSqWha: pricerPerSqm / 0.25,
+        pricePerAcre: pricerPerSqm * 4046.86);
 
     // switch (outputUnit) {
     //   case ConvertingUnit.rai:

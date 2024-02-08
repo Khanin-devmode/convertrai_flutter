@@ -50,12 +50,12 @@ class InputSection extends ConsumerWidget {
           ),
           UnitSelectDropdown(
             selectableUnits: const [
-              ConvertingUnit.acre,
               ConvertingUnit.raiNganSqWha,
               ConvertingUnit.rai,
               ConvertingUnit.ngan,
               ConvertingUnit.sqWha,
               ConvertingUnit.sqm,
+              ConvertingUnit.acre,
             ],
             appLocal: appLocal,
             selectedUnit: calState.selectedUnit,

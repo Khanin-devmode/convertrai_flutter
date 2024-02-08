@@ -51,6 +51,7 @@ class PriceInputSection extends StatelessWidget {
             ConvertingUnit.ngan,
             ConvertingUnit.sqWha,
             ConvertingUnit.sqm,
+            ConvertingUnit.acre,
           ],
           appLocal: appLocal,
           selectedUnit: seletedInputUnit,
