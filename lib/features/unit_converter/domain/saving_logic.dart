@@ -8,7 +8,7 @@ class SaveNotifier extends StateNotifier<List<String>> {
 
   void initHiveSavingBox() async {
     box = await Hive.openBox('saveResultBox');
-    state = await box.get('results');
+    state = await box.get('results') ?? [];
   }
 
   void saveResult(String result) async {
