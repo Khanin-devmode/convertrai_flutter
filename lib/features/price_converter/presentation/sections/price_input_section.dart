@@ -8,18 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PriceInputSection extends StatelessWidget {
-  const PriceInputSection(
-      {super.key,
-      required this.seletedInputUnit,
-      required this.singleInputCtrl,
-      required this.priceInputCtrl,
-      required this.priceCalNotifier,
-      required this.seletedOutputUnit,
-      required this.raiInputCtrl,
-      required this.nganInputCtrl,
-      required this.sqWhaInputCtrl,
-      required this.selectInputUnit,
-      required this.appLocal});
+  const PriceInputSection({
+    super.key,
+    required this.seletedInputUnit,
+    required this.singleInputCtrl,
+    required this.priceInputCtrl,
+    required this.priceCalNotifier,
+    required this.seletedOutputUnit,
+    required this.raiInputCtrl,
+    required this.nganInputCtrl,
+    required this.sqWhaInputCtrl,
+    required this.selectInputUnit,
+    required this.appLocal,
+  });
 
   final ConvertingUnit seletedInputUnit;
   final TextEditingController singleInputCtrl;
@@ -159,151 +160,6 @@ class PriceInputSection extends StatelessWidget {
                   ),
                 ],
               ),
-        // Row(
-        //   children: [
-        //     Expanded(
-        //       flex: 4,
-        //       child: seletedInputUnit != ConvertingUnit.raiNganSqWha
-        //           ? CustomInputField(
-        //               label: getUnitText(seletedInputUnit),
-        //               inputTextController: singleInputCtrl,
-        //               onChanged: (newValue) {
-        //                 double unitValue = stringToDouble(newValue);
-        //                 double inputPrice = stringToDouble(priceInputCtrl.text);
-        //                 priceCalNotifier.convertPrice(
-        //                     inputPrice, unitValue, seletedInputUnit);
-        //               },
-        //             )
-        //           : Row(
-        //               children: [
-        //                 Expanded(
-        //                   child: CustomInputField(
-        //                     label: 'ไร่',
-        //                     inputTextController: raiInputCtrl,
-        //                     onChanged: (newValue) {
-        //                       double rai = stringToDouble(newValue);
-        //                       double ngan = stringToDouble(nganInputCtrl.text);
-        //                       double sqWha =
-        //                           stringToDouble(sqWhaInputCtrl.text);
-        //                       double inputPrice =
-        //                           stringToDouble(priceInputCtrl.text);
-        //                       priceCalNotifier.convertCombinedUnit(rai, ngan,
-        //                           sqWha, inputPrice, seletedOutputUnit);
-        //                     },
-        //                   ),
-        //                 ),
-        //                 const SizedBox(width: 12),
-        //                 Expanded(
-        //                   child: CustomInputField(
-        //                     label: 'งาน',
-        //                     inputTextController: nganInputCtrl,
-        //                     onChanged: (newValue) {
-        //                       double rai = stringToDouble(raiInputCtrl.text);
-        //                       double ngan = stringToDouble(newValue);
-        //                       double sqWha =
-        //                           stringToDouble(sqWhaInputCtrl.text);
-        //                       double inputPrice =
-        //                           stringToDouble(priceInputCtrl.text);
-        //                       priceCalNotifier.convertCombinedUnit(rai, ngan,
-        //                           sqWha, inputPrice, seletedOutputUnit);
-        //                     },
-        //                   ),
-        //                 ),
-        //                 const SizedBox(width: 12),
-        //                 Expanded(
-        //                   child: CustomInputField(
-        //                     label: 'ตรว.',
-        //                     inputTextController: sqWhaInputCtrl,
-        //                     onChanged: (newValue) {
-        //                       double rai = stringToDouble(raiInputCtrl.text);
-        //                       double ngan = stringToDouble(nganInputCtrl.text);
-        //                       double sqWha = stringToDouble(newValue);
-        //                       double inputPrice =
-        //                           stringToDouble(priceInputCtrl.text);
-        //                       priceCalNotifier.convertCombinedUnit(rai, ngan,
-        //                           sqWha, inputPrice, seletedOutputUnit);
-        //                     },
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //     ),
-        //     const SizedBox(
-        //       width: 12,
-        //     ),
-        //     Expanded(
-        //       flex: 2,
-        //       child: UnitSelectDropdown(
-        //         selectableUnits: const [
-        //           ConvertingUnit.sqm,
-        //           ConvertingUnit.rai,
-        //           ConvertingUnit.ngan,
-        //           ConvertingUnit.sqWha,
-        //           ConvertingUnit.raiNganSqWha
-        //         ],
-        //         selectedUnit: seletedInputUnit,
-        //         onChanged: (newUnit) {
-        //           selectInputUnit(newUnit);
-        //           var inputPrice = stringToDouble(priceInputCtrl.text);
-
-        //           if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
-        //             var unitValue = stringToDouble(singleInputCtrl.text);
-        //             priceCalNotifier.convertPrice(
-        //                 inputPrice, unitValue, seletedInputUnit);
-        //           } else {
-        //             double rai = stringToDouble(raiInputCtrl.text);
-        //             double ngan = stringToDouble(nganInputCtrl.text);
-        //             double sqWha = stringToDouble(sqWhaInputCtrl.text);
-        //             double inputPrice = stringToDouble(priceInputCtrl.text);
-        //             priceCalNotifier.convertCombinedUnit(
-        //                 rai, ngan, sqWha, inputPrice, seletedOutputUnit);
-        //           }
-        //         },
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(12),
-        //   child: Row(
-        //     children: [
-        //       Expanded(
-        //         flex: 4,
-        //         child: CustomInputField(
-        //             inputTextController: priceInputCtrl,
-        //             onChanged: (newvalue) {
-        //               var inputPrice = stringToDouble(newvalue);
-
-        //               if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
-        //                 var unitValue = stringToDouble(singleInputCtrl.text);
-        //                 priceCalNotifier.convertPrice(
-        //                     inputPrice, unitValue, seletedInputUnit);
-        //               } else {
-        //                 double rai = stringToDouble(raiInputCtrl.text);
-        //                 double ngan = stringToDouble(nganInputCtrl.text);
-        //                 double sqWha = stringToDouble(sqWhaInputCtrl.text);
-        //                 double inputPrice = stringToDouble(priceInputCtrl.text);
-        //                 priceCalNotifier.convertCombinedUnit(
-        //                     rai, ngan, sqWha, inputPrice, seletedOutputUnit);
-        //               }
-        //             },
-        //             label: 'ราคาที่ดิน'),
-        //       ),
-        //       // const SizedBox(
-        //       //   width: 12,
-        //       // ),
-        //       // const Expanded(
-        //       //   flex: 2,
-        //       //   child: Center(
-        //       //     child: Text(
-        //       //       'บาท',
-        //       //       style: kBodyText,
-        //       //     ),
-        //       //   ),
-        //       // )
-        //     ],
-        //   ),
-        // ),
         InputLabel(label: appLocal.price),
         CustomInputField(
           label: appLocal.price,

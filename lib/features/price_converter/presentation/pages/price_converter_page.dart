@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../shared_widgets/custom_input.dart';
+import '../../../../shared_widgets/input_label.dart';
+import '../../../../shared_widgets/unit_select_dropdown.dart';
+import '../../../unit_converter/presentation/helper_function.dart';
+
 class PriceConverterPage extends ConsumerStatefulWidget {
   const PriceConverterPage({super.key});
 
@@ -74,15 +79,64 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   appLocal.pricePerUnit,
                   style: const TextStyle(fontSize: 20),
                 ),
-                PriceOutputSection(
-                  singleInputCtrl: singleInputCtrl,
-                  raiInputCtrl: raiInputCtrl,
-                  nganInputCtrl: nganInputCtrl,
-                  sqWhaInputCtrl: sqWhaInputCtrl,
-                  priceInputCtrl: priceInputCtrl,
-                  selectedInputUnit: seletedInputUnit,
+
+                UnitSelectDropdown(
+                  selectableUnits: const [
+                    ConvertingUnit.raiNganSqWha,
+                    ConvertingUnit.rai,
+                    ConvertingUnit.ngan,
+                    ConvertingUnit.sqWha,
+                    ConvertingUnit.sqm,
+                    ConvertingUnit.acre,
+                  ],
                   appLocal: appLocal,
+                  selectedUnit: seletedOutputUnit,
+                  onChanged: (newUnit) {
+                    // selectInputUnit(newUnit);
+                    // var inputPrice = stringToDouble(priceInputCtrl.text);
+
+                    // if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
+                    //   var unitValue = stringToDouble(singleInputCtrl.text);
+                    //   priceCalNotifier.convertPrice(
+                    //       inputPrice, unitValue, seletedInputUnit);
+                    // } else {
+                    //   double rai = stringToDouble(raiInputCtrl.text);
+                    //   double ngan = stringToDouble(nganInputCtrl.text);
+                    //   double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                    //   double inputPrice = stringToDouble(priceInputCtrl.text);
+                    //   priceCalNotifier.convertCombinedUnit(
+                    //       rai, ngan, sqWha, inputPrice, seletedOutputUnit);
+                    // }
+                  },
                 ),
+                InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
+                CustomInputField(
+                  label: getUnitText(seletedInputUnit, appLocal),
+                  inputTextController: singleInputCtrl,
+                  onChanged: (newValue) {
+                    // double unitValue = stringToDouble(newValue);
+                    // double inputPrice = stringToDouble(priceInputCtrl.text);
+                    // priceCalNotifier.convertPrice(
+                    //     inputPrice, unitValue, seletedInputUnit);
+                  },
+                ),
+
+                InputLabel(label: 'ราคา'),
+                InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
+                Builder(builder: (context) {
+                  final priceState = ref.watch(priceCalNotifierProvider);
+
+                  return Text('${priceState.pricePerSqm}');
+                })
+                // PriceOutputSection(
+                //   singleInputCtrl: singleInputCtrl,
+                //   raiInputCtrl: raiInputCtrl,
+                //   nganInputCtrl: nganInputCtrl,
+                //   sqWhaInputCtrl: sqWhaInputCtrl,
+                //   priceInputCtrl: priceInputCtrl,
+                //   selectedInputUnit: seletedInputUnit,
+                //   appLocal: appLocal,
+                // ),
               ],
             ),
           ),
