@@ -92,7 +92,9 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   appLocal: appLocal,
                   selectedUnit: seletedOutputUnit,
                   onChanged: (newUnit) {
-                    // selectInputUnit(newUnit);
+                    setState(() {
+                      seletedOutputUnit = newUnit;
+                    });
                     // var inputPrice = stringToDouble(priceInputCtrl.text);
 
                     // if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
@@ -124,9 +126,32 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 InputLabel(label: 'ราคา'),
                 InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
                 Builder(builder: (context) {
-                  final priceState = ref.watch(priceCalNotifierProvider);
+                  final pricePerSqm =
+                      ref.watch(priceCalNotifierProvider).pricePerSqm;
+                  final double targetArea =
+                      stringToDouble(singleInputCtrl.text);
+                  late double outputPrice;
 
-                  return Text('${priceState.pricePerSqm}');
+                  switch (seletedOutputUnit) {
+                    case ConvertingUnit.rai:
+                      outputPrice = targetArea * (pricePerSqm / 0.000625);
+                      break;
+                    case ConvertingUnit.ngan:
+                      outputPrice = targetArea * (pricePerSqm / 0.0025);
+                      break;
+                    case ConvertingUnit.sqWha:
+                      outputPrice = targetArea * (pricePerSqm / 0.25);
+                      break;
+                    case ConvertingUnit.sqm:
+                      outputPrice = targetArea * pricePerSqm;
+                      break;
+                    case ConvertingUnit.raiNganSqWha:
+                    case ConvertingUnit.acre:
+                      outputPrice = targetArea * (pricePerSqm / 0.000247);
+                      break;
+                  }
+
+                  return Text('${outputPrice}');
                 })
                 // PriceOutputSection(
                 //   singleInputCtrl: singleInputCtrl,
