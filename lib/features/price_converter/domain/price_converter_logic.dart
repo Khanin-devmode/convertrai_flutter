@@ -26,7 +26,7 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
           ),
         );
 
-  void convertPrice({
+  void updatePriceData({
     double? inputPrice,
     double? inputArea,
     ConvertingUnit? inputAreaUnit,
@@ -83,7 +83,7 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
   }) {
     double sqm = (rai * 1600) + (ngan * 400) + (sqWha * 4);
 
-    convertPrice(
+    updatePriceData(
       inputPrice: inputPrice,
       inputArea: sqm,
       inputAreaUnit: ConvertingUnit.sqm,

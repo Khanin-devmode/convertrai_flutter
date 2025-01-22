@@ -92,7 +92,10 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   appLocal: appLocal,
                   selectedUnit: seletedOutputUnit,
                   onChanged: (newUnit) {
-                    priceCalNotifier.convertPrice(outputAreaUnit: newUnit);
+                    priceCalNotifier.updatePriceData(outputAreaUnit: newUnit);
+
+                    seletedOutputUnit = newUnit;
+                    setState(() {});
                   },
                 ),
                 InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
@@ -102,7 +105,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   onChanged: (newValue) {
                     double outputArea = stringToDouble(newValue);
 
-                    priceCalNotifier.convertPrice(outputArea: outputArea);
+                    priceCalNotifier.updatePriceData(outputArea: outputArea);
                   },
                 ),
                 InputLabel(label: 'ราคา'),
