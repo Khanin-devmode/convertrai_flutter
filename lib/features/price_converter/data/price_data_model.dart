@@ -71,7 +71,7 @@ class PriceData {
         break;
       case ConvertingUnit.raiNganSqWha:
       case ConvertingUnit.acre:
-        outputPrice = outputArea * (pricePerSqm / 0.000247);
+        outputPrice = outputArea * 4046.86 * pricePerSqm;
         break;
     }
 
