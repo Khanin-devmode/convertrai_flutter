@@ -1,4 +1,4 @@
-import 'package:convert_rai/features/price_converter/data/price_output_model.dart';
+import 'package:convert_rai/features/price_converter/data/price_data_model.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,65 +14,25 @@ final sqWhaInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
 final priceInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
     (ref) => TextEditingController(text: '0'));
 
-class PriceCalNotifier extends StateNotifier<PriceOutput> {
+class PriceCalNotifier extends StateNotifier<PriceData> {
   PriceCalNotifier()
       : super(
-          PriceOutput(
-            pricePerSqm: 0,
-            pricePerRai: 0,
-            pricePerNgan: 0,
-            pricePerSqWha: 0,
-            pricePerAcre: 0,
+          PriceData(
+            inputArea: 1,
+            inputAreaUnit: ConvertingUnit.sqWha,
+            inputPrice: 25000,
+            outputArea: 1,
+            outputAreaUnit: ConvertingUnit.rai,
           ),
         );
 
-  void convertPrice(
-      double inputPrice, double unitValue, ConvertingUnit inputUnit) {
-    double sqm;
-    double pricerPerSqm;
-
-    switch (inputUnit) {
-      case ConvertingUnit.rai:
-        {
-          sqm = unitValue * 1600;
-        }
-        break;
-      case ConvertingUnit.ngan:
-        {
-          sqm = unitValue * 400;
-        }
-        break;
-      case ConvertingUnit.sqWha:
-        {
-          sqm = unitValue * 4;
-        }
-        break;
-      case ConvertingUnit.sqm:
-        {
-          sqm = unitValue;
-        }
-        break;
-      case ConvertingUnit.raiNganSqWha:
-        {
-          sqm = unitValue;
-        }
-        break;
-      case ConvertingUnit.acre:
-        {
-          sqm = unitValue * 4046.86;
-        }
-        break;
-    }
-
-    pricerPerSqm = inputPrice / sqm;
-
-    state = PriceOutput(
-        pricePerSqm: pricerPerSqm,
-        pricePerRai: pricerPerSqm / 0.000625,
-        pricePerNgan: pricerPerSqm / 0.0025,
-        pricePerSqWha: pricerPerSqm / 0.25,
-        pricePerAcre: pricerPerSqm * 4046.86);
-
+  void convertPrice({
+    double? inputPrice,
+    double? inputArea,
+    ConvertingUnit? inputAreaUnit,
+    double? outputArea,
+    ConvertingUnit? outputAreaUnit,
+  }) {
     // switch (outputUnit) {
     //   case ConvertingUnit.rai:
     //     {
@@ -99,17 +59,41 @@ class PriceCalNotifier extends StateNotifier<PriceOutput> {
     //       break;
     //     }
     // }
+
+    state = PriceData(
+      // pricePerRai: pricerPerSqm / 0.000625,
+      // pricePerNgan: pricerPerSqm / 0.0025,
+      // pricePerSqWha: pricerPerSqm / 0.25,
+      // pricePerAcre: pricerPerSqm * 4046.86,
+      inputArea: inputArea ?? state.inputArea,
+      inputPrice: inputPrice ?? state.inputPrice,
+      inputAreaUnit: inputAreaUnit ?? state.inputAreaUnit,
+      outputArea: outputArea ?? state.outputArea,
+      outputAreaUnit: outputAreaUnit ?? state.outputAreaUnit,
+    );
   }
 
-  void convertCombinedUnit(double rai, double ngan, double sqWha,
-      double inputPrice, ConvertingUnit outputUnit) {
+  void convertCombinedUnit({
+    required double rai,
+    required double ngan,
+    required double sqWha,
+    required double inputPrice,
+    double? outputArea,
+    ConvertingUnit? outputAreaUnit,
+  }) {
     double sqm = (rai * 1600) + (ngan * 400) + (sqWha * 4);
 
-    convertPrice(inputPrice, sqm, ConvertingUnit.sqm);
+    convertPrice(
+      inputPrice: inputPrice,
+      inputArea: sqm,
+      inputAreaUnit: ConvertingUnit.sqm,
+      outputArea: outputArea,
+      outputAreaUnit: outputAreaUnit,
+    );
   }
 }
 
 final priceCalNotifierProvider =
-    StateNotifierProvider<PriceCalNotifier, PriceOutput>((ref) {
+    StateNotifierProvider<PriceCalNotifier, PriceData>((ref) {
   return PriceCalNotifier();
 });

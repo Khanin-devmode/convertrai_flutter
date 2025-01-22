@@ -1,5 +1,4 @@
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
-import 'package:convert_rai/features/price_converter/presentation/sections/price_output_section.dart';
 import 'package:convert_rai/features/price_converter/presentation/sections/price_input_section.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
@@ -22,6 +21,8 @@ class PriceConverterPage extends ConsumerStatefulWidget {
 class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
   ConvertingUnit seletedInputUnit = ConvertingUnit.sqWha;
   ConvertingUnit seletedOutputUnit = ConvertingUnit.rai;
+
+  final outputAreaController = TextEditingController(text: '1');
 
   selectInputUnit(ConvertingUnit unit) {
     setState(() {
@@ -61,7 +62,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
             child: Column(
               children: [
                 PriceInputSection(
-                  seletedInputUnit: seletedInputUnit,
+                  inputAreaUnit: seletedInputUnit,
                   singleInputCtrl: singleInputCtrl,
                   priceInputCtrl: priceInputCtrl,
                   priceCalNotifier: priceCalNotifier,
@@ -79,7 +80,6 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   appLocal.pricePerUnit,
                   style: const TextStyle(fontSize: 20),
                 ),
-
                 UnitSelectDropdown(
                   selectableUnits: const [
                     ConvertingUnit.raiNganSqWha,
@@ -92,76 +92,26 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   appLocal: appLocal,
                   selectedUnit: seletedOutputUnit,
                   onChanged: (newUnit) {
-                    setState(() {
-                      seletedOutputUnit = newUnit;
-                    });
-                    // var inputPrice = stringToDouble(priceInputCtrl.text);
-
-                    // if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
-                    //   var unitValue = stringToDouble(singleInputCtrl.text);
-                    //   priceCalNotifier.convertPrice(
-                    //       inputPrice, unitValue, seletedInputUnit);
-                    // } else {
-                    //   double rai = stringToDouble(raiInputCtrl.text);
-                    //   double ngan = stringToDouble(nganInputCtrl.text);
-                    //   double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                    //   double inputPrice = stringToDouble(priceInputCtrl.text);
-                    //   priceCalNotifier.convertCombinedUnit(
-                    //       rai, ngan, sqWha, inputPrice, seletedOutputUnit);
-                    // }
+                    priceCalNotifier.convertPrice(outputAreaUnit: newUnit);
                   },
                 ),
                 InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
                 CustomInputField(
                   label: getUnitText(seletedInputUnit, appLocal),
-                  inputTextController: singleInputCtrl,
+                  inputTextController: outputAreaController,
                   onChanged: (newValue) {
-                    // double unitValue = stringToDouble(newValue);
-                    // double inputPrice = stringToDouble(priceInputCtrl.text);
-                    // priceCalNotifier.convertPrice(
-                    //     inputPrice, unitValue, seletedInputUnit);
+                    double outputArea = stringToDouble(newValue);
+
+                    priceCalNotifier.convertPrice(outputArea: outputArea);
                   },
                 ),
-
                 InputLabel(label: 'ราคา'),
                 InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
                 Builder(builder: (context) {
-                  final pricePerSqm =
-                      ref.watch(priceCalNotifierProvider).pricePerSqm;
-                  final double targetArea =
-                      stringToDouble(singleInputCtrl.text);
-                  late double outputPrice;
+                  final priceData = ref.watch(priceCalNotifierProvider);
 
-                  switch (seletedOutputUnit) {
-                    case ConvertingUnit.rai:
-                      outputPrice = targetArea * (pricePerSqm / 0.000625);
-                      break;
-                    case ConvertingUnit.ngan:
-                      outputPrice = targetArea * (pricePerSqm / 0.0025);
-                      break;
-                    case ConvertingUnit.sqWha:
-                      outputPrice = targetArea * (pricePerSqm / 0.25);
-                      break;
-                    case ConvertingUnit.sqm:
-                      outputPrice = targetArea * pricePerSqm;
-                      break;
-                    case ConvertingUnit.raiNganSqWha:
-                    case ConvertingUnit.acre:
-                      outputPrice = targetArea * (pricePerSqm / 0.000247);
-                      break;
-                  }
-
-                  return Text('${outputPrice}');
+                  return Text('${priceData.getOutputPrice()}');
                 })
-                // PriceOutputSection(
-                //   singleInputCtrl: singleInputCtrl,
-                //   raiInputCtrl: raiInputCtrl,
-                //   nganInputCtrl: nganInputCtrl,
-                //   sqWhaInputCtrl: sqWhaInputCtrl,
-                //   priceInputCtrl: priceInputCtrl,
-                //   selectedInputUnit: seletedInputUnit,
-                //   appLocal: appLocal,
-                // ),
               ],
             ),
           ),

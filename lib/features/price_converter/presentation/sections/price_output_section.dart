@@ -1,5 +1,5 @@
 import 'package:convert_rai/constants.dart';
-import 'package:convert_rai/features/price_converter/data/price_output_model.dart';
+import 'package:convert_rai/features/price_converter/data/price_data_model.dart';
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
@@ -28,7 +28,7 @@ class PriceOutputSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    PriceOutput priceOutput = ref.watch(priceCalNotifierProvider);
+    PriceData priceOutput = ref.watch(priceCalNotifierProvider);
 
     final inputText = getInputText(singleInputCtrl, raiInputCtrl, nganInputCtrl,
         sqWhaInputCtrl, selectedInputUnit, appLocal);
@@ -62,31 +62,31 @@ class PriceOutputSection extends ConsumerWidget {
               ),
             ),
           ),
-          PricePerUnitRow(
-            pricePerUnit: priceOutput.pricePerRai,
-            unit: appLocal.rai,
-            appLocal: appLocal,
-          ),
-          PricePerUnitRow(
-            pricePerUnit: priceOutput.pricePerNgan,
-            unit: appLocal.ngan,
-            appLocal: appLocal,
-          ),
-          PricePerUnitRow(
-            pricePerUnit: priceOutput.pricePerSqWha,
-            unit: appLocal.sqWha,
-            appLocal: appLocal,
-          ),
-          PricePerUnitRow(
-            pricePerUnit: priceOutput.pricePerSqm,
-            unit: appLocal.sqm,
-            appLocal: appLocal,
-          ),
-          PricePerUnitRow(
-            pricePerUnit: priceOutput.pricePerAcre,
-            unit: appLocal.acre,
-            appLocal: appLocal,
-          ),
+          // PricePerUnitRow(
+          //   pricePerUnit: priceOutput.pricePerRai,
+          //   unit: appLocal.rai,
+          //   appLocal: appLocal,
+          // ),
+          // PricePerUnitRow(
+          //   pricePerUnit: priceOutput.pricePerNgan,
+          //   unit: appLocal.ngan,
+          //   appLocal: appLocal,
+          // ),
+          // PricePerUnitRow(
+          //   pricePerUnit: priceOutput.pricePerSqWha,
+          //   unit: appLocal.sqWha,
+          //   appLocal: appLocal,
+          // ),
+          // PricePerUnitRow(
+          //   pricePerUnit: priceOutput.pricePerSqm,
+          //   unit: appLocal.sqm,
+          //   appLocal: appLocal,
+          // ),
+          // PricePerUnitRow(
+          //   pricePerUnit: priceOutput.pricePerAcre,
+          //   unit: appLocal.acre,
+          //   appLocal: appLocal,
+          // ),
         ],
       ),
     );

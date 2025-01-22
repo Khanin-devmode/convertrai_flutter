@@ -10,7 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PriceInputSection extends StatelessWidget {
   const PriceInputSection({
     super.key,
-    required this.seletedInputUnit,
+    required this.inputAreaUnit,
     required this.singleInputCtrl,
     required this.priceInputCtrl,
     required this.priceCalNotifier,
@@ -22,7 +22,7 @@ class PriceInputSection extends StatelessWidget {
     required this.appLocal,
   });
 
-  final ConvertingUnit seletedInputUnit;
+  final ConvertingUnit inputAreaUnit;
   final TextEditingController singleInputCtrl;
   final TextEditingController priceInputCtrl;
   final PriceCalNotifier priceCalNotifier;
@@ -55,38 +55,48 @@ class PriceInputSection extends StatelessWidget {
             ConvertingUnit.acre,
           ],
           appLocal: appLocal,
-          selectedUnit: seletedInputUnit,
+          selectedUnit: inputAreaUnit,
           onChanged: (newUnit) {
             selectInputUnit(newUnit);
             var inputPrice = stringToDouble(priceInputCtrl.text);
 
-            if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
-              var unitValue = stringToDouble(singleInputCtrl.text);
+            if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
+              var inputArea = stringToDouble(singleInputCtrl.text);
               priceCalNotifier.convertPrice(
-                  inputPrice, unitValue, seletedInputUnit);
+                inputPrice: inputPrice,
+                inputArea: inputArea,
+                inputAreaUnit: inputAreaUnit,
+              );
             } else {
               double rai = stringToDouble(raiInputCtrl.text);
               double ngan = stringToDouble(nganInputCtrl.text);
               double sqWha = stringToDouble(sqWhaInputCtrl.text);
               double inputPrice = stringToDouble(priceInputCtrl.text);
               priceCalNotifier.convertCombinedUnit(
-                  rai, ngan, sqWha, inputPrice, seletedOutputUnit);
+                rai: rai,
+                ngan: ngan,
+                sqWha: sqWha,
+                inputPrice: inputPrice,
+              );
             }
           },
         ),
-        seletedInputUnit != ConvertingUnit.raiNganSqWha
+        inputAreaUnit != ConvertingUnit.raiNganSqWha
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InputLabel(label: appLocal.areaSize),
                   CustomInputField(
-                    label: getUnitText(seletedInputUnit, appLocal),
+                    label: getUnitText(inputAreaUnit, appLocal),
                     inputTextController: singleInputCtrl,
                     onChanged: (newValue) {
                       double unitValue = stringToDouble(newValue);
                       double inputPrice = stringToDouble(priceInputCtrl.text);
                       priceCalNotifier.convertPrice(
-                          inputPrice, unitValue, seletedInputUnit);
+                        inputPrice: inputPrice,
+                        inputArea: unitValue,
+                        inputAreaUnit: inputAreaUnit,
+                      );
                     },
                   ),
                 ],
@@ -107,8 +117,12 @@ class PriceInputSection extends StatelessWidget {
                             double sqWha = stringToDouble(sqWhaInputCtrl.text);
                             double inputPrice =
                                 stringToDouble(priceInputCtrl.text);
-                            priceCalNotifier.convertCombinedUnit(rai, ngan,
-                                sqWha, inputPrice, seletedOutputUnit);
+                            priceCalNotifier.convertCombinedUnit(
+                              rai: rai,
+                              ngan: ngan,
+                              sqWha: sqWha,
+                              inputPrice: inputPrice,
+                            );
                           },
                         ),
                       ],
@@ -129,8 +143,12 @@ class PriceInputSection extends StatelessWidget {
                             double sqWha = stringToDouble(sqWhaInputCtrl.text);
                             double inputPrice =
                                 stringToDouble(priceInputCtrl.text);
-                            priceCalNotifier.convertCombinedUnit(rai, ngan,
-                                sqWha, inputPrice, seletedOutputUnit);
+                            priceCalNotifier.convertCombinedUnit(
+                              rai: rai,
+                              ngan: ngan,
+                              sqWha: sqWha,
+                              inputPrice: inputPrice,
+                            );
                           },
                         ),
                       ],
@@ -151,8 +169,12 @@ class PriceInputSection extends StatelessWidget {
                             double sqWha = stringToDouble(newValue);
                             double inputPrice =
                                 stringToDouble(priceInputCtrl.text);
-                            priceCalNotifier.convertCombinedUnit(rai, ngan,
-                                sqWha, inputPrice, seletedOutputUnit);
+                            priceCalNotifier.convertCombinedUnit(
+                              rai: rai,
+                              ngan: ngan,
+                              sqWha: sqWha,
+                              inputPrice: inputPrice,
+                            );
                           },
                         ),
                       ],
@@ -167,17 +189,23 @@ class PriceInputSection extends StatelessWidget {
           onChanged: (newvalue) {
             var inputPrice = stringToDouble(newvalue);
 
-            if (seletedInputUnit != ConvertingUnit.raiNganSqWha) {
-              var unitValue = stringToDouble(singleInputCtrl.text);
+            if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
+              var inputArea = stringToDouble(singleInputCtrl.text);
               priceCalNotifier.convertPrice(
-                  inputPrice, unitValue, seletedInputUnit);
+                  inputPrice: inputPrice,
+                  inputArea: inputArea,
+                  inputAreaUnit: inputAreaUnit);
             } else {
               double rai = stringToDouble(raiInputCtrl.text);
               double ngan = stringToDouble(nganInputCtrl.text);
               double sqWha = stringToDouble(sqWhaInputCtrl.text);
               double inputPrice = stringToDouble(priceInputCtrl.text);
               priceCalNotifier.convertCombinedUnit(
-                  rai, ngan, sqWha, inputPrice, seletedOutputUnit);
+                rai: rai,
+                ngan: ngan,
+                sqWha: sqWha,
+                inputPrice: inputPrice,
+              );
             }
           },
         ),
