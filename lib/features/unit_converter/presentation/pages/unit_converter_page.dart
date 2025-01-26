@@ -56,7 +56,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                 InputSection(
                   calState: calState,
                   singleInputCtrl: singleInputCtrl,
-                  calNotifier: calNotifier,
+                  areaCalNotifier: calNotifier,
                   raiInputCtrl: raiInputCtrl,
                   nganInputCtrl: nganInputCtrl,
                   sqWhaInputCtrl: sqWhaInputCtrl,

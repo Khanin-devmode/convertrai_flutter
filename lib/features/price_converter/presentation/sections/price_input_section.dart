@@ -3,6 +3,7 @@ import 'package:convert_rai/features/price_converter/domain/price_converter_logi
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/shared_widgets/custom_input.dart';
 import 'package:convert_rai/shared_widgets/input_label.dart';
+import 'package:convert_rai/shared_widgets/rai_ngan_sqwa_input.dart';
 import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -111,86 +112,12 @@ class PriceInputSection extends StatelessWidget {
                   ),
                 ],
               )
-            : Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InputLabel(label: appLocal.rai),
-                        CustomInputField(
-                          label: appLocal.rai,
-                          inputTextController: raiInputCtrl,
-                          onChanged: (newValue) {
-                            double rai = stringToDouble(newValue);
-                            double ngan = stringToDouble(nganInputCtrl.text);
-                            double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                            double inputPrice =
-                                stringToDouble(priceInputCtrl.text);
-                            priceCalNotifier.convertCombinedUnit(
-                              rai: rai,
-                              ngan: ngan,
-                              sqWha: sqWha,
-                              inputPrice: inputPrice,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InputLabel(label: appLocal.ngan),
-                        CustomInputField(
-                          label: appLocal.ngan,
-                          inputTextController: nganInputCtrl,
-                          onChanged: (newValue) {
-                            double rai = stringToDouble(raiInputCtrl.text);
-                            double ngan = stringToDouble(newValue);
-                            double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                            double inputPrice =
-                                stringToDouble(priceInputCtrl.text);
-                            priceCalNotifier.convertCombinedUnit(
-                              rai: rai,
-                              ngan: ngan,
-                              sqWha: sqWha,
-                              inputPrice: inputPrice,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InputLabel(label: appLocal.sqWha),
-                        CustomInputField(
-                          label: appLocal.sqWha,
-                          inputTextController: sqWhaInputCtrl,
-                          onChanged: (newValue) {
-                            double rai = stringToDouble(raiInputCtrl.text);
-                            double ngan = stringToDouble(nganInputCtrl.text);
-                            double sqWha = stringToDouble(newValue);
-                            double inputPrice =
-                                stringToDouble(priceInputCtrl.text);
-                            priceCalNotifier.convertCombinedUnit(
-                              rai: rai,
-                              ngan: ngan,
-                              sqWha: sqWha,
-                              inputPrice: inputPrice,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+            : RaiNganSqwaInput(
+                appLocal: appLocal,
+                raiInputCtrl: raiInputCtrl,
+                nganInputCtrl: nganInputCtrl,
+                sqWhaInputCtrl: sqWhaInputCtrl,
+                onChanged: (double rai, double ngan, double sqwa) {},
               ),
         InputLabel(label: appLocal.price),
         CustomInputField(
@@ -202,9 +129,10 @@ class PriceInputSection extends StatelessWidget {
             if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
               var inputArea = stringToDouble(singleInputCtrl.text);
               priceCalNotifier.updatePriceData(
-                  inputPrice: inputPrice,
-                  inputArea: inputArea,
-                  inputAreaUnit: inputAreaUnit);
+                inputPrice: inputPrice,
+                inputArea: inputArea,
+                inputAreaUnit: inputAreaUnit,
+              );
             } else {
               double rai = stringToDouble(raiInputCtrl.text);
               double ngan = stringToDouble(nganInputCtrl.text);
@@ -214,7 +142,6 @@ class PriceInputSection extends StatelessWidget {
                 rai: rai,
                 ngan: ngan,
                 sqWha: sqWha,
-                inputPrice: inputPrice,
               );
             }
           },

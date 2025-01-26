@@ -77,7 +77,7 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
     required double rai,
     required double ngan,
     required double sqWha,
-    required double inputPrice,
+    double? inputPrice,
     double? outputArea,
     ConvertingUnit? outputAreaUnit,
   }) {
