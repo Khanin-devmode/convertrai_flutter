@@ -1,3 +1,4 @@
+import 'package:convert_rai/features/price_converter/data/price_data_model.dart';
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/shared_widgets/custom_input.dart';
@@ -20,6 +21,7 @@ class PriceInputSection extends StatelessWidget {
     required this.sqWhaInputCtrl,
     required this.selectInputUnit,
     required this.appLocal,
+    required this.priceData,
   });
 
   final ConvertingUnit inputAreaUnit;
@@ -32,12 +34,20 @@ class PriceInputSection extends StatelessWidget {
   final TextEditingController sqWhaInputCtrl;
   final Function(ConvertingUnit) selectInputUnit;
   final AppLocalizations appLocal;
+  final PriceData priceData;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'ราคาตั้งต้น',
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
@@ -55,7 +65,7 @@ class PriceInputSection extends StatelessWidget {
             ConvertingUnit.acre,
           ],
           appLocal: appLocal,
-          selectedUnit: inputAreaUnit,
+          selectedUnit: priceData.inputAreaUnit,
           onChanged: (newUnit) {
             selectInputUnit(newUnit);
             var inputPrice = stringToDouble(priceInputCtrl.text);

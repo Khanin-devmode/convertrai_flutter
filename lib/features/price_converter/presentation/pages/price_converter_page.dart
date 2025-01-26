@@ -33,6 +33,8 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
   @override
   Widget build(BuildContext context) {
     final priceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
+    final priceData = ref.watch(priceCalNotifierProvider);
+
     // final outputText = kNumFormat.format(priceCalState).toString();
     final singleInputCtrl = ref.watch(singleInputCtrlProviderPriceCon);
     final raiInputCtrl = ref.watch(raiInputCtrlProviderPriceCon);
@@ -60,6 +62,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
               ),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 PriceInputSection(
                   inputAreaUnit: seletedInputUnit,
@@ -72,14 +75,18 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   sqWhaInputCtrl: sqWhaInputCtrl,
                   selectInputUnit: selectInputUnit,
                   appLocal: appLocal,
+                  priceData: priceData,
                 ),
                 const Divider(
                   height: 40,
                 ),
-                Text(
-                  appLocal.pricePerUnit,
-                  style: const TextStyle(fontSize: 20),
-                ),
+                // Text(
+                //   appLocal.pricePerUnit,
+                //   style: const TextStyle(fontSize: 20),
+                // ),
+                InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
+                InputLabel(label: 'หน่วยพื้นที่'),
+
                 UnitSelectDropdown(
                   selectableUnits: const [
                     ConvertingUnit.raiNganSqWha,
@@ -90,7 +97,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                     ConvertingUnit.acre,
                   ],
                   appLocal: appLocal,
-                  selectedUnit: seletedOutputUnit,
+                  selectedUnit: priceData.outputAreaUnit,
                   onChanged: (newUnit) {
                     priceCalNotifier.updatePriceData(outputAreaUnit: newUnit);
 
@@ -98,9 +105,10 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                     setState(() {});
                   },
                 ),
-                InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
+                InputLabel(label: 'ขนาดพื้นที่'),
+
                 CustomInputField(
-                  label: getUnitText(seletedInputUnit, appLocal),
+                  label: getUnitText(seletedOutputUnit, appLocal),
                   inputTextController: outputAreaController,
                   onChanged: (newValue) {
                     double outputArea = stringToDouble(newValue);
@@ -109,7 +117,6 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   },
                 ),
                 InputLabel(label: 'ราคา'),
-                InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
                 Builder(builder: (context) {
                   final priceData = ref.watch(priceCalNotifierProvider);
 

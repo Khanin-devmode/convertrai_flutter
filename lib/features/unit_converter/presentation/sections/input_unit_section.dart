@@ -30,11 +30,7 @@ class InputSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = ref.watch(unitFormKeyPrivider);
-
-    final size = MediaQuery.of(context).size;
-    print(size.width);
-    print(size.height);
+    final formKey = ref.watch(unitFormKeyProvider);
 
     return Form(
       key: formKey,
