@@ -19,7 +19,7 @@ class PriceConverterPage extends ConsumerStatefulWidget {
 }
 
 class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
-  ConvertingUnit seletedInputUnit = ConvertingUnit.sqWha;
+  ConvertingUnit seletedInputUnit = ConvertingUnit.sqWa;
   ConvertingUnit seletedOutputUnit = ConvertingUnit.rai;
 
   final outputAreaController = TextEditingController(text: '1');
@@ -92,7 +92,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                     ConvertingUnit.raiNganSqWha,
                     ConvertingUnit.rai,
                     ConvertingUnit.ngan,
-                    ConvertingUnit.sqWha,
+                    ConvertingUnit.sqWa,
                     ConvertingUnit.sqm,
                     ConvertingUnit.acre,
                   ],

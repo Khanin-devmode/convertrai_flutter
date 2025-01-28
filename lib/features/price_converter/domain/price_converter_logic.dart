@@ -19,7 +19,7 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
       : super(
           PriceData(
             inputArea: 1,
-            inputAreaUnit: ConvertingUnit.sqWha,
+            inputAreaUnit: ConvertingUnit.sqWa,
             inputPrice: 25000,
             outputArea: 1,
             outputAreaUnit: ConvertingUnit.rai,

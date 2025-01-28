@@ -61,7 +61,7 @@ class OutputUnitSection extends StatelessWidget {
                     ValueUnitPair(
                         value: calState.ngan, unit: ConvertingUnit.ngan),
                     ValueUnitPair(
-                        value: calState.sqWha, unit: ConvertingUnit.sqWha),
+                        value: calState.sqWha, unit: ConvertingUnit.sqWa),
                   ],
                   appLocal: appLocal,
                   // resultValue:
@@ -91,12 +91,12 @@ class OutputUnitSection extends StatelessWidget {
               //     ' = ${kNumFormat.format(calState.fullNgan)} งาน.',
               // resultUnit: '',
             ),
-          if (calState.selectedUnit != ConvertingUnit.sqWha)
+          if (calState.selectedUnit != ConvertingUnit.sqWa)
             ResultRow(
               inputText: inputText,
               valueList: [
                 ValueUnitPair(
-                    value: calState.fullSqWha, unit: ConvertingUnit.sqWha)
+                    value: calState.fullSqWha, unit: ConvertingUnit.sqWa)
               ],
               appLocal: appLocal,
               // resultValue:

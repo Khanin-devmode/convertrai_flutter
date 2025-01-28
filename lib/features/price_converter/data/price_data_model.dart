@@ -32,7 +32,7 @@ class PriceData {
           sqm = inputArea * 400;
         }
         break;
-      case ConvertingUnit.sqWha:
+      case ConvertingUnit.sqWa:
         {
           sqm = inputArea * 4;
         }
@@ -63,7 +63,7 @@ class PriceData {
       case ConvertingUnit.ngan:
         outputPrice = outputArea * (pricePerSqm / 0.0025);
         break;
-      case ConvertingUnit.sqWha:
+      case ConvertingUnit.sqWa:
         outputPrice = outputArea * (pricePerSqm / 0.25);
         break;
       case ConvertingUnit.raiNganSqWha:

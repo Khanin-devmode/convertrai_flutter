@@ -20,8 +20,8 @@ String getUnitText(ConvertingUnit unit, AppLocalizations appLocal) {
       return appLocal.rai;
     case ConvertingUnit.ngan:
       return appLocal.ngan;
-    case ConvertingUnit.sqWha:
-      return appLocal.sqWha;
+    case ConvertingUnit.sqWa:
+      return appLocal.sqWa;
     case ConvertingUnit.sqm:
       return appLocal.sqm;
     case ConvertingUnit.raiNganSqWha:
@@ -39,7 +39,7 @@ String getInputText(
     ConvertingUnit selectedUnit,
     AppLocalizations appLocal) {
   if (selectedUnit == ConvertingUnit.raiNganSqWha) {
-    return '${kNumFormat.format(stringToDouble(raiInputCtrl.text))} ${appLocal.rai} ${kNumFormat.format(stringToDouble(nganInputCtrl.text))} ${appLocal.ngan} ${kNumFormat.format(stringToDouble(sqWhaInputCtrl.text))} ${appLocal.sqWha}';
+    return '${kNumFormat.format(stringToDouble(raiInputCtrl.text))} ${appLocal.rai} ${kNumFormat.format(stringToDouble(nganInputCtrl.text))} ${appLocal.ngan} ${kNumFormat.format(stringToDouble(sqWhaInputCtrl.text))} ${appLocal.sqWa}';
   } else {
     return '${kNumFormat.format(stringToDouble(singleInputCtrl.text))} ${getUnitText(selectedUnit, appLocal)}';
   }

@@ -1,4 +1,4 @@
-enum ConvertingUnit { sqm, rai, ngan, sqWha, raiNganSqWha, acre }
+enum ConvertingUnit { sqm, rai, ngan, sqWa, raiNganSqWha, acre }
 
 class Calculation {
   ConvertingUnit selectedUnit = ConvertingUnit.raiNganSqWha;
@@ -19,7 +19,7 @@ class Calculation {
         return '$rai';
       case ConvertingUnit.ngan:
         return '$ngan';
-      case ConvertingUnit.sqWha:
+      case ConvertingUnit.sqWa:
         return '$sqWha.';
       case ConvertingUnit.sqm:
         return '$sqm';

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class UnitSelectDropdown extends StatelessWidget {
                 items: selectableUnits.map((ConvertingUnit unit) {
                   return DropdownMenuItem<ConvertingUnit>(
                     value: unit,
-                    child: Text(
+                    child: AutoSizeText(
                       getUnitText(unit, appLocal),
                     ),
                   );

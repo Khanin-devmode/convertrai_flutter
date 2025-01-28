@@ -32,7 +32,7 @@ class CalNotifier extends StateNotifier<Calculation> {
           newCal.sqm = newValue * 400;
         }
         break;
-      case ConvertingUnit.sqWha:
+      case ConvertingUnit.sqWa:
         {
           newCal.sqm = newValue * 4;
         }

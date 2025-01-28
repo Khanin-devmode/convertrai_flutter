@@ -35,65 +35,76 @@ class InputSection extends ConsumerWidget {
 
     return Form(
       key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              appLocal.unit,
-              style: const TextStyle(fontSize: 16),
+          Expanded(
+            flex: 4,
+            child: calState.selectedUnit != ConvertingUnit.raiNganSqWha
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InputLabel(label: appLocal.areaSize),
+                      CustomInputField(
+                        label: getUnitText(calState.selectedUnit, appLocal),
+                        inputTextController: singleInputCtrl,
+                        onChanged: (newValue) {
+                          double n = stringToDouble(newValue);
+                          areaCalNotifier.convertUnit(n);
+                        },
+                      ),
+                    ],
+                  )
+                : RaiNganSqwaInput(
+                    appLocal: appLocal,
+                    raiInputCtrl: raiInputCtrl,
+                    nganInputCtrl: nganInputCtrl,
+                    sqWhaInputCtrl: sqWhaInputCtrl,
+                    onChanged: (rai, ngan, sqwa) {
+                      areaCalNotifier.convertCombinedUnit(rai, ngan, sqwa);
+                    },
+                  ),
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    appLocal.unit,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+                UnitSelectDropdown(
+                  selectableUnits: const [
+                    ConvertingUnit.raiNganSqWha,
+                    ConvertingUnit.rai,
+                    ConvertingUnit.ngan,
+                    ConvertingUnit.sqWa,
+                    ConvertingUnit.sqm,
+                    ConvertingUnit.acre,
+                  ],
+                  appLocal: appLocal,
+                  selectedUnit: calState.selectedUnit,
+                  onChanged: (newUnit) {
+                    areaCalNotifier.selectUnit(newUnit);
+
+                    if (newUnit != ConvertingUnit.raiNganSqWha) {
+                      double n = stringToDouble(singleInputCtrl.text);
+                      areaCalNotifier.convertUnit(n);
+                    } else {
+                      double rai = stringToDouble(raiInputCtrl.text);
+                      double ngan = stringToDouble(nganInputCtrl.text);
+                      double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                      areaCalNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                    }
+                  },
+                ),
+              ],
             ),
           ),
-          UnitSelectDropdown(
-            selectableUnits: const [
-              ConvertingUnit.raiNganSqWha,
-              ConvertingUnit.rai,
-              ConvertingUnit.ngan,
-              ConvertingUnit.sqWha,
-              ConvertingUnit.sqm,
-              ConvertingUnit.acre,
-            ],
-            appLocal: appLocal,
-            selectedUnit: calState.selectedUnit,
-            onChanged: (newUnit) {
-              areaCalNotifier.selectUnit(newUnit);
-
-              if (newUnit != ConvertingUnit.raiNganSqWha) {
-                double n = stringToDouble(singleInputCtrl.text);
-                areaCalNotifier.convertUnit(n);
-              } else {
-                double rai = stringToDouble(raiInputCtrl.text);
-                double ngan = stringToDouble(nganInputCtrl.text);
-                double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                areaCalNotifier.convertCombinedUnit(rai, ngan, sqWha);
-              }
-            },
-          ),
-          calState.selectedUnit != ConvertingUnit.raiNganSqWha
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InputLabel(label: appLocal.areaSize),
-                    CustomInputField(
-                      label: getUnitText(calState.selectedUnit, appLocal),
-                      inputTextController: singleInputCtrl,
-                      onChanged: (newValue) {
-                        double n = stringToDouble(newValue);
-                        areaCalNotifier.convertUnit(n);
-                      },
-                    ),
-                  ],
-                )
-              : RaiNganSqwaInput(
-                  appLocal: appLocal,
-                  raiInputCtrl: raiInputCtrl,
-                  nganInputCtrl: nganInputCtrl,
-                  sqWhaInputCtrl: sqWhaInputCtrl,
-                  onChanged: (rai, ngan, sqwa) {
-                    areaCalNotifier.convertCombinedUnit(rai, ngan, sqwa);
-                  },
-                )
         ],
       ),
     );
