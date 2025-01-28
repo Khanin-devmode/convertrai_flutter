@@ -28,7 +28,7 @@ class UnitSelectDropdown extends StatelessWidget {
                 Radius.circular(12),
               ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
             child: DropdownButton<ConvertingUnit>(
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                 alignment: Alignment.centerLeft,

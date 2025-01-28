@@ -28,18 +28,18 @@ class CustomInputField extends StatelessWidget {
         focusNode.unfocus();
       },
       decoration: InputDecoration(
-        // labelText: label,
-        // hintText: label,
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: const BorderSide(
-            width: 0,
-            style: BorderStyle.none,
+          // labelText: label,
+          // hintText: label,
+          fillColor: Colors.white,
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: const BorderSide(
+              width: 0,
+              style: BorderStyle.none,
+            ),
           ),
-        ),
-      ),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 12)),
     );
   }
 }
