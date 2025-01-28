@@ -85,37 +85,58 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 //   style: const TextStyle(fontSize: 20),
                 // ),
                 InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
-                InputLabel(label: 'หน่วยพื้นที่'),
 
-                UnitSelectDropdown(
-                  selectableUnits: const [
-                    ConvertingUnit.raiNganSqWha,
-                    ConvertingUnit.rai,
-                    ConvertingUnit.ngan,
-                    ConvertingUnit.sqWa,
-                    ConvertingUnit.sqm,
-                    ConvertingUnit.acre,
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        children: [
+                          InputLabel(label: 'ขนาดพื้นที่'),
+                          CustomInputField(
+                            label: getUnitText(seletedOutputUnit, appLocal),
+                            inputTextController: outputAreaController,
+                            onChanged: (newValue) {
+                              double outputArea = stringToDouble(newValue);
+
+                              priceCalNotifier.updatePriceData(
+                                  outputArea: outputArea);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        children: [
+                          InputLabel(label: 'หน่วยพื้นที่'),
+                          UnitSelectDropdown(
+                            selectableUnits: const [
+                              ConvertingUnit.raiNganSqWha,
+                              ConvertingUnit.rai,
+                              ConvertingUnit.ngan,
+                              ConvertingUnit.sqWa,
+                              ConvertingUnit.sqm,
+                              ConvertingUnit.acre,
+                            ],
+                            appLocal: appLocal,
+                            selectedUnit: priceData.outputAreaUnit,
+                            onChanged: (newUnit) {
+                              priceCalNotifier.updatePriceData(
+                                  outputAreaUnit: newUnit);
+
+                              seletedOutputUnit = newUnit;
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                    )
                   ],
-                  appLocal: appLocal,
-                  selectedUnit: priceData.outputAreaUnit,
-                  onChanged: (newUnit) {
-                    priceCalNotifier.updatePriceData(outputAreaUnit: newUnit);
-
-                    seletedOutputUnit = newUnit;
-                    setState(() {});
-                  },
                 ),
-                InputLabel(label: 'ขนาดพื้นที่'),
 
-                CustomInputField(
-                  label: getUnitText(seletedOutputUnit, appLocal),
-                  inputTextController: outputAreaController,
-                  onChanged: (newValue) {
-                    double outputArea = stringToDouble(newValue);
-
-                    priceCalNotifier.updatePriceData(outputArea: outputArea);
-                  },
-                ),
                 InputLabel(label: 'ราคา'),
                 Builder(builder: (context) {
                   final priceData = ref.watch(priceCalNotifierProvider);
