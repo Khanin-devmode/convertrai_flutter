@@ -2,6 +2,7 @@ import 'package:convert_rai/features/price_converter/domain/price_converter_logi
 import 'package:convert_rai/features/price_converter/presentation/sections/price_input_section.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
+import 'package:convert_rai/shared_widgets/rai_ngan_sqwa_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -35,12 +36,19 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
     final priceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
     final priceData = ref.watch(priceCalNotifierProvider);
 
+    //     final singleInputCtrl = ref.watch(singlePriceInputCtrlProvider);
+    // final raiInputCtrl = ref.watch(raiInputCtrlProviderPriceCon);
+    // final nganInputCtrl = ref.watch(nganInputCtrlProviderPriceCon);
+    // final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderPriceCon);
+    // final priceInputCtrl = ref.watch(priceInputCtrlProviderPriceCon);
+
     // final outputText = kNumFormat.format(priceCalState).toString();
-    final singleInputCtrl = ref.watch(singleInputCtrlProviderPriceCon);
-    final raiInputCtrl = ref.watch(raiInputCtrlProviderPriceCon);
-    final nganInputCtrl = ref.watch(nganInputCtrlProviderPriceCon);
-    final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderPriceCon);
-    final priceInputCtrl = ref.watch(priceInputCtrlProviderPriceCon);
+    final priceCoverterControllers = ref.watch(priceConverterCtrlsProvider);
+    final singleInputCtrl = priceCoverterControllers.singleInput;
+    final raiInputCtrl = priceCoverterControllers.raiInput;
+    final nganInputCtrl = priceCoverterControllers.nganInput;
+    final sqwaInputCtrl = priceCoverterControllers.sqwaInput;
+    final priceInputCtrl = priceCoverterControllers.priceInput;
 
     final appLocal = AppLocalizations.of(context)!;
 
@@ -72,7 +80,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   seletedOutputUnit: seletedOutputUnit,
                   raiInputCtrl: raiInputCtrl,
                   nganInputCtrl: nganInputCtrl,
-                  sqWhaInputCtrl: sqWhaInputCtrl,
+                  sqWhaInputCtrl: sqwaInputCtrl,
                   selectInputUnit: selectInputUnit,
                   appLocal: appLocal,
                   priceData: priceData,
@@ -90,21 +98,30 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   children: [
                     Expanded(
                       flex: 4,
-                      child: Column(
-                        children: [
-                          InputLabel(label: 'ขนาดพื้นที่'),
-                          CustomInputField(
-                            label: getUnitText(seletedOutputUnit, appLocal),
-                            inputTextController: outputAreaController,
-                            onChanged: (newValue) {
-                              double outputArea = stringToDouble(newValue);
+                      child: seletedOutputUnit != ConvertingUnit.raiNganSqWha
+                          ? Column(
+                              children: [
+                                InputLabel(label: 'ขนาดพื้นที่'),
+                                CustomTextField(
+                                  label:
+                                      getUnitText(seletedOutputUnit, appLocal),
+                                  inputTextController: outputAreaController,
+                                  onChanged: (newValue) {
+                                    double outputArea =
+                                        stringToDouble(newValue);
 
-                              priceCalNotifier.updatePriceData(
-                                  outputArea: outputArea);
-                            },
-                          ),
-                        ],
-                      ),
+                                    priceCalNotifier.updatePriceData(
+                                        outputArea: outputArea);
+                                  },
+                                ),
+                              ],
+                            )
+                          : RaiNganSqwaTextFields(
+                              appLocal: appLocal,
+                              raiTextCtrl: priceCoverterControllers.raiOutput,
+                              nganTextCtrl: priceCoverterControllers.nganOutput,
+                              sqwaTextCtrl: priceCoverterControllers.sqwaOutput,
+                            ),
                     ),
                     SizedBox(width: 8),
                     Expanded(

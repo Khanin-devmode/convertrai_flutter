@@ -44,7 +44,7 @@ class InputSection extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InputLabel(label: appLocal.areaSize),
-                      CustomInputField(
+                      CustomTextField(
                         label: getUnitText(calState.selectedUnit, appLocal),
                         inputTextController: singleInputCtrl,
                         onChanged: (newValue) {
@@ -54,11 +54,11 @@ class InputSection extends ConsumerWidget {
                       ),
                     ],
                   )
-                : RaiNganSqwaInput(
+                : RaiNganSqwaTextFields(
                     appLocal: appLocal,
-                    raiInputCtrl: raiInputCtrl,
-                    nganInputCtrl: nganInputCtrl,
-                    sqWhaInputCtrl: sqWhaInputCtrl,
+                    raiTextCtrl: raiInputCtrl,
+                    nganTextCtrl: nganInputCtrl,
+                    sqwaTextCtrl: sqWhaInputCtrl,
                     onChanged: (rai, ngan, sqwa) {
                       areaCalNotifier.convertCombinedUnit(rai, ngan, sqwa);
                     },

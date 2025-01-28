@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import '../features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RaiNganSqwaInput extends StatelessWidget {
-  const RaiNganSqwaInput({
+class RaiNganSqwaTextFields extends StatelessWidget {
+  const RaiNganSqwaTextFields({
     super.key,
     required this.appLocal,
-    required this.raiInputCtrl,
-    required this.nganInputCtrl,
-    required this.sqWhaInputCtrl,
+    required this.raiTextCtrl,
+    required this.nganTextCtrl,
+    required this.sqwaTextCtrl,
     this.onChanged,
   });
 
   final AppLocalizations appLocal;
-  final TextEditingController raiInputCtrl;
-  final TextEditingController nganInputCtrl;
-  final TextEditingController sqWhaInputCtrl;
+  final TextEditingController raiTextCtrl;
+  final TextEditingController nganTextCtrl;
+  final TextEditingController sqwaTextCtrl;
   final Function(double rai, double ngan, double sqwa)? onChanged;
 
   @override
@@ -29,13 +29,13 @@ class RaiNganSqwaInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InputLabel(label: appLocal.rai),
-              CustomInputField(
+              CustomTextField(
                 label: appLocal.rai,
-                inputTextController: raiInputCtrl,
+                inputTextController: raiTextCtrl,
                 onChanged: (newValue) {
                   double rai = stringToDouble(newValue);
-                  double ngan = stringToDouble(nganInputCtrl.text);
-                  double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                  double ngan = stringToDouble(nganTextCtrl.text);
+                  double sqWha = stringToDouble(sqwaTextCtrl.text);
                   // priceCalNotifier.convertCombinedUnit(
                   //   rai: rai,
                   //   ngan: ngan,
@@ -53,13 +53,13 @@ class RaiNganSqwaInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InputLabel(label: appLocal.ngan),
-              CustomInputField(
+              CustomTextField(
                 label: appLocal.ngan,
-                inputTextController: nganInputCtrl,
+                inputTextController: nganTextCtrl,
                 onChanged: (newValue) {
-                  double rai = stringToDouble(raiInputCtrl.text);
+                  double rai = stringToDouble(raiTextCtrl.text);
                   double ngan = stringToDouble(newValue);
-                  double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                  double sqWha = stringToDouble(sqwaTextCtrl.text);
                   // priceCalNotifier.convertCombinedUnit(
                   //   rai: rai,
                   //   ngan: ngan,
@@ -77,12 +77,12 @@ class RaiNganSqwaInput extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InputLabel(label: appLocal.sqWa),
-              CustomInputField(
+              CustomTextField(
                 label: appLocal.sqWa,
-                inputTextController: sqWhaInputCtrl,
+                inputTextController: sqwaTextCtrl,
                 onChanged: (newValue) {
-                  double rai = stringToDouble(raiInputCtrl.text);
-                  double ngan = stringToDouble(nganInputCtrl.text);
+                  double rai = stringToDouble(raiTextCtrl.text);
+                  double ngan = stringToDouble(nganTextCtrl.text);
                   double sqWha = stringToDouble(newValue);
                   // priceCalNotifier.convertCombinedUnit(
                   //   rai: rai,

@@ -58,7 +58,7 @@ class PriceInputSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InputLabel(label: appLocal.areaSize),
-                        CustomInputField(
+                        CustomTextField(
                           label: getUnitText(inputAreaUnit, appLocal),
                           inputTextController: singleInputCtrl,
                           onChanged: (newValue) {
@@ -74,11 +74,11 @@ class PriceInputSection extends StatelessWidget {
                         ),
                       ],
                     )
-                  : RaiNganSqwaInput(
+                  : RaiNganSqwaTextFields(
                       appLocal: appLocal,
-                      raiInputCtrl: raiInputCtrl,
-                      nganInputCtrl: nganInputCtrl,
-                      sqWhaInputCtrl: sqWhaInputCtrl,
+                      raiTextCtrl: raiInputCtrl,
+                      nganTextCtrl: nganInputCtrl,
+                      sqwaTextCtrl: sqWhaInputCtrl,
                       onChanged: (double rai, double ngan, double sqwa) {},
                     ),
             ),
@@ -136,7 +136,7 @@ class PriceInputSection extends StatelessWidget {
           ],
         ),
         InputLabel(label: appLocal.price),
-        CustomInputField(
+        CustomTextField(
           label: appLocal.price,
           inputTextController: priceInputCtrl,
           onChanged: (newvalue) {

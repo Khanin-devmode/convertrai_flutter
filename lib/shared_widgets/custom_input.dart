@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomInputField extends StatefulWidget {
-  const CustomInputField({
+class CustomTextField extends StatefulWidget {
+  const CustomTextField({
     super.key,
     required this.inputTextController,
     required this.onChanged,
@@ -14,10 +14,10 @@ class CustomInputField extends StatefulWidget {
   final String label;
 
   @override
-  State<CustomInputField> createState() => _CustomInputFieldState();
+  State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
-class _CustomInputFieldState extends State<CustomInputField> {
+class _CustomTextFieldState extends State<CustomTextField> {
   late FocusNode focusNode;
 
   @override

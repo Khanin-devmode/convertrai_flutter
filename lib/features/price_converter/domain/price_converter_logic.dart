@@ -3,16 +3,46 @@ import 'package:convert_rai/features/unit_converter/data/calculation_model.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final singleInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '1'));
-final raiInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '1'));
-final nganInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '0'));
-final sqWhaInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '0'));
-final priceInputCtrlProviderPriceCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '0'));
+final priceConverterCtrlsProvider =
+    StateProvider<PriceConverterTextControllers>(
+  (ref) => PriceConverterTextControllers(
+    singleInput: TextEditingController(text: '1'),
+    raiInput: TextEditingController(text: '0'),
+    nganInput: TextEditingController(text: '0'),
+    sqwaInput: TextEditingController(text: '0'),
+    priceInput: TextEditingController(text: '0'),
+    //
+    singleOutput: TextEditingController(text: '1'),
+    raiOutput: TextEditingController(text: '0'),
+    nganOutput: TextEditingController(text: '0'),
+    sqwaOutput: TextEditingController(text: '0'),
+  ),
+);
+
+class PriceConverterTextControllers {
+  PriceConverterTextControllers({
+    required this.raiInput,
+    required this.nganInput,
+    required this.sqwaInput,
+    required this.priceInput,
+    required this.singleOutput,
+    required this.raiOutput,
+    required this.nganOutput,
+    required this.sqwaOutput,
+    required this.singleInput,
+  });
+
+  final TextEditingController singleInput;
+  final TextEditingController raiInput;
+  final TextEditingController nganInput;
+  final TextEditingController sqwaInput;
+  final TextEditingController priceInput;
+
+  final TextEditingController singleOutput;
+  final TextEditingController raiOutput;
+  final TextEditingController nganOutput;
+  final TextEditingController sqwaOutput;
+}
 
 class PriceCalNotifier extends StateNotifier<PriceData> {
   PriceCalNotifier()
