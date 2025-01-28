@@ -49,76 +49,92 @@ class PriceInputSection extends StatelessWidget {
             style: const TextStyle(fontSize: 16),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            appLocal.unit,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ),
-        UnitSelectDropdown(
-          selectableUnits: const [
-            ConvertingUnit.raiNganSqWha,
-            ConvertingUnit.rai,
-            ConvertingUnit.ngan,
-            ConvertingUnit.sqWa,
-            ConvertingUnit.sqm,
-            ConvertingUnit.acre,
-          ],
-          appLocal: appLocal,
-          selectedUnit: priceData.inputAreaUnit,
-          onChanged: (newUnit) {
-            selectInputUnit(newUnit);
-            var inputPrice = stringToDouble(priceInputCtrl.text);
-
-            if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
-              var inputArea = stringToDouble(singleInputCtrl.text);
-              priceCalNotifier.updatePriceData(
-                inputPrice: inputPrice,
-                inputArea: inputArea,
-                inputAreaUnit: inputAreaUnit,
-              );
-            } else {
-              double rai = stringToDouble(raiInputCtrl.text);
-              double ngan = stringToDouble(nganInputCtrl.text);
-              double sqWha = stringToDouble(sqWhaInputCtrl.text);
-              double inputPrice = stringToDouble(priceInputCtrl.text);
-              priceCalNotifier.convertCombinedUnit(
-                rai: rai,
-                ngan: ngan,
-                sqWha: sqWha,
-                inputPrice: inputPrice,
-              );
-            }
-          },
-        ),
-        inputAreaUnit != ConvertingUnit.raiNganSqWha
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: inputAreaUnit != ConvertingUnit.raiNganSqWha
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InputLabel(label: appLocal.areaSize),
+                        CustomInputField(
+                          label: getUnitText(inputAreaUnit, appLocal),
+                          inputTextController: singleInputCtrl,
+                          onChanged: (newValue) {
+                            double unitValue = stringToDouble(newValue);
+                            double inputPrice =
+                                stringToDouble(priceInputCtrl.text);
+                            priceCalNotifier.updatePriceData(
+                              inputPrice: inputPrice,
+                              inputArea: unitValue,
+                              inputAreaUnit: inputAreaUnit,
+                            );
+                          },
+                        ),
+                      ],
+                    )
+                  : RaiNganSqwaInput(
+                      appLocal: appLocal,
+                      raiInputCtrl: raiInputCtrl,
+                      nganInputCtrl: nganInputCtrl,
+                      sqWhaInputCtrl: sqWhaInputCtrl,
+                      onChanged: (double rai, double ngan, double sqwa) {},
+                    ),
+            ),
+            SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: Column(
                 children: [
-                  InputLabel(label: appLocal.areaSize),
-                  CustomInputField(
-                    label: getUnitText(inputAreaUnit, appLocal),
-                    inputTextController: singleInputCtrl,
-                    onChanged: (newValue) {
-                      double unitValue = stringToDouble(newValue);
-                      double inputPrice = stringToDouble(priceInputCtrl.text);
-                      priceCalNotifier.updatePriceData(
-                        inputPrice: inputPrice,
-                        inputArea: unitValue,
-                        inputAreaUnit: inputAreaUnit,
-                      );
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      appLocal.unit,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  UnitSelectDropdown(
+                    selectableUnits: const [
+                      ConvertingUnit.raiNganSqWha,
+                      ConvertingUnit.rai,
+                      ConvertingUnit.ngan,
+                      ConvertingUnit.sqWa,
+                      ConvertingUnit.sqm,
+                      ConvertingUnit.acre,
+                    ],
+                    appLocal: appLocal,
+                    selectedUnit: priceData.inputAreaUnit,
+                    onChanged: (newUnit) {
+                      selectInputUnit(newUnit);
+                      var inputPrice = stringToDouble(priceInputCtrl.text);
+
+                      if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
+                        var inputArea = stringToDouble(singleInputCtrl.text);
+                        priceCalNotifier.updatePriceData(
+                          inputPrice: inputPrice,
+                          inputArea: inputArea,
+                          inputAreaUnit: inputAreaUnit,
+                        );
+                      } else {
+                        double rai = stringToDouble(raiInputCtrl.text);
+                        double ngan = stringToDouble(nganInputCtrl.text);
+                        double sqWha = stringToDouble(sqWhaInputCtrl.text);
+                        double inputPrice = stringToDouble(priceInputCtrl.text);
+                        priceCalNotifier.convertCombinedUnit(
+                          rai: rai,
+                          ngan: ngan,
+                          sqWha: sqWha,
+                          inputPrice: inputPrice,
+                        );
+                      }
                     },
                   ),
                 ],
-              )
-            : RaiNganSqwaInput(
-                appLocal: appLocal,
-                raiInputCtrl: raiInputCtrl,
-                nganInputCtrl: nganInputCtrl,
-                sqWhaInputCtrl: sqWhaInputCtrl,
-                onChanged: (double rai, double ngan, double sqwa) {},
               ),
+            )
+          ],
+        ),
         InputLabel(label: appLocal.price),
         CustomInputField(
           label: appLocal.price,

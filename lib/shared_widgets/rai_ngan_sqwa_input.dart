@@ -76,9 +76,9 @@ class RaiNganSqwaInput extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InputLabel(label: appLocal.sqWha),
+              InputLabel(label: appLocal.sqWa),
               CustomInputField(
-                label: appLocal.sqWha,
+                label: appLocal.sqWa,
                 inputTextController: sqWhaInputCtrl,
                 onChanged: (newValue) {
                   double rai = stringToDouble(raiInputCtrl.text);
