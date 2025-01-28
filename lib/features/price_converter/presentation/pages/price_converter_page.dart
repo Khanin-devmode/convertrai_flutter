@@ -121,6 +121,10 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                               raiTextCtrl: priceCoverterControllers.raiOutput,
                               nganTextCtrl: priceCoverterControllers.nganOutput,
                               sqwaTextCtrl: priceCoverterControllers.sqwaOutput,
+                              onChanged: (rai, ngan, sqwa) {
+                                priceCalNotifier.convertCombinedUnit(
+                                    rai: rai, ngan: ngan, sqWa: sqwa);
+                              },
                             ),
                     ),
                     SizedBox(width: 8),
@@ -139,13 +143,28 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                               ConvertingUnit.acre,
                             ],
                             appLocal: appLocal,
-                            selectedUnit: priceData.outputAreaUnit,
+                            selectedUnit: seletedOutputUnit,
                             onChanged: (newUnit) {
-                              priceCalNotifier.updatePriceData(
-                                  outputAreaUnit: newUnit);
+                              setState(() {
+                                seletedOutputUnit = newUnit;
 
-                              seletedOutputUnit = newUnit;
-                              setState(() {});
+                                if (seletedOutputUnit !=
+                                    ConvertingUnit.raiNganSqWha) {
+                                  priceCalNotifier.updatePriceData(
+                                    outputAreaUnit: newUnit,
+                                  );
+                                } else {
+                                  double rai = stringToDouble(
+                                      priceCoverterControllers.raiOutput.text);
+                                  double ngan = stringToDouble(
+                                      priceCoverterControllers.nganOutput.text);
+                                  double sqwa = stringToDouble(
+                                      priceCoverterControllers.sqwaOutput.text);
+
+                                  priceCalNotifier.convertCombinedUnit(
+                                      rai: rai, ngan: ngan, sqWa: sqwa);
+                                }
+                              });
                             },
                           ),
                         ],

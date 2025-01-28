@@ -124,7 +124,7 @@ class PriceInputSection extends StatelessWidget {
                         priceCalNotifier.convertCombinedUnit(
                           rai: rai,
                           ngan: ngan,
-                          sqWha: sqWha,
+                          sqWa: sqWha,
                           inputPrice: inputPrice,
                         );
                       }
@@ -157,7 +157,7 @@ class PriceInputSection extends StatelessWidget {
               priceCalNotifier.convertCombinedUnit(
                 rai: rai,
                 ngan: ngan,
-                sqWha: sqWha,
+                sqWa: sqWha,
               );
             }
           },

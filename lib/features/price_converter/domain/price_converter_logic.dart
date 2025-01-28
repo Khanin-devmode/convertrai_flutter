@@ -7,13 +7,13 @@ final priceConverterCtrlsProvider =
     StateProvider<PriceConverterTextControllers>(
   (ref) => PriceConverterTextControllers(
     singleInput: TextEditingController(text: '1'),
-    raiInput: TextEditingController(text: '0'),
+    raiInput: TextEditingController(text: '1'),
     nganInput: TextEditingController(text: '0'),
     sqwaInput: TextEditingController(text: '0'),
     priceInput: TextEditingController(text: '0'),
     //
     singleOutput: TextEditingController(text: '1'),
-    raiOutput: TextEditingController(text: '0'),
+    raiOutput: TextEditingController(text: '1'),
     nganOutput: TextEditingController(text: '0'),
     sqwaOutput: TextEditingController(text: '0'),
   ),
@@ -63,38 +63,7 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
     double? outputArea,
     ConvertingUnit? outputAreaUnit,
   }) {
-    // switch (outputUnit) {
-    //   case ConvertingUnit.rai:
-    //     {
-    //       state = pricerPerSqm / 0.000625;
-    //     }
-    //     break;
-    //   case ConvertingUnit.ngan:
-    //     {
-    //       state = pricerPerSqm / 0.0025;
-    //     }
-    //     break;
-    //   case ConvertingUnit.sqWha:
-    //     {
-    //       state = pricerPerSqm / 0.25;
-    //     }
-    //     break;
-    //   case ConvertingUnit.sqm:
-    //     {
-    //       state = pricerPerSqm;
-    //     }
-    //     break;
-    //   case ConvertingUnit.raiNganSqWha:
-    //     {
-    //       break;
-    //     }
-    // }
-
     state = PriceData(
-      // pricePerRai: pricerPerSqm / 0.000625,
-      // pricePerNgan: pricerPerSqm / 0.0025,
-      // pricePerSqWha: pricerPerSqm / 0.25,
-      // pricePerAcre: pricerPerSqm * 4046.86,
       inputArea: inputArea ?? state.inputArea,
       inputPrice: inputPrice ?? state.inputPrice,
       inputAreaUnit: inputAreaUnit ?? state.inputAreaUnit,
@@ -106,19 +75,19 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
   void convertCombinedUnit({
     required double rai,
     required double ngan,
-    required double sqWha,
+    required double sqWa,
     double? inputPrice,
     double? outputArea,
     ConvertingUnit? outputAreaUnit,
   }) {
-    double sqm = (rai * 1600) + (ngan * 400) + (sqWha * 4);
+    double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
 
     updatePriceData(
       inputPrice: inputPrice,
       inputArea: sqm,
       inputAreaUnit: ConvertingUnit.sqm,
       outputArea: outputArea,
-      outputAreaUnit: outputAreaUnit,
+      outputAreaUnit: ConvertingUnit.sqm,
     );
   }
 }
