@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class CustomInputField extends StatelessWidget {
-  CustomInputField({
+class CustomInputField extends StatefulWidget {
+  const CustomInputField({
     super.key,
     required this.inputTextController,
     required this.onChanged,
@@ -12,34 +13,54 @@ class CustomInputField extends StatelessWidget {
   final Function(String) onChanged;
   final String label;
 
-  final FocusNode focusNode = FocusNode();
+  @override
+  State<CustomInputField> createState() => _CustomInputFieldState();
+}
+
+class _CustomInputFieldState extends State<CustomInputField> {
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      key: super.key,
-      controller: inputTextController,
+      controller: widget.inputTextController,
       focusNode: focusNode,
-      onChanged: onChanged,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: const [],
+      onChanged: widget.onChanged,
+      keyboardType: const TextInputType.numberWithOptions(signed: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(
+            RegExp(r'^\d*\.?\d*')), // Allow numbers and a single '.'
+      ],
       onTapOutside: (event) {
-        print(focusNode);
         focusNode.unfocus();
       },
       decoration: InputDecoration(
-          // labelText: label,
-          // hintText: label,
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: const BorderSide(
-              width: 0,
-              style: BorderStyle.none,
-            ),
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: const BorderSide(
+            width: 0,
+            style: BorderStyle.none,
           ),
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 12)),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 0,
+          horizontal: 12,
+        ),
+      ),
     );
   }
 }
