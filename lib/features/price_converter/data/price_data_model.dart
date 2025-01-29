@@ -38,10 +38,6 @@ class PriceData {
         }
         break;
       case ConvertingUnit.sqm:
-        {
-          sqm = inputArea;
-        }
-        break;
       case ConvertingUnit.raiNganSqWha:
         {
           sqm = inputArea;

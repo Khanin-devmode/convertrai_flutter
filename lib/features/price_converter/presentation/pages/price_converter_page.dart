@@ -111,7 +111,8 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                                         stringToDouble(newValue);
 
                                     priceCalNotifier.updatePriceData(
-                                        outputArea: outputArea);
+                                      outputArea: outputArea,
+                                    );
                                   },
                                 ),
                               ],
@@ -122,8 +123,11 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                               nganTextCtrl: priceCoverterControllers.nganOutput,
                               sqwaTextCtrl: priceCoverterControllers.sqwaOutput,
                               onChanged: (rai, ngan, sqwa) {
-                                priceCalNotifier.convertCombinedUnit(
-                                    rai: rai, ngan: ngan, sqWa: sqwa);
+                                priceCalNotifier.convertCombinedInputUnit(
+                                  rai: rai,
+                                  ngan: ngan,
+                                  sqWa: sqwa,
+                                );
                               },
                             ),
                     ),
@@ -161,8 +165,12 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                                   double sqwa = stringToDouble(
                                       priceCoverterControllers.sqwaOutput.text);
 
-                                  priceCalNotifier.convertCombinedUnit(
-                                      rai: rai, ngan: ngan, sqWa: sqwa);
+                                  priceCalNotifier.convertCombinedOutputUnit(
+                                    rai: rai,
+                                    ngan: ngan,
+                                    sqWa: sqwa,
+                                    outputAreaUnit: seletedOutputUnit,
+                                  );
                                 }
                               });
                             },

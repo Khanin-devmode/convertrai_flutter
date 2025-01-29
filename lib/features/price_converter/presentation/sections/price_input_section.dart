@@ -79,7 +79,17 @@ class PriceInputSection extends StatelessWidget {
                       raiTextCtrl: raiInputCtrl,
                       nganTextCtrl: nganInputCtrl,
                       sqwaTextCtrl: sqWhaInputCtrl,
-                      onChanged: (double rai, double ngan, double sqwa) {},
+                      onChanged: (
+                        double rai,
+                        double ngan,
+                        double sqWa,
+                      ) {
+                        priceCalNotifier.convertCombinedInputUnit(
+                          rai: rai,
+                          ngan: ngan,
+                          sqWa: sqWa,
+                        );
+                      },
                     ),
             ),
             SizedBox(width: 8),
@@ -120,12 +130,11 @@ class PriceInputSection extends StatelessWidget {
                         double rai = stringToDouble(raiInputCtrl.text);
                         double ngan = stringToDouble(nganInputCtrl.text);
                         double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                        double inputPrice = stringToDouble(priceInputCtrl.text);
-                        priceCalNotifier.convertCombinedUnit(
+                        priceCalNotifier.convertCombinedInputUnit(
                           rai: rai,
                           ngan: ngan,
                           sqWa: sqWha,
-                          inputPrice: inputPrice,
+                          inputAreaUnit: inputAreaUnit,
                         );
                       }
                     },
@@ -141,25 +150,29 @@ class PriceInputSection extends StatelessWidget {
           inputTextController: priceInputCtrl,
           onChanged: (newvalue) {
             var inputPrice = stringToDouble(newvalue);
+            priceCalNotifier.updatePriceData(
+              inputPrice: inputPrice,
+            );
 
-            if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
-              var inputArea = stringToDouble(singleInputCtrl.text);
-              priceCalNotifier.updatePriceData(
-                inputPrice: inputPrice,
-                inputArea: inputArea,
-                inputAreaUnit: inputAreaUnit,
-              );
-            } else {
-              double rai = stringToDouble(raiInputCtrl.text);
-              double ngan = stringToDouble(nganInputCtrl.text);
-              double sqWha = stringToDouble(sqWhaInputCtrl.text);
-              double inputPrice = stringToDouble(priceInputCtrl.text);
-              priceCalNotifier.convertCombinedUnit(
-                rai: rai,
-                ngan: ngan,
-                sqWa: sqWha,
-              );
-            }
+            // if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
+            //   var inputArea = stringToDouble(singleInputCtrl.text);
+            //   priceCalNotifier.updatePriceData(
+            //     inputPrice: inputPrice,
+            //     inputArea: inputArea,
+            //     inputAreaUnit: inputAreaUnit,
+            //   );
+            // } else {
+            //   double rai = stringToDouble(raiInputCtrl.text);
+            //   double ngan = stringToDouble(nganInputCtrl.text);
+            //   double sqWha = stringToDouble(sqWhaInputCtrl.text);
+            //   double inputPrice = stringToDouble(priceInputCtrl.text);
+            //   priceCalNotifier.convertCombinedUnit(
+            //     rai: rai,
+            //     ngan: ngan,
+            //     sqWa: sqWha,
+            //     inputPrice: inputPrice
+            //   );
+            // }
           },
         ),
       ],

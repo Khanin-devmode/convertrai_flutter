@@ -10,7 +10,7 @@ final priceConverterCtrlsProvider =
     raiInput: TextEditingController(text: '1'),
     nganInput: TextEditingController(text: '0'),
     sqwaInput: TextEditingController(text: '0'),
-    priceInput: TextEditingController(text: '0'),
+    priceInput: TextEditingController(text: '25000'),
     //
     singleOutput: TextEditingController(text: '1'),
     raiOutput: TextEditingController(text: '1'),
@@ -72,22 +72,37 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
     );
   }
 
-  void convertCombinedUnit({
+  void convertCombinedInputUnit({
     required double rai,
     required double ngan,
     required double sqWa,
     double? inputPrice,
+    ConvertingUnit? inputAreaUnit,
     double? outputArea,
     ConvertingUnit? outputAreaUnit,
   }) {
     double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
 
     updatePriceData(
-      inputPrice: inputPrice,
       inputArea: sqm,
-      inputAreaUnit: ConvertingUnit.sqm,
-      outputArea: outputArea,
-      outputAreaUnit: ConvertingUnit.sqm,
+      inputAreaUnit: inputAreaUnit,
+    );
+  }
+
+  void convertCombinedOutputUnit({
+    required double rai,
+    required double ngan,
+    required double sqWa,
+    // double? inputPrice,
+    // ConvertingUnit? inputAreaUnit,
+    // double? outputArea,
+    ConvertingUnit? outputAreaUnit,
+  }) {
+    double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
+
+    updatePriceData(
+      outputArea: sqm,
+      outputAreaUnit: outputAreaUnit,
     );
   }
 }
