@@ -48,63 +48,81 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
   PriceCalNotifier()
       : super(
           PriceData(
-            inputArea: 1,
+            inputSingleArea: 1,
             inputAreaUnit: ConvertingUnit.sqWa,
             inputPrice: 25000,
+            inputRai: 1,
+            inputNgan: 0,
+            inputSqWa: 0,
             outputArea: 1,
             outputAreaUnit: ConvertingUnit.rai,
+            outputRai: 1,
+            outputNgan: 0,
+            outputSqWa: 0,
           ),
         );
 
   void updatePriceData({
     double? inputPrice,
-    double? inputArea,
+    double? inputSingleArea,
+    double? inputRai,
+    double? inputNgan,
+    double? inputSqWa,
     ConvertingUnit? inputAreaUnit,
-    double? outputArea,
+    double? outputSingleArea,
+    double? outputRai,
+    double? outputNgan,
+    double? outputSqWa,
     ConvertingUnit? outputAreaUnit,
   }) {
     state = PriceData(
-      inputArea: inputArea ?? state.inputArea,
+      inputSingleArea: inputSingleArea ?? state.inputSingleArea,
       inputPrice: inputPrice ?? state.inputPrice,
       inputAreaUnit: inputAreaUnit ?? state.inputAreaUnit,
-      outputArea: outputArea ?? state.outputArea,
+      inputRai: inputRai ?? state.inputRai,
+      inputNgan: inputNgan ?? state.inputNgan,
+      inputSqWa: inputSqWa ?? state.inputSqWa,
+      outputArea: outputSingleArea ?? state.outputArea,
       outputAreaUnit: outputAreaUnit ?? state.outputAreaUnit,
+      outputRai: outputRai ?? state.outputRai,
+      outputNgan: outputNgan ?? state.outputNgan,
+      outputSqWa: outputSqWa ?? state.outputSqWa,
     );
   }
 
-  void convertCombinedInputUnit({
-    required double rai,
-    required double ngan,
-    required double sqWa,
-    double? inputPrice,
-    ConvertingUnit? inputAreaUnit,
-    double? outputArea,
-    ConvertingUnit? outputAreaUnit,
-  }) {
-    double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
+  // void convertCombinedInputUnit({
+  //   required double rai,
+  //   required double ngan,
+  //   required double sqWa,
+  //   double? inputPrice,
+  //   ConvertingUnit? inputAreaUnit,
+  //   double? outputArea,
+  //   ConvertingUnit? outputAreaUnit,
+  // }) {
+  //   double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
 
-    updatePriceData(
-      inputArea: sqm,
-      inputAreaUnit: inputAreaUnit,
-    );
-  }
+  //   updatePriceData(
+  //     inputSingleArea: sqm,
+  //     inputAreaUnit: inputAreaUnit,
+  //   );
+  // }
 
-  void convertCombinedOutputUnit({
-    required double rai,
-    required double ngan,
-    required double sqWa,
-    // double? inputPrice,
-    // ConvertingUnit? inputAreaUnit,
-    // double? outputArea,
-    ConvertingUnit? outputAreaUnit,
-  }) {
-    double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
+  // void convertCombinedOutputUnit({
+  //   required double rai,
+  //   required double ngan,
+  //   required double sqWa,
+  //   // double? inputPrice,
+  //   // ConvertingUnit? inputAreaUnit,
+  //   // double? outputArea,
+  //   ConvertingUnit? outputAreaUnit,
+  // }) {
+  //   double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
 
-    updatePriceData(
-      outputArea: sqm,
-      outputAreaUnit: outputAreaUnit,
-    );
-  }
+  //   updatePriceData(
+  //     outputSingleArea: sqm,
+  //     outputAreaUnit: outputAreaUnit,
+  //   );
+  // }
 }
 
 final priceCalNotifierProvider =

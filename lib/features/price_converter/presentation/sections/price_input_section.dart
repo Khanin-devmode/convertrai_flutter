@@ -67,7 +67,7 @@ class PriceInputSection extends StatelessWidget {
                                 stringToDouble(priceInputCtrl.text);
                             priceCalNotifier.updatePriceData(
                               inputPrice: inputPrice,
-                              inputArea: unitValue,
+                              inputSingleArea: unitValue,
                               inputAreaUnit: inputAreaUnit,
                             );
                           },
@@ -84,10 +84,10 @@ class PriceInputSection extends StatelessWidget {
                         double ngan,
                         double sqWa,
                       ) {
-                        priceCalNotifier.convertCombinedInputUnit(
-                          rai: rai,
-                          ngan: ngan,
-                          sqWa: sqWa,
+                        priceCalNotifier.updatePriceData(
+                          inputRai: rai,
+                          inputNgan: ngan,
+                          inputSqWa: sqWa,
                         );
                       },
                     ),
@@ -123,17 +123,17 @@ class PriceInputSection extends StatelessWidget {
                         var inputArea = stringToDouble(singleInputCtrl.text);
                         priceCalNotifier.updatePriceData(
                           inputPrice: inputPrice,
-                          inputArea: inputArea,
+                          inputSingleArea: inputArea,
                           inputAreaUnit: inputAreaUnit,
                         );
                       } else {
                         double rai = stringToDouble(raiInputCtrl.text);
                         double ngan = stringToDouble(nganInputCtrl.text);
                         double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                        priceCalNotifier.convertCombinedInputUnit(
-                          rai: rai,
-                          ngan: ngan,
-                          sqWa: sqWha,
+                        priceCalNotifier.updatePriceData(
+                          inputRai: rai,
+                          inputNgan: ngan,
+                          inputSqWa: sqWha,
                           inputAreaUnit: inputAreaUnit,
                         );
                       }

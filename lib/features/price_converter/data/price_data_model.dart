@@ -3,17 +3,29 @@ import 'package:convert_rai/features/unit_converter/data/calculation_model.dart'
 class PriceData {
   PriceData({
     required this.inputPrice,
-    required this.inputArea,
+    required this.inputSingleArea,
     required this.inputAreaUnit,
     required this.outputArea,
     required this.outputAreaUnit,
+    required this.inputRai,
+    required this.inputNgan,
+    required this.inputSqWa,
+    required this.outputRai,
+    required this.outputNgan,
+    required this.outputSqWa,
   });
 
   double inputPrice;
-  double inputArea;
+  double inputSingleArea;
+  double inputRai;
+  double inputNgan;
+  double inputSqWa;
   ConvertingUnit inputAreaUnit;
 
   double outputArea;
+  double outputRai;
+  double outputNgan;
+  double outputSqWa;
   ConvertingUnit outputAreaUnit;
 
   double getOutputPrice() {
@@ -23,30 +35,27 @@ class PriceData {
 
     switch (inputAreaUnit) {
       case ConvertingUnit.rai:
-        {
-          sqm = inputArea * 1600;
-        }
+        sqm = inputSingleArea * 1600;
         break;
+
       case ConvertingUnit.ngan:
-        {
-          sqm = inputArea * 400;
-        }
+        sqm = inputSingleArea * 400;
         break;
+
       case ConvertingUnit.sqWa:
-        {
-          sqm = inputArea * 4;
-        }
+        sqm = inputSingleArea * 4;
         break;
-      case ConvertingUnit.sqm:
+
       case ConvertingUnit.raiNganSqWha:
-        {
-          sqm = inputArea;
-        }
+        sqm = (inputRai * 1600) + (inputNgan * 400) + (inputSqWa * 4);
         break;
+
+      case ConvertingUnit.sqm:
+        sqm = inputSingleArea;
+        break;
+
       case ConvertingUnit.acre:
-        {
-          sqm = inputArea * 4046.86;
-        }
+        sqm = inputSingleArea * 4046.86;
         break;
     }
 
@@ -63,6 +72,10 @@ class PriceData {
         outputPrice = outputArea * (pricePerSqm / 0.25);
         break;
       case ConvertingUnit.raiNganSqWha:
+        outputPrice =
+            ((outputRai * 1600) + (outputNgan * 400) + (outputSqWa * 4)) *
+                pricePerSqm;
+        break;
       case ConvertingUnit.sqm:
         outputPrice = outputArea * pricePerSqm;
         break;
