@@ -17,6 +17,11 @@
     "pricePerUnit":"Price per unit",
     "baht":"Baht",
     "areaSize":"Area Size",
-    "acre":"Acre"
+    "acre":"Acre",
+    "unitConverter":"Unit Converter",
+    "priceConverter":"​Price Converter",
+    "startingAreaPrice":"Starting Area Price",
+    "targetAreaPrice":"Target Area Price"
+
 
 }

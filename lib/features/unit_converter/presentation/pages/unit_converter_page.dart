@@ -38,7 +38,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HeaderRow(label: 'Unit Converter'),
+        HeaderRow(label: appLocal.unitConverter),
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Container(

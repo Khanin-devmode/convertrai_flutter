@@ -45,7 +45,7 @@ class PriceInputSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'ราคาตั้งต้น',
+            appLocal.startingAreaPrice,
             style: const TextStyle(fontSize: 16),
           ),
         ),

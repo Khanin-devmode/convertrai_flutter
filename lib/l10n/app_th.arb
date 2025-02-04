@@ -17,5 +17,9 @@
     "pricePerUnit":"ราคาต่อหน่วย",
     "baht":"บาท",
     "areaSize":"ขนาดพื้นที่",
-    "acre":"เอเคอร์"
+    "acre":"เอเคอร์",
+    "unitConverter":"แปลงหน่วยพื้นที่",
+    "priceConverter":"แปลงราคาพื้นที่",
+    "startingAreaPrice":"ราคาพื้นที่ตั้งต้น",
+    "targetAreaPrice":"ราคาพื้นที่ที่ต้องการ"
 }

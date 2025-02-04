@@ -57,7 +57,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HeaderRow(label: 'Price Converter'),
+        HeaderRow(label: appLocal.priceConverter),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Container(
@@ -95,7 +95,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 //   style: const TextStyle(fontSize: 20),
                 // ),
 
-                InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
+                InputLabel(label: appLocal.targetAreaPrice),
 
                 Row(
                   children: [
