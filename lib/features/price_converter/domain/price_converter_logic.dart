@@ -89,40 +89,6 @@ class PriceCalNotifier extends StateNotifier<PriceData> {
       outputSqWa: outputSqWa ?? state.outputSqWa,
     );
   }
-
-  // void convertCombinedInputUnit({
-  //   required double rai,
-  //   required double ngan,
-  //   required double sqWa,
-  //   double? inputPrice,
-  //   ConvertingUnit? inputAreaUnit,
-  //   double? outputArea,
-  //   ConvertingUnit? outputAreaUnit,
-  // }) {
-  //   double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
-
-  //   updatePriceData(
-  //     inputSingleArea: sqm,
-  //     inputAreaUnit: inputAreaUnit,
-  //   );
-  // }
-
-  // void convertCombinedOutputUnit({
-  //   required double rai,
-  //   required double ngan,
-  //   required double sqWa,
-  //   // double? inputPrice,
-  //   // ConvertingUnit? inputAreaUnit,
-  //   // double? outputArea,
-  //   ConvertingUnit? outputAreaUnit,
-  // }) {
-  //   double sqm = (rai * 1600) + (ngan * 400) + (sqWa * 4);
-
-  //   updatePriceData(
-  //     outputSingleArea: sqm,
-  //     outputAreaUnit: outputAreaUnit,
-  //   );
-  // }
 }
 
 final priceCalNotifierProvider =

@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/price_converter/presentation/sections/price_input_section.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
@@ -92,6 +94,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                 //   appLocal.pricePerUnit,
                 //   style: const TextStyle(fontSize: 20),
                 // ),
+
                 InputLabel(label: 'ขนาดที่ต้องการทราบราคา'),
 
                 Row(
@@ -100,8 +103,9 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                       flex: 4,
                       child: seletedOutputUnit != ConvertingUnit.raiNganSqWha
                           ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                InputLabel(label: 'ขนาดพื้นที่'),
+                                InputLabel(label: appLocal.areaSize),
                                 CustomTextField(
                                   label:
                                       getUnitText(seletedOutputUnit, appLocal),
@@ -135,8 +139,9 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                     Expanded(
                       flex: 2,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          InputLabel(label: 'หน่วยพื้นที่'),
+                          InputLabel(label: appLocal.unit),
                           UnitSelectDropdown(
                             selectableUnits: const [
                               ConvertingUnit.raiNganSqWha,
@@ -181,12 +186,33 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   ],
                 ),
 
-                InputLabel(label: 'ราคา'),
-                Builder(builder: (context) {
-                  final priceData = ref.watch(priceCalNotifierProvider);
+                InputLabel(label: appLocal.price),
+                Container(
+                  constraints: BoxConstraints(minHeight: 100),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16),
+                    ),
+                  ),
+                  child: Builder(builder: (context) {
+                    final priceData = ref.watch(priceCalNotifierProvider);
 
-                  return Text('${priceData.getOutputPrice()}');
-                })
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: AutoSizeText(
+                          '${kNumFormat.format(priceData.getOutputPrice())} ${appLocal.baht}',
+                          style: TextStyle(
+                            fontSize: 28,
+                          ),
+                          minFontSize: 10,
+                          maxLines: 1,
+                        ),
+                      ),
+                    );
+                  }),
+                )
               ],
             ),
           ),

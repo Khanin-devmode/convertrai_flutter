@@ -96,6 +96,7 @@ class PriceInputSection extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
