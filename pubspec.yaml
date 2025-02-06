@@ -40,6 +40,9 @@ flutter:
         - asset: fonts/Prompt-Regular.ttf
   uses-material-design: true
   generate: true
+  assets:
+  - assets/images/
+
 
 flutter_launcher_icons:
   android: "launcher_icon"
