@@ -45,6 +45,7 @@ class HeaderRow extends ConsumerWidget {
                     child: Container(
                       alignment: Alignment.center,
                       width: 48,
+                      height: 40,
                       child: Text(
                         'ไทย',
                         style: TextStyle(
@@ -66,6 +67,7 @@ class HeaderRow extends ConsumerWidget {
                         .update((state) => 'en')),
                     child: Container(
                       width: 48,
+                      height: 40,
                       alignment: Alignment.center,
                       child: Text(
                         'En',
