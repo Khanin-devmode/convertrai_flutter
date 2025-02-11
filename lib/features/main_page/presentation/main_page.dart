@@ -1,10 +1,8 @@
-import 'package:convert_rai/ad_helper.dart';
 import 'package:convert_rai/features/price_converter/presentation/pages/price_converter_page.dart';
 import 'package:convert_rai/features/unit_converter/presentation/pages/unit_converter_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -14,34 +12,34 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class MainPageState extends ConsumerState<MainPage> {
-  BannerAd? _bannerAd;
+  // BannerAd? _bannerAd;
 
   @override
   void initState() {
-    if (!kIsWeb) {
-      BannerAd(
-        adUnitId: AdHelper.bannerAdUnitId,
-        request: const AdRequest(),
-        size: AdSize.banner,
-        listener: BannerAdListener(
-          onAdLoaded: (ad) {
-            setState(() {
-              _bannerAd = ad as BannerAd;
-            });
-          },
-          onAdFailedToLoad: (ad, err) {
-            // print('Failed to load a banner ad: ${err.message}');
-            ad.dispose();
-          },
-        ),
-      ).load();
-    }
+    // if (!kIsWeb) {
+    //   BannerAd(
+    //     adUnitId: AdHelper.bannerAdUnitId,
+    //     request: const AdRequest(),
+    //     size: AdSize.banner,
+    //     listener: BannerAdListener(
+    //       onAdLoaded: (ad) {
+    //         setState(() {
+    //           _bannerAd = ad as BannerAd;
+    //         });
+    //       },
+    //       onAdFailedToLoad: (ad, err) {
+    //         // print('Failed to load a banner ad: ${err.message}');
+    //         ad.dispose();
+    //       },
+    //     ),
+    //   ).load();
+    // }
     super.initState();
   }
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    // _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -60,7 +58,7 @@ class MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    // Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -91,18 +89,18 @@ class MainPageState extends ConsumerState<MainPage> {
             child: _pages.elementAt(_selectedIndex),
           ),
         ),
-        _bannerAd != null
-            ? Positioned(
-                bottom: 16,
-                left: (screenSize.width / 2 - _bannerAd!.size.width / 2),
-                child: Container(
-                  color: Colors.blue,
-                  width: _bannerAd!.size.width.toDouble(),
-                  height: _bannerAd!.size.height.toDouble(),
-                  alignment: Alignment.center,
-                  child: AdWidget(ad: _bannerAd!),
-                ))
-            : const SizedBox()
+        // _bannerAd != null
+        //     ? Positioned(
+        //         bottom: 16,
+        //         left: (screenSize.width / 2 - _bannerAd!.size.width / 2),
+        //         child: Container(
+        //           color: Colors.blue,
+        //           width: _bannerAd!.size.width.toDouble(),
+        //           height: _bannerAd!.size.height.toDouble(),
+        //           alignment: Alignment.center,
+        //           child: AdWidget(ad: _bannerAd!),
+        //         ))
+        //     : const SizedBox()
       ]),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
