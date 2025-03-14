@@ -125,7 +125,7 @@ class PriceInputSection extends StatelessWidget {
                         priceCalNotifier.updatePriceData(
                           inputPrice: inputPrice,
                           inputSingleArea: inputArea,
-                          inputAreaUnit: inputAreaUnit,
+                          inputAreaUnit: newUnit,
                         );
                       } else {
                         double rai = stringToDouble(raiInputCtrl.text);
@@ -135,7 +135,8 @@ class PriceInputSection extends StatelessWidget {
                           inputRai: rai,
                           inputNgan: ngan,
                           inputSqWa: sqWha,
-                          inputAreaUnit: inputAreaUnit,
+                          inputPrice: inputPrice,
+                          inputAreaUnit: newUnit,
                         );
                       }
                     },

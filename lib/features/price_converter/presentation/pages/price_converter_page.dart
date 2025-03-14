@@ -202,7 +202,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
                         child: AutoSizeText(
-                          '${kNumFormat.format(priceData.getOutputPrice())} ${appLocal.baht}',
+                          '${kBahtFormat.format(priceData.getOutputPrice())} ${appLocal.baht}',
                           style: TextStyle(
                             fontSize: 28,
                           ),
