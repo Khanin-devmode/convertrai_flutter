@@ -18,8 +18,13 @@
     "baht":"บาท",
     "areaSize":"ขนาดพื้นที่",
     "acre":"เอเคอร์",
-    "unitConverter":"แปลงหน่วยพื้นที่",
-    "priceConverter":"แปลงราคาพื้นที่",
+    "areaUnitConverter":"แปลงหน่วยพื้นที่",
+    "areaPriceConverter":"แปลงราคาพื้นที่",
     "startingAreaPrice":"ราคาพื้นที่ตั้งต้น",
-    "targetAreaPrice":"ราคาพื้นที่ที่ต้องการ"
+    "targetAreaPrice":"ราคาพื้นที่ที่ต้องการ",
+    "inputArea":"ขนาดพื้นที่เริ่มต้น",
+    "allResult":"ผลลัพธ์ทั้งหมด",
+    "unitCoverter":"แปลงน่วย",
+    "priceConverter":"แปลงราคา"
+
 }

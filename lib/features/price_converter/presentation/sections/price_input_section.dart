@@ -42,12 +42,8 @@ class PriceInputSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            appLocal.startingAreaPrice,
-            style: const TextStyle(fontSize: 16),
-          ),
+        InputLabel(
+          label: appLocal.startingAreaPrice,
         ),
         Row(
           children: [

@@ -4,6 +4,7 @@ import 'package:convert_rai/features/unit_converter/presentation/sections/output
 import 'package:convert_rai/features/unit_converter/presentation/sections/save_result_section.dart';
 import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
+import 'package:convert_rai/shared_widgets/input_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,7 +39,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        HeaderRow(label: appLocal.unitConverter),
+        HeaderRow(label: appLocal.areaUnitConverter),
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: Container(
@@ -52,7 +53,9 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                   Radius.circular(20),
                 )),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                InputLabel(label: appLocal.inputArea),
                 InputSection(
                   calState: calState,
                   singleInputCtrl: singleInputCtrl,
@@ -65,9 +68,8 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                 const Divider(
                   height: 40,
                 ),
-                Text(
-                  appLocal.conversion,
-                  style: const TextStyle(fontSize: 20),
+                InputLabel(
+                  label: appLocal.allResult,
                 ),
                 OutputUnitSection(
                   calState: calState,
@@ -77,9 +79,8 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                   sqWhaInputCtrl: sqWhaInputCtrl,
                   appLocal: appLocal,
                 ),
-                Text(
-                  appLocal.saveResult,
-                  style: const TextStyle(fontSize: 20),
+                InputLabel(
+                  label: appLocal.saveResult,
                 ),
                 const SizedBox(
                   height: 10,

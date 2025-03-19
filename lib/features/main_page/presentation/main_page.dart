@@ -3,6 +3,7 @@ import 'package:convert_rai/features/unit_converter/presentation/pages/unit_conv
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -12,28 +13,8 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class MainPageState extends ConsumerState<MainPage> {
-  // BannerAd? _bannerAd;
-
   @override
   void initState() {
-    // if (!kIsWeb) {
-    //   BannerAd(
-    //     adUnitId: AdHelper.bannerAdUnitId,
-    //     request: const AdRequest(),
-    //     size: AdSize.banner,
-    //     listener: BannerAdListener(
-    //       onAdLoaded: (ad) {
-    //         setState(() {
-    //           _bannerAd = ad as BannerAd;
-    //         });
-    //       },
-    //       onAdFailedToLoad: (ad, err) {
-    //         // print('Failed to load a banner ad: ${err.message}');
-    //         ad.dispose();
-    //       },
-    //     ),
-    //   ).load();
-    // }
     super.initState();
   }
 
@@ -58,13 +39,10 @@ class MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Size screenSize = MediaQuery.of(context).size;
+    final appLocal = AppLocalizations.of(context)!;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //     backgroundColor: Colors.transparent,
-      //     surfaceTintColor: Colors.transparent),
       body: Stack(children: [
         Container(
           height: 270,
@@ -103,14 +81,14 @@ class MainPageState extends ConsumerState<MainPage> {
         //     : const SizedBox()
       ]),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.change_circle_outlined),
-            label: 'Unit Converter',
+            label: appLocal.unitCoverter,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.currency_exchange_outlined),
-            label: 'Price Converter',
+            label: appLocal.priceConverter,
           )
         ],
         currentIndex: _selectedIndex,
