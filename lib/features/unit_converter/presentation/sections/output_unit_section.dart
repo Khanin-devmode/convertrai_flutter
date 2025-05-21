@@ -120,8 +120,22 @@ class OutputUnitSection extends StatelessWidget {
                 ValueUnitPair(value: calState.acre, unit: ConvertingUnit.acre)
               ],
               appLocal: appLocal,
-              // resultValue: ' = ${kNumFormat.format(calState.sqm)} ตรม.',
-              // resultUnit: '',
+            ),
+          if (calState.selectedUnit != ConvertingUnit.sqFt)
+            ResultRow(
+              inputText: inputText,
+              valueList: [
+                ValueUnitPair(value: calState.sqFt, unit: ConvertingUnit.sqFt)
+              ],
+              appLocal: appLocal,
+            ),
+          if (calState.selectedUnit != ConvertingUnit.sqIn)
+            ResultRow(
+              inputText: inputText,
+              valueList: [
+                ValueUnitPair(value: calState.sqIn, unit: ConvertingUnit.sqIn)
+              ],
+              appLocal: appLocal,
             ),
         ],
       ),

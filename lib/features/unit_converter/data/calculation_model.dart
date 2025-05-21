@@ -1,4 +1,4 @@
-enum ConvertingUnit { sqm, rai, ngan, sqWa, raiNganSqWha, acre }
+enum ConvertingUnit { sqm, rai, ngan, sqWa, raiNganSqWha, acre, sqFt, sqIn }
 
 class Calculation {
   ConvertingUnit selectedUnit = ConvertingUnit.raiNganSqWha;
@@ -12,6 +12,8 @@ class Calculation {
   double fullSqWha = 400;
   double sqWhaRemainder = 0;
   double acre = 0.39536826;
+  double sqFt = 0;
+  double sqIn = 0;
 
   String getTextValueSelectedUnit(ConvertingUnit selectedUnit) {
     switch (selectedUnit) {
@@ -27,6 +29,10 @@ class Calculation {
         return '0';
       case ConvertingUnit.acre:
         return '$acre';
+      case ConvertingUnit.sqFt:
+        return '$sqFt';
+      case ConvertingUnit.sqIn:
+        return '$sqIn';
     }
   }
 }

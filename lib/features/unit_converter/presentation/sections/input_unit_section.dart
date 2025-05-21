@@ -85,6 +85,8 @@ class InputSection extends ConsumerWidget {
                     ConvertingUnit.sqWa,
                     ConvertingUnit.sqm,
                     ConvertingUnit.acre,
+                    ConvertingUnit.sqFt,
+                    ConvertingUnit.sqIn,
                   ],
                   appLocal: appLocal,
                   selectedUnit: calState.selectedUnit,

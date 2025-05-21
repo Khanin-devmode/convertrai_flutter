@@ -28,7 +28,12 @@ String getUnitText(ConvertingUnit unit, AppLocalizations appLocal) {
       return appLocal.raiNganSqWha;
     case ConvertingUnit.acre:
       return appLocal.acre;
+    case ConvertingUnit.sqFt:
+      return 'sq ft';
+    case ConvertingUnit.sqIn:
+      return 'sq in';
   }
+  return '';
 }
 
 String getInputText(
