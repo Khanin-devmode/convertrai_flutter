@@ -54,6 +54,9 @@ class HeaderRow extends ConsumerWidget {
                               ? FontWeight.bold
                               : FontWeight.normal,
                         ),
+                        textAlign: TextAlign.start,
+                        textDirection: TextDirection.ltr,
+                        textWidthBasis: TextWidthBasis.longestLine,
                       ),
                     )),
                 Container(

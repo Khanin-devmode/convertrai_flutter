@@ -7,7 +7,7 @@ import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:convert_rai/shared_widgets/rai_ngan_sqwa_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:convert_rai/l10n/app_localizations.dart';
 
 import '../../../../shared_widgets/custom_input.dart';
 import '../../../../shared_widgets/input_label.dart';

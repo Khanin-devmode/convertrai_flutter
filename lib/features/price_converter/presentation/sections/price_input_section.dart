@@ -7,7 +7,7 @@ import 'package:convert_rai/shared_widgets/rai_ngan_sqwa_input.dart';
 import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:convert_rai/l10n/app_localizations.dart';
 
 class PriceInputSection extends StatelessWidget {
   const PriceInputSection({

@@ -2,7 +2,7 @@ import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
 import 'package:convert_rai/shared_widgets/saved_result_row.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:convert_rai/l10n/app_localizations.dart';
 
 class SaveResultArea extends StatelessWidget {
   const SaveResultArea(
