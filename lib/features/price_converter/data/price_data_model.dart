@@ -57,6 +57,18 @@ class PriceData {
       case ConvertingUnit.acre:
         sqm = inputSingleArea * 4046.86;
         break;
+
+      case ConvertingUnit.hectare:
+        sqm = inputSingleArea * 10000;
+        break;
+
+      case ConvertingUnit.sqKm:
+        sqm = inputSingleArea * 1000000;
+        break;
+
+      case ConvertingUnit.sqFt:
+        sqm = inputSingleArea * 0.09290304;
+        break;
     }
 
     pricePerSqm = inputPrice / sqm;
@@ -81,6 +93,18 @@ class PriceData {
         break;
       case ConvertingUnit.acre:
         outputPrice = outputArea * 4046.86 * pricePerSqm;
+        break;
+
+      case ConvertingUnit.hectare:
+        outputPrice = outputArea * 10000 * pricePerSqm;
+        break;
+
+      case ConvertingUnit.sqKm:
+        outputPrice = outputArea * 1000000 * pricePerSqm;
+        break;
+
+      case ConvertingUnit.sqFt:
+        outputPrice = outputArea * 0.09290304 * pricePerSqm;
         break;
     }
 

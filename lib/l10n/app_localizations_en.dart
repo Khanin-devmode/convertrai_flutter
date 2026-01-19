@@ -57,6 +57,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acre => 'Acre';
 
   @override
+  String get hectare => 'Hectare';
+
+  @override
+  String get sqKm => 'Sq.Km.';
+
+  @override
+  String get sqFt => 'Sq.Ft.';
+
+  @override
   String get areaUnitConverter => 'Unit Converter';
 
   @override

@@ -40,6 +40,12 @@ String getUnitText(ConvertingUnit unit, AppLocalizations appLocal) {
       return appLocal.raiNganSqWha;
     case ConvertingUnit.acre:
       return appLocal.acre;
+    case ConvertingUnit.hectare:
+      return appLocal.hectare;
+    case ConvertingUnit.sqKm:
+      return appLocal.sqKm;
+    case ConvertingUnit.sqFt:
+      return appLocal.sqFt;
   }
 }
 

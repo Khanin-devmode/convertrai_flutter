@@ -57,6 +57,15 @@ class AppLocalizationsTh extends AppLocalizations {
   String get acre => 'เอเคอร์';
 
   @override
+  String get hectare => 'เฮกตาร์';
+
+  @override
+  String get sqKm => 'ตร.กม.';
+
+  @override
+  String get sqFt => 'ตร.ฟุต';
+
+  @override
   String get areaUnitConverter => 'แปลงหน่วยพื้นที่';
 
   @override

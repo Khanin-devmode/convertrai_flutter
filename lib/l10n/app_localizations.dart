@@ -194,6 +194,24 @@ abstract class AppLocalizations {
   /// **'Acre'**
   String get acre;
 
+  /// No description provided for @hectare.
+  ///
+  /// In en, this message translates to:
+  /// **'Hectare'**
+  String get hectare;
+
+  /// No description provided for @sqKm.
+  ///
+  /// In en, this message translates to:
+  /// **'Sq.Km.'**
+  String get sqKm;
+
+  /// No description provided for @sqFt.
+  ///
+  /// In en, this message translates to:
+  /// **'Sq.Ft.'**
+  String get sqFt;
+
   /// No description provided for @areaUnitConverter.
   ///
   /// In en, this message translates to:

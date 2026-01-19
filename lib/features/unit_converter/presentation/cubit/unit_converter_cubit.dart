@@ -41,6 +41,21 @@ class UnitConverterCubit extends Cubit<UnitConverterState> {
           newCal.sqm = newValue * 4046.86;
         }
         break;
+      case ConvertingUnit.hectare:
+        {
+          newCal.sqm = newValue * 10000;
+        }
+        break;
+      case ConvertingUnit.sqKm:
+        {
+          newCal.sqm = newValue * 1000000;
+        }
+        break;
+      case ConvertingUnit.sqFt:
+        {
+          newCal.sqm = newValue * 0.09290304;
+        }
+        break;
     }
 
     newCal.fullRai = newCal.sqm / 1600;
@@ -52,6 +67,9 @@ class UnitConverterCubit extends Cubit<UnitConverterState> {
     newCal.ngan = (newCal.sqWhaRemainder / 100).floorToDouble();
     newCal.sqWha = newCal.sqWhaRemainder.remainder(100);
     newCal.acre = newCal.sqm / 4046.86;
+    newCal.hectare = newCal.sqm / 10000;
+    newCal.sqKm = newCal.sqm / 1000000;
+    newCal.sqFt = newCal.sqm / 0.09290304;
 
     emit(state.copyWith(calculation: newCal));
   }
@@ -75,6 +93,9 @@ class UnitConverterCubit extends Cubit<UnitConverterState> {
     newState.fullSqWha = state.calculation.fullSqWha;
     newState.sqWhaRemainder = state.calculation.sqWhaRemainder;
     newState.acre = state.calculation.acre;
+    newState.hectare = state.calculation.hectare;
+    newState.sqKm = state.calculation.sqKm;
+    newState.sqFt = state.calculation.sqFt;
 
     emit(state.copyWith(calculation: newState));
   }
