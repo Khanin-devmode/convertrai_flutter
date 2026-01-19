@@ -1,42 +1,43 @@
-import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/save_result_cubit.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/save_result_state.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/unit_converter_cubit.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/unit_converter_state.dart';
 import 'package:convert_rai/features/unit_converter/presentation/sections/input_unit_section.dart';
 import 'package:convert_rai/features/unit_converter/presentation/sections/output_unit_section.dart';
 import 'package:convert_rai/features/unit_converter/presentation/sections/save_result_section.dart';
-import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:convert_rai/shared_widgets/input_label.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
-class UnitConverterPage extends ConsumerStatefulWidget {
+class UnitConverterPage extends StatefulWidget {
   const UnitConverterPage({super.key});
 
   @override
   ConverterPageState createState() => ConverterPageState();
 }
 
-class ConverterPageState extends ConsumerState<UnitConverterPage> {
+class ConverterPageState extends State<UnitConverterPage> {
   @override
   void initState() {
-    ref.read(saveNotifierProvider.notifier).initHiveSavingBox();
     super.initState();
+    context.read<SaveResultCubit>().initHiveSavingBox();
   }
 
   @override
   Widget build(BuildContext context) {
-    final calState = ref.watch(calNotifierProvider);
-    final calNotifier = ref.watch(calNotifierProvider.notifier);
-    final List<String> saveState = ref.watch(saveNotifierProvider);
-    final saveNotifier = ref.watch(saveNotifierProvider.notifier);
-    final singleInputCtrl = ref.watch(singleInputCtrlProviderUnitCon);
-    final raiInputCtrl = ref.watch(raiInputCtrlProviderUnitCon);
-    final nganInputCtrl = ref.watch(nganInputCtrlProviderUnitCon);
-    final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderUnitCon);
-
     final appLocal = AppLocalizations.of(context)!;
 
-    return Column(
+    return BlocBuilder<UnitConverterCubit, UnitConverterState>(builder: (context, unitState) {
+      return BlocBuilder<SaveResultCubit, SaveResultState>(builder: (context, saveState) {
+        final calState = unitState.calculation;
+        final singleInputCtrl = unitState.singleInputCtrl;
+        final raiInputCtrl = unitState.raiInputCtrl;
+        final nganInputCtrl = unitState.nganInputCtrl;
+        final sqWhaInputCtrl = unitState.sqWhaInputCtrl;
+
+        return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         HeaderRow(label: appLocal.areaUnitConverter),
@@ -59,7 +60,6 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                 InputSection(
                   calState: calState,
                   singleInputCtrl: singleInputCtrl,
-                  areaCalNotifier: calNotifier,
                   raiInputCtrl: raiInputCtrl,
                   nganInputCtrl: nganInputCtrl,
                   sqWhaInputCtrl: sqWhaInputCtrl,
@@ -86,8 +86,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
                   height: 10,
                 ),
                 SaveResultArea(
-                  saveState: saveState,
-                  saveNotifier: saveNotifier,
+                  saveState: saveState.savedResults,
                   appLocal: appLocal,
                 ),
               ],
@@ -99,5 +98,7 @@ class ConverterPageState extends ConsumerState<UnitConverterPage> {
         )
       ],
     );
+      });
+    });
   }
 }

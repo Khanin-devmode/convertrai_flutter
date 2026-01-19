@@ -1,25 +1,14 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/unit_converter_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-final singleInputCtrlProviderUnitCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '1'));
-final raiInputCtrlProviderUnitCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '1'));
-final nganInputCtrlProviderUnitCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '0'));
-final sqWhaInputCtrlProviderUnitCon = StateProvider<TextEditingController>(
-    (ref) => TextEditingController(text: '0'));
-
-final unitFormKeyProvider = StateProvider<GlobalKey>((ref) => GlobalKey());
-
-class CalNotifier extends StateNotifier<Calculation> {
-  CalNotifier() : super(Calculation());
+class UnitConverterCubit extends Cubit<UnitConverterState> {
+  UnitConverterCubit() : super(UnitConverterState.initial());
 
   void convertUnit(double newValue) {
     Calculation newCal = Calculation();
 
-    newCal.selectedUnit = state.selectedUnit;
+    newCal.selectedUnit = state.calculation.selectedUnit;
 
     switch (newCal.selectedUnit) {
       case ConvertingUnit.rai:
@@ -64,39 +53,42 @@ class CalNotifier extends StateNotifier<Calculation> {
     newCal.sqWha = newCal.sqWhaRemainder.remainder(100);
     newCal.acre = newCal.sqm / 4046.86;
 
-    state = newCal;
+    emit(state.copyWith(calculation: newCal));
   }
 
   void convertCombinedUnit(double rai, double ngan, double sqWha) {
     double sqm = (rai * 1600) + (ngan * 400) + (sqWha * 4);
-
     convertUnit(sqm);
   }
 
-  void selectUnit(newUnit) {
+  void selectUnit(ConvertingUnit newUnit) {
     Calculation newState = Calculation();
 
-    //must find better solution, this is fine for this small project.
     newState.selectedUnit = newUnit;
 
-    newState.sqm = state.sqm;
-    newState.rai = state.rai;
-    newState.ngan = state.ngan;
-    newState.sqWha = state.sqWha;
-    newState.fullRai = state.fullRai;
-    newState.fullNgan = state.fullNgan;
-    newState.fullSqWha = state.fullSqWha;
-    newState.sqWhaRemainder = state.sqWhaRemainder;
+    newState.sqm = state.calculation.sqm;
+    newState.rai = state.calculation.rai;
+    newState.ngan = state.calculation.ngan;
+    newState.sqWha = state.calculation.sqWha;
+    newState.fullRai = state.calculation.fullRai;
+    newState.fullNgan = state.calculation.fullNgan;
+    newState.fullSqWha = state.calculation.fullSqWha;
+    newState.sqWhaRemainder = state.calculation.sqWhaRemainder;
+    newState.acre = state.calculation.acre;
 
-    state = newState;
+    emit(state.copyWith(calculation: newState));
   }
 
   void resetState() {
-    state = Calculation();
+    emit(state.copyWith(calculation: Calculation()));
+  }
+
+  @override
+  Future<void> close() {
+    state.singleInputCtrl.dispose();
+    state.raiInputCtrl.dispose();
+    state.nganInputCtrl.dispose();
+    state.sqWhaInputCtrl.dispose();
+    return super.close();
   }
 }
-
-final calNotifierProvider =
-    StateNotifierProvider<CalNotifier, Calculation>((ref) {
-  return CalNotifier();
-});

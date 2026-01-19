@@ -13,7 +13,7 @@ void main() async {
   group('end-to-end test', () {
     testWidgets('Test Statrt app', (tester) async {
       // Load app widget.
-      await tester.pumpWidget(const ProviderScope(child: ConverRaiApp()));
+      await tester.pumpWidget(const ProviderScope(child: ConvertRaiApp()));
 
       await Future.delayed(Duration(seconds: 30));
 

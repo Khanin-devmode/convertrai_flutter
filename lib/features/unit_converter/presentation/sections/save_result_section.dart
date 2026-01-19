@@ -1,18 +1,17 @@
 import 'package:convert_rai/constants.dart';
-import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/save_result_cubit.dart';
 import 'package:convert_rai/shared_widgets/saved_result_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
 class SaveResultArea extends StatelessWidget {
   const SaveResultArea(
       {super.key,
       required this.saveState,
-      required this.saveNotifier,
       required this.appLocal});
 
   final List<String> saveState;
-  final SaveNotifier saveNotifier;
   final AppLocalizations appLocal;
 
   @override
@@ -29,7 +28,7 @@ class SaveResultArea extends StatelessWidget {
                   saveState.length,
                   (i) => SavedResultRow(
                         resultText: saveState[i],
-                        deleteFunction: saveNotifier.deleteResult,
+                        deleteFunction: (index) => context.read<SaveResultCubit>().deleteResult(index),
                         index: i,
                       )),
             )

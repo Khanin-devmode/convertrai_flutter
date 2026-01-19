@@ -1,5 +1,5 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:convert_rai/features/unit_converter/domain/calculate_logic.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/unit_converter_cubit.dart';
 import 'package:convert_rai/shared_widgets/custom_input.dart';
 import 'package:convert_rai/shared_widgets/input_label.dart';
 import 'package:convert_rai/shared_widgets/rai_ngan_sqwa_input.dart';
@@ -7,14 +7,13 @@ import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class InputSection extends ConsumerWidget {
+class InputSection extends StatelessWidget {
   const InputSection({
     super.key,
     required this.calState,
     required this.singleInputCtrl,
-    required this.areaCalNotifier,
     required this.raiInputCtrl,
     required this.nganInputCtrl,
     required this.sqWhaInputCtrl,
@@ -23,19 +22,16 @@ class InputSection extends ConsumerWidget {
 
   final Calculation calState;
   final TextEditingController singleInputCtrl;
-  final CalNotifier areaCalNotifier;
   final TextEditingController raiInputCtrl;
   final TextEditingController nganInputCtrl;
   final TextEditingController sqWhaInputCtrl;
   final AppLocalizations appLocal;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formKey = ref.watch(unitFormKeyProvider);
+  Widget build(BuildContext context) {
+    final cubit = context.read<UnitConverterCubit>();
 
-    return Form(
-      key: formKey,
-      child: Row(
+    return Row(
         children: [
           Expanded(
             flex: 4,
@@ -49,7 +45,7 @@ class InputSection extends ConsumerWidget {
                         inputTextController: singleInputCtrl,
                         onChanged: (newValue) {
                           double n = stringToDouble(newValue);
-                          areaCalNotifier.convertUnit(n);
+                          cubit.convertUnit(n);
                         },
                       ),
                     ],
@@ -60,7 +56,7 @@ class InputSection extends ConsumerWidget {
                     nganTextCtrl: nganInputCtrl,
                     sqwaTextCtrl: sqWhaInputCtrl,
                     onChanged: (rai, ngan, sqwa) {
-                      areaCalNotifier.convertCombinedUnit(rai, ngan, sqwa);
+                      cubit.convertCombinedUnit(rai, ngan, sqwa);
                     },
                   ),
           ),
@@ -89,16 +85,16 @@ class InputSection extends ConsumerWidget {
                   appLocal: appLocal,
                   selectedUnit: calState.selectedUnit,
                   onChanged: (newUnit) {
-                    areaCalNotifier.selectUnit(newUnit);
+                    cubit.selectUnit(newUnit);
 
                     if (newUnit != ConvertingUnit.raiNganSqWha) {
                       double n = stringToDouble(singleInputCtrl.text);
-                      areaCalNotifier.convertUnit(n);
+                      cubit.convertUnit(n);
                     } else {
                       double rai = stringToDouble(raiInputCtrl.text);
                       double ngan = stringToDouble(nganInputCtrl.text);
                       double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                      areaCalNotifier.convertCombinedUnit(rai, ngan, sqWha);
+                      cubit.convertCombinedUnit(rai, ngan, sqWha);
                     }
                   },
                 ),
@@ -106,7 +102,6 @@ class InputSection extends ConsumerWidget {
             ),
           ),
         ],
-      ),
     );
   }
 }

@@ -1,14 +1,14 @@
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:convert_rai/features/unit_converter/domain/saving_logic.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/save_result_cubit.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 import 'package:convert_rai/shared_widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ResultRow extends ConsumerWidget {
+class ResultRow extends StatelessWidget {
   const ResultRow({
     Key? key,
     required this.valueList,
@@ -21,8 +21,7 @@ class ResultRow extends ConsumerWidget {
   final AppLocalizations appLocal;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    SaveNotifier saveNotifier = ref.watch(saveNotifierProvider.notifier);
+  Widget build(BuildContext context) {
 
     String resultText = ' =';
     for (var pairValue in valueList) {
@@ -63,8 +62,8 @@ class ResultRow extends ConsumerWidget {
                 color: kIconColor,
               ),
               onPressed: () async {
-                //Save with notifier
-                saveNotifier.saveResult('$inputText$resultText');
+                //Save with cubit
+                context.read<SaveResultCubit>().saveResult('$inputText$resultText');
               },
             ),
             IconButton(

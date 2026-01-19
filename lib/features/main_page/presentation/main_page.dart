@@ -1,18 +1,20 @@
 import 'package:convert_rai/features/price_converter/presentation/pages/price_converter_page.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/save_result_cubit.dart';
+import 'package:convert_rai/features/unit_converter/presentation/cubit/unit_converter_cubit.dart';
 import 'package:convert_rai/features/unit_converter/presentation/pages/unit_converter_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
-class MainPage extends ConsumerStatefulWidget {
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
   @override
   MainPageState createState() => MainPageState();
 }
 
-class MainPageState extends ConsumerState<MainPage> {
+class MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
@@ -26,8 +28,14 @@ class MainPageState extends ConsumerState<MainPage> {
 
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const UnitConverterPage(),
+  List<Widget> get _pages => [
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => UnitConverterCubit()),
+        BlocProvider(create: (context) => SaveResultCubit()),
+      ],
+      child: const UnitConverterPage(),
+    ),
     const PriceConverterPage(),
   ];
 

@@ -1,25 +1,23 @@
-import 'package:convert_rai/features/main_page/presentation/main_app_state.dart';
 import 'package:convert_rai/features/main_page/presentation/main_page.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
-  // runApp(const ConverRaiApp());
   await Hive.initFlutter();
 
-  runApp(const ProviderScope(child: ConverRaiApp()));
+  runApp(const ConvertRaiApp());
 }
 
-class ConverRaiApp extends ConsumerWidget {
-  const ConverRaiApp({super.key});
+class ConvertRaiApp extends StatelessWidget {
+  const ConvertRaiApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final String localLangCode = ref.watch(localLangCodeProvider);
+  Widget build(BuildContext context) {
+    // TODO: Will migrate language state to Bloc in Phase 5
+    final String localLangCode = 'th';
 
     return MaterialApp(
       title: 'Convert Rai',
