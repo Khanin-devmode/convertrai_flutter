@@ -14,7 +14,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_launcher_icons: ^0.14.3
   intl: any
-  flutter_riverpod: ^2.1.3
   flutter_localizations:
     sdk: flutter
   hive: ^2.2.3
