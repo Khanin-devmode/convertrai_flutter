@@ -1,7 +1,7 @@
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:flutter/material.dart';
 import 'package:convert_rai/constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:convert_rai/l10n/app_localizations.dart';
 
 double stringToDouble(String newValue) {
   String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');

@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
+import 'package:convert_rai/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UnitSelectDropdown extends StatelessWidget {
   const UnitSelectDropdown(
