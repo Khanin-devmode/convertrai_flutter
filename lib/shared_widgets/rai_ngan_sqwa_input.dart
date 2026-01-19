@@ -2,7 +2,7 @@ import 'package:convert_rai/l10n/app_localizations.dart';
 import 'package:convert_rai/shared_widgets/custom_input.dart';
 import 'package:convert_rai/shared_widgets/input_label.dart';
 import 'package:flutter/material.dart';
-import '../features/unit_converter/presentation/helper_function.dart';
+import '../shared/helper_functions.dart';
 
 class RaiNganSqwaTextFields extends StatelessWidget {
   const RaiNganSqwaTextFields({

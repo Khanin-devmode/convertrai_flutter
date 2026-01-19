@@ -13,7 +13,7 @@ import 'package:convert_rai/l10n/app_localizations.dart';
 import '../../../../shared_widgets/custom_input.dart';
 import '../../../../shared_widgets/input_label.dart';
 import '../../../../shared_widgets/unit_select_dropdown.dart';
-import '../../../unit_converter/presentation/helper_function.dart';
+import '../../../../shared/helper_functions.dart';
 
 class PriceConverterPage extends StatefulWidget {
   const PriceConverterPage({super.key});

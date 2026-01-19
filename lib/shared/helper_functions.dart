@@ -4,14 +4,26 @@ import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
 double stringToDouble(String newValue) {
-  String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
-  double n;
-  if (pureNum.isNotEmpty) {
-    n = double.parse(pureNum);
-  } else {
-    n = 0;
+  // Remove all characters except digits and decimal point
+  String pureNum = newValue.replaceAll(RegExp('[^0-9.]'), '');
+  
+  if (pureNum.isEmpty) {
+    return 0;
   }
-  return n;
+  
+  // Handle multiple decimal points - keep only the first one
+  int firstDotIndex = pureNum.indexOf('.');
+  if (firstDotIndex != -1) {
+    String beforeDot = pureNum.substring(0, firstDotIndex + 1);
+    String afterDot = pureNum.substring(firstDotIndex + 1).replaceAll('.', '');
+    pureNum = beforeDot + afterDot;
+  }
+  
+  try {
+    return double.parse(pureNum);
+  } catch (e) {
+    return 0;
+  }
 }
 
 String getUnitText(ConvertingUnit unit, AppLocalizations appLocal) {

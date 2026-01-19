@@ -1,6 +1,6 @@
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
-import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
+import 'package:convert_rai/shared/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
