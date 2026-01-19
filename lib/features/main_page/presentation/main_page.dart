@@ -1,3 +1,4 @@
+import 'package:convert_rai/features/price_converter/presentation/cubit/price_converter_cubit.dart';
 import 'package:convert_rai/features/price_converter/presentation/pages/price_converter_page.dart';
 import 'package:convert_rai/features/unit_converter/presentation/cubit/save_result_cubit.dart';
 import 'package:convert_rai/features/unit_converter/presentation/cubit/unit_converter_cubit.dart';
@@ -36,7 +37,10 @@ class MainPageState extends State<MainPage> {
       ],
       child: const UnitConverterPage(),
     ),
-    const PriceConverterPage(),
+    BlocProvider(
+      create: (context) => PriceConverterCubit(),
+      child: const PriceConverterPage(),
+    ),
   ];
 
   void _onItemTapped(int index) {

@@ -1,13 +1,10 @@
 import 'package:convert_rai/constants.dart';
-import 'package:convert_rai/features/price_converter/data/price_data_model.dart';
-import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
-class PriceOutputSection extends ConsumerWidget {
+class PriceOutputSection extends StatelessWidget {
   const PriceOutputSection(
       {super.key,
       required this.singleInputCtrl,
@@ -27,8 +24,7 @@ class PriceOutputSection extends ConsumerWidget {
   final AppLocalizations appLocal;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    PriceData priceOutput = ref.watch(priceCalNotifierProvider);
+  Widget build(BuildContext context) {
 
     final inputText = getInputText(singleInputCtrl, raiInputCtrl, nganInputCtrl,
         sqWhaInputCtrl, selectedInputUnit, appLocal);

@@ -1,12 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert_rai/constants.dart';
-import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
+import 'package:convert_rai/features/price_converter/presentation/cubit/price_converter_cubit.dart';
+import 'package:convert_rai/features/price_converter/presentation/cubit/price_converter_state.dart';
 import 'package:convert_rai/features/price_converter/presentation/sections/price_input_section.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/shared_widgets/header_label.dart';
 import 'package:convert_rai/shared_widgets/rai_ngan_sqwa_input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
 import '../../../../shared_widgets/custom_input.dart';
@@ -14,14 +15,14 @@ import '../../../../shared_widgets/input_label.dart';
 import '../../../../shared_widgets/unit_select_dropdown.dart';
 import '../../../unit_converter/presentation/helper_function.dart';
 
-class PriceConverterPage extends ConsumerStatefulWidget {
+class PriceConverterPage extends StatefulWidget {
   const PriceConverterPage({super.key});
 
   @override
   PriceConverterPageState createState() => PriceConverterPageState();
 }
 
-class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
+class PriceConverterPageState extends State<PriceConverterPage> {
   ConvertingUnit seletedInputUnit = ConvertingUnit.sqWa;
   ConvertingUnit seletedOutputUnit = ConvertingUnit.rai;
 
@@ -35,26 +36,17 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final priceCalNotifier = ref.watch(priceCalNotifierProvider.notifier);
-    final priceData = ref.watch(priceCalNotifierProvider);
-
-    //     final singleInputCtrl = ref.watch(singlePriceInputCtrlProvider);
-    // final raiInputCtrl = ref.watch(raiInputCtrlProviderPriceCon);
-    // final nganInputCtrl = ref.watch(nganInputCtrlProviderPriceCon);
-    // final sqWhaInputCtrl = ref.watch(sqWhaInputCtrlProviderPriceCon);
-    // final priceInputCtrl = ref.watch(priceInputCtrlProviderPriceCon);
-
-    // final outputText = kNumFormat.format(priceCalState).toString();
-    final priceCoverterControllers = ref.watch(priceConverterCtrlsProvider);
-    final singleInputCtrl = priceCoverterControllers.singleInput;
-    final raiInputCtrl = priceCoverterControllers.raiInput;
-    final nganInputCtrl = priceCoverterControllers.nganInput;
-    final sqwaInputCtrl = priceCoverterControllers.sqwaInput;
-    final priceInputCtrl = priceCoverterControllers.priceInput;
-
     final appLocal = AppLocalizations.of(context)!;
 
-    return Column(
+    return BlocBuilder<PriceConverterCubit, PriceConverterState>(builder: (context, priceState) {
+      final priceData = priceState.priceData;
+      final singleInputCtrl = priceState.singleInputCtrl;
+      final raiInputCtrl = priceState.raiInputCtrl;
+      final nganInputCtrl = priceState.nganInputCtrl;
+      final sqwaInputCtrl = priceState.sqWhaInputCtrl;
+      final priceInputCtrl = priceState.priceInputCtrl;
+
+      return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         HeaderRow(label: appLocal.priceConverter),
@@ -78,7 +70,6 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                   inputAreaUnit: seletedInputUnit,
                   singleInputCtrl: singleInputCtrl,
                   priceInputCtrl: priceInputCtrl,
-                  priceCalNotifier: priceCalNotifier,
                   seletedOutputUnit: seletedOutputUnit,
                   raiInputCtrl: raiInputCtrl,
                   nganInputCtrl: nganInputCtrl,
@@ -114,7 +105,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                                     double outputArea =
                                         stringToDouble(newValue);
 
-                                    priceCalNotifier.updatePriceData(
+                                    context.read<PriceConverterCubit>().updatePriceData(
                                       outputSingleArea: outputArea,
                                     );
                                   },
@@ -123,11 +114,11 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                             )
                           : RaiNganSqwaTextFields(
                               appLocal: appLocal,
-                              raiTextCtrl: priceCoverterControllers.raiOutput,
-                              nganTextCtrl: priceCoverterControllers.nganOutput,
-                              sqwaTextCtrl: priceCoverterControllers.sqwaOutput,
+                              raiTextCtrl: priceState.raiOutputCtrl,
+                              nganTextCtrl: priceState.nganOutputCtrl,
+                              sqwaTextCtrl: priceState.sqWhaOutputCtrl,
                               onChanged: (rai, ngan, sqwa) {
-                                priceCalNotifier.updatePriceData(
+                                context.read<PriceConverterCubit>().updatePriceData(
                                   outputRai: rai,
                                   outputNgan: ngan,
                                   outputSqWa: sqwa,
@@ -159,18 +150,18 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
 
                                 if (seletedOutputUnit !=
                                     ConvertingUnit.raiNganSqWha) {
-                                  priceCalNotifier.updatePriceData(
+                                  context.read<PriceConverterCubit>().updatePriceData(
                                     outputAreaUnit: newUnit,
                                   );
                                 } else {
                                   double rai = stringToDouble(
-                                      priceCoverterControllers.raiOutput.text);
+                                      priceState.raiOutputCtrl.text);
                                   double ngan = stringToDouble(
-                                      priceCoverterControllers.nganOutput.text);
+                                      priceState.nganOutputCtrl.text);
                                   double sqwa = stringToDouble(
-                                      priceCoverterControllers.sqwaOutput.text);
+                                      priceState.sqWhaOutputCtrl.text);
 
-                                  priceCalNotifier.updatePriceData(
+                                  context.read<PriceConverterCubit>().updatePriceData(
                                     outputRai: rai,
                                     outputNgan: ngan,
                                     outputSqWa: sqwa,
@@ -195,10 +186,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                       Radius.circular(16),
                     ),
                   ),
-                  child: Builder(builder: (context) {
-                    final priceData = ref.watch(priceCalNotifierProvider);
-
-                    return Padding(
+                  child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
                         child: AutoSizeText(
@@ -210,8 +198,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
                           maxLines: 1,
                         ),
                       ),
-                    );
-                  }),
+                    ),
                 )
               ],
             ),
@@ -222,5 +209,6 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
         )
       ],
     );
+    });
   }
 }

@@ -1,5 +1,5 @@
 import 'package:convert_rai/features/price_converter/data/price_data_model.dart';
-import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
+import 'package:convert_rai/features/price_converter/presentation/cubit/price_converter_cubit.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/shared_widgets/custom_input.dart';
 import 'package:convert_rai/shared_widgets/input_label.dart';
@@ -7,6 +7,7 @@ import 'package:convert_rai/shared_widgets/rai_ngan_sqwa_input.dart';
 import 'package:convert_rai/shared_widgets/unit_select_dropdown.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
 
 class PriceInputSection extends StatelessWidget {
@@ -15,7 +16,6 @@ class PriceInputSection extends StatelessWidget {
     required this.inputAreaUnit,
     required this.singleInputCtrl,
     required this.priceInputCtrl,
-    required this.priceCalNotifier,
     required this.seletedOutputUnit,
     required this.raiInputCtrl,
     required this.nganInputCtrl,
@@ -28,7 +28,6 @@ class PriceInputSection extends StatelessWidget {
   final ConvertingUnit inputAreaUnit;
   final TextEditingController singleInputCtrl;
   final TextEditingController priceInputCtrl;
-  final PriceCalNotifier priceCalNotifier;
   final ConvertingUnit seletedOutputUnit;
   final TextEditingController raiInputCtrl;
   final TextEditingController nganInputCtrl;
@@ -61,7 +60,7 @@ class PriceInputSection extends StatelessWidget {
                             double unitValue = stringToDouble(newValue);
                             double inputPrice =
                                 stringToDouble(priceInputCtrl.text);
-                            priceCalNotifier.updatePriceData(
+                            context.read<PriceConverterCubit>().updatePriceData(
                               inputPrice: inputPrice,
                               inputSingleArea: unitValue,
                               inputAreaUnit: inputAreaUnit,
@@ -80,7 +79,7 @@ class PriceInputSection extends StatelessWidget {
                         double ngan,
                         double sqWa,
                       ) {
-                        priceCalNotifier.updatePriceData(
+                        context.read<PriceConverterCubit>().updatePriceData(
                           inputRai: rai,
                           inputNgan: ngan,
                           inputSqWa: sqWa,
@@ -118,7 +117,7 @@ class PriceInputSection extends StatelessWidget {
 
                       if (inputAreaUnit != ConvertingUnit.raiNganSqWha) {
                         var inputArea = stringToDouble(singleInputCtrl.text);
-                        priceCalNotifier.updatePriceData(
+                        context.read<PriceConverterCubit>().updatePriceData(
                           inputPrice: inputPrice,
                           inputSingleArea: inputArea,
                           inputAreaUnit: newUnit,
@@ -127,7 +126,7 @@ class PriceInputSection extends StatelessWidget {
                         double rai = stringToDouble(raiInputCtrl.text);
                         double ngan = stringToDouble(nganInputCtrl.text);
                         double sqWha = stringToDouble(sqWhaInputCtrl.text);
-                        priceCalNotifier.updatePriceData(
+                        context.read<PriceConverterCubit>().updatePriceData(
                           inputRai: rai,
                           inputNgan: ngan,
                           inputSqWa: sqWha,
@@ -148,7 +147,7 @@ class PriceInputSection extends StatelessWidget {
           inputTextController: priceInputCtrl,
           onChanged: (newvalue) {
             var inputPrice = stringToDouble(newvalue);
-            priceCalNotifier.updatePriceData(
+            context.read<PriceConverterCubit>().updatePriceData(
               inputPrice: inputPrice,
             );
 
