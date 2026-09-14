@@ -12,8 +12,8 @@ class Calculation {
   double fullSqWha = 400;
   double sqWhaRemainder = 0;
   double acre = 0.39536826;
-  double sqFt = 0;
-  double sqIn = 0;
+  double sqFt = 17222.24;
+  double sqIn = 2480000;
 
   String getTextValueSelectedUnit(ConvertingUnit selectedUnit) {
     switch (selectedUnit) {
