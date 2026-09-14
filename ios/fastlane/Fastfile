@@ -20,6 +20,15 @@ platform :ios do
 
     match(type: "appstore", readonly: is_ci, api_key: api_key)
 
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "Runner.xcodeproj",
+      code_sign_identity: "Apple Distribution",
+      bundle_identifier: "dev.khanin.convertrai-ios",
+      profile_name: lane_context[SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING]["dev.khanin.convertrai-ios"],
+      team_id: "2LX246B32M"
+    )
+
     new_build_number = app_store_build_number(
       api_key: api_key,
       live: false
