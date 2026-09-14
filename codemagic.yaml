@@ -1,0 +1,90 @@
+workflows:
+  android-production:
+    name: Android production release
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      groups:
+        - google_play
+      android_signing:
+        - convertrai_keystore
+      vars:
+        PACKAGE_NAME: "dev.khanin.convert_rai"
+      flutter: stable
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: "v*"
+          include: true
+      cancel_previous_builds: true
+    scripts:
+      - name: Get Flutter packages
+        script: flutter packages pub get
+      - name: Run tests
+        script: flutter test
+      - name: Determine next version code and build AAB
+        script: |
+          LATEST_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME" 2>/dev/null || echo "")
+          if [ -z "$LATEST_BUILD_NUMBER" ]; then
+            NEW_BUILD_NUMBER=1
+          else
+            NEW_BUILD_NUMBER=$((LATEST_BUILD_NUMBER + 1))
+          fi
+          flutter build appbundle --release --build-number=$NEW_BUILD_NUMBER
+    artifacts:
+      - build/**/outputs/**/*.aab
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+        track: production
+
+  ios-production:
+    name: iOS production release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: "Khanin Chomphusri"
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: "dev.khanin.convertrai-ios"
+      vars:
+        # Numeric "Apple ID" of the app from App Store Connect > App Information (NOT the bundle identifier).
+        APP_APPLE_ID: 6444877065
+        XCODE_WORKSPACE: "Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"
+      flutter: stable
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: "v*"
+          include: true
+      cancel_previous_builds: true
+    scripts:
+      - name: Get Flutter packages
+        script: flutter packages pub get
+      - name: Run tests
+        script: flutter test
+      - name: Set up code signing
+        script: xcode-project use-profiles
+      - name: Install CocoaPods dependencies
+        script: find . -name "Podfile" -maxdepth 2 -execdir pod install \;
+      - name: Bump build number from App Store Connect
+        script: |
+          LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_APPLE_ID")
+          cd ios
+          agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
+      - name: Flutter build ipa
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_app_store: true
+        release_type: AFTER_APPROVAL
