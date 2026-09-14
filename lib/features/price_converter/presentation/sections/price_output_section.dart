@@ -1,6 +1,4 @@
 import 'package:convert_rai/constants.dart';
-import 'package:convert_rai/features/price_converter/data/price_data_model.dart';
-import 'package:convert_rai/features/price_converter/domain/price_converter_logic.dart';
 import 'package:convert_rai/features/unit_converter/data/calculation_model.dart';
 import 'package:convert_rai/features/unit_converter/presentation/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +26,6 @@ class PriceOutputSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    PriceData priceOutput = ref.watch(priceCalNotifierProvider);
-
     final inputText = getInputText(singleInputCtrl, raiInputCtrl, nganInputCtrl,
         sqWhaInputCtrl, selectedInputUnit, appLocal);
 

@@ -2,7 +2,6 @@ import 'package:convert_rai/features/unit_converter/data/calculation_model.dart'
 import 'package:flutter/material.dart';
 import 'package:convert_rai/constants.dart';
 import 'package:convert_rai/l10n/app_localizations.dart';
-import 'package:convert_rai/l10n/app_localizations.dart';
 
 double stringToDouble(String newValue) {
   String pureNum = newValue.replaceAll(RegExp('[^A-Za-z0-9]'), '');
@@ -34,7 +33,6 @@ String getUnitText(ConvertingUnit unit, AppLocalizations appLocal) {
     case ConvertingUnit.sqIn:
       return 'sq in';
   }
-  return '';
 }
 
 String getInputText(

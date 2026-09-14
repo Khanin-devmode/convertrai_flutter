@@ -27,7 +27,7 @@ class PriceConverterPageState extends ConsumerState<PriceConverterPage> {
 
   final outputAreaController = TextEditingController(text: '1');
 
-  selectInputUnit(ConvertingUnit unit) {
+  void selectInputUnit(ConvertingUnit unit) {
     setState(() {
       seletedInputUnit = unit;
     });

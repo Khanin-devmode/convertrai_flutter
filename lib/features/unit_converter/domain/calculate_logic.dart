@@ -85,7 +85,7 @@ class CalNotifier extends StateNotifier<Calculation> {
     convertUnit(sqm);
   }
 
-  void selectUnit(newUnit) {
+  void selectUnit(ConvertingUnit newUnit) {
     Calculation newState = Calculation();
 
     //must find better solution, this is fine for this small project.

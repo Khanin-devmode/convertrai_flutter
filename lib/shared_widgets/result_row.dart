@@ -10,11 +10,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ResultRow extends ConsumerWidget {
   const ResultRow({
-    Key? key,
+    super.key,
     required this.valueList,
     required this.appLocal,
     this.inputText,
-  }) : super(key: key);
+  });
 
   final String? inputText;
   final List<ValueUnitPair> valueList;

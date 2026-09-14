@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 
 class SavedResultRow extends StatelessWidget {
   const SavedResultRow({
-    Key? key,
+    super.key,
     required this.resultText,
     required this.deleteFunction,
     required this.index,
-  }) : super(key: key);
+  });
 
   final String resultText;
   final Function(int) deleteFunction;
