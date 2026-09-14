@@ -39,7 +39,8 @@ platform :ios do
     build_app(
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
-      export_method: "app-store"
+      export_method: "app-store",
+      clean: true
     )
 
     upload_to_app_store(
