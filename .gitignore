@@ -47,3 +47,17 @@ app.*.map.json
 /android/app/release
 
 pubspec.lock
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/test_output/
+**/fastlane/Preview.html
+*.mobileprovision
+*.p12
+*.p8
+*.jks
+android/key.properties
+android/upload-keystore.jks
+google-play-key.json
+asc_api_key.p8
+.bundle/

@@ -1,0 +1,48 @@
+name: Release Android
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Decode Android keystore
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/upload-keystore.jks
+
+      - name: Write key.properties
+        run: |
+          cat > android/key.properties <<EOF
+          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          storeFile=${{ github.workspace }}/android/upload-keystore.jks
+          EOF
+
+      - name: Write Google Play service account key
+        run: echo '${{ secrets.GOOGLE_PLAY_JSON_KEY }}' > google-play-key.json
+
+      - name: Get Flutter packages
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Release to Google Play
+        working-directory: android
+        env:
+          GOOGLE_PLAY_JSON_KEY_PATH: ${{ github.workspace }}/google-play-key.json
+        run: bundle exec fastlane android release

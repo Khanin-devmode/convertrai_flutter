@@ -1,0 +1,4 @@
+git_url("git@github.com:Khanin-devmode/app-certificates.git")
+git_branch("master")
+storage_mode("git")
+type("appstore")
